@@ -18,9 +18,6 @@ namespace CodeBase.UI.Services.Window
             {
                 case WindowType.None:
                     break;
-                case WindowType.Shop:
-                    uiFactory.CreatePolicyAskingPopup();
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(window), window, null);
             }

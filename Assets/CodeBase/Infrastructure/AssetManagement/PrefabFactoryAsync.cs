@@ -1,8 +1,3 @@
-using CodeBase.Infrastructure.UI.LoadingCurtain;
-using CodeBase.UI.Overlays;
-using CodeBase.UI.PopUps.ErrorPopup;
-using CodeBase.UI.PopUps.PolicyAcceptPopup;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 

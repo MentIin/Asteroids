@@ -1,15 +1,9 @@
-﻿using CodeBase.Services.LogService;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
 namespace CodeBase.Infrastructure.SceneManagement
 {
-    public class SceneLoader : ISceneLoader
-    {
-        private ILogService log;
-
-        public SceneLoader(ILogService log) => 
-            this.log = log;
+    public class SceneLoader : ISceneLoader{
 
         public async UniTask Load(string nextScene)
         {

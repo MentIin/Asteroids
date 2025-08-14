@@ -1,7 +1,3 @@
-using CodeBase.Infrastructure.AssetManagement;
-using CodeBase.UI.PopUps.ErrorPopup;
-using CodeBase.UI.PopUps.PolicyAcceptPopup;
-using Cysharp.Threading.Tasks;
 using Zenject;
 
 namespace CodeBase.UI.Services.Factories

@@ -3,22 +3,16 @@ using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.CameraService;
 using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.SceneManagement;
-using CodeBase.Infrastructure.States;
-using CodeBase.Infrastructure.UI.LoadingCurtain;
+using CodeBase.Interfaces.Infrastructure.Factories;
 using CodeBase.Services.AdsService;
 using CodeBase.Services.AnalyticsService;
 using CodeBase.Services.InputService;
-using CodeBase.Services.LocalizationService;
-using CodeBase.Services.LogService;
 using CodeBase.Services.PlayerProgressService;
 using CodeBase.Services.RandomizerService;
 using CodeBase.Services.SaveLoadService;
 using CodeBase.Services.ServerConnectionService;
 using CodeBase.Services.StaticDataService;
-using CodeBase.Services.WalletService;
-using CodeBase.UI.Overlays;
 using CodeBase.UI.Services.Factories;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -38,10 +32,6 @@ namespace CodeBase.CompositionRoot
 
             BindSceneLoader();
 
-            BindInfrastructureUI();
-
-            BindGameStateMachine();
-
             BindStaticDataService();
 
             BindGameFactory();
@@ -60,13 +50,7 @@ namespace CodeBase.CompositionRoot
 
             BindServerConnectionService();
 
-            BindLocalizationService();
-
-            BindLogService();
-
             BindAssetProvider();
-
-            BindWalletService();
         }
 
         private void BindCamera()
@@ -75,17 +59,10 @@ namespace CodeBase.CompositionRoot
             Container.Bind<CameraService>().To<CameraService>().AsSingle();
         }
 
-        private void BindWalletService() => 
-            Container.BindInterfacesAndSelfTo<WalletService>().AsSingle();
 
         private void BindAssetProvider() => 
             Container.BindInterfacesTo<AssetProvider>().AsSingle();
 
-        private void BindLogService() => 
-            Container.BindInterfacesTo<LogService>().AsSingle();
-
-        private void BindLocalizationService() => 
-            Container.BindInterfacesTo<LocalizationService>().AsSingle();
 
         private void BindServerConnectionService() => 
             Container.BindInterfacesTo<ServerConnectionService>().AsSingle();
@@ -155,32 +132,6 @@ namespace CodeBase.CompositionRoot
 
         private void BindSceneLoader() => 
             Container.BindInterfacesAndSelfTo<SceneLoader>().AsSingle();
-
-        private void BindInfrastructureUI()
-        {
-            BindLoadingCurtains();
-
-            BindAwaitingOverlay();
-        }
-
-        private void BindAwaitingOverlay()
-        {
-            Container
-                .BindFactory<string, AwaitingOverlay, AwaitingOverlay.Factory>()
-                .FromFactory<PrefabFactoryAsync<AwaitingOverlay>>();
-
-            Container.BindInterfacesAndSelfTo<AwaitingOverlayProxy>().AsSingle();
-        }
-
-        private void BindLoadingCurtains()
-        {
-            Container.BindFactory<string, LoadingCurtain, LoadingCurtain.Factory>()
-                .FromFactory<PrefabFactoryAsync<LoadingCurtain>>();
-
-            Container.BindInterfacesAndSelfTo<LoadingCurtainProxy>().AsSingle();
-        }
-
-        private void BindGameStateMachine() => 
-            GameStateMachineInstaller.Install(Container);
+        
     }
 }
