@@ -10,7 +10,6 @@ using CodeBase.Services.InputService;
 using CodeBase.Services.PlayerProgressService;
 using CodeBase.Services.RandomizerService;
 using CodeBase.Services.SaveLoadService;
-using CodeBase.Services.ServerConnectionService;
 using CodeBase.Services.StaticDataService;
 using CodeBase.UI.Services.Factories;
 using UnityEngine;
@@ -48,8 +47,6 @@ namespace CodeBase.CompositionRoot
 
             BindAnalyticsService();
 
-            BindServerConnectionService();
-
             BindAssetProvider();
         }
 
@@ -62,10 +59,6 @@ namespace CodeBase.CompositionRoot
 
         private void BindAssetProvider() => 
             Container.BindInterfacesTo<AssetProvider>().AsSingle();
-
-
-        private void BindServerConnectionService() => 
-            Container.BindInterfacesTo<ServerConnectionService>().AsSingle();
 
         private void BindAnalyticsService() => 
             Container.BindInterfacesTo<AnalyticsService>().AsSingle();
