@@ -26,13 +26,13 @@ namespace CodeBase.CompositionRoot
 
             BindGameBootstrapperFactory();
 
-            BindCoroutineRunner();
-
             BindSceneLoader();
 
             BindStaticDataService();
 
             BindGameFactory();
+            
+            BindUIFactory();
 
             BindRandomizeService();
 
@@ -67,7 +67,7 @@ namespace CodeBase.CompositionRoot
         {
             Container
                 .BindFactory<GameBootstrapper, GameBootstrapper.Factory>()
-                .FromComponentInNewPrefabResource(InfrastructureAssetPath.GameBootstraper);
+                .FromComponentInNewPrefabResource(InfrastructureAssetPath.GameBootstrapper);
         }
 
         private void BindInputService() => 
@@ -104,15 +104,7 @@ namespace CodeBase.CompositionRoot
                 .ByInstaller<UIFactoryInstaller>()
                 .AsSingle();
         }
-
-        private void BindCoroutineRunner()
-        {
-            Container
-                .Bind<ICoroutineRunner>()
-                .To<CoroutineRunner>()
-                .FromComponentInNewPrefabResource(InfrastructureAssetPath.CoroutineRunnerPath)
-                .AsSingle();
-        }
+        
 
         private void BindSceneLoader() => 
             Container.BindInterfacesAndSelfTo<SceneLoader>().AsSingle();
