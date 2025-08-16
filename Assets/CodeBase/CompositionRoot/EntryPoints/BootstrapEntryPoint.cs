@@ -3,16 +3,16 @@ using CodeBase.Interfaces.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
 using Zenject;
 
-namespace CodeBase.Infrastructure
+namespace CodeBase.CompositionRoot.EntryPoints
 {
-    public class GameBootstrapper : IInitializable
+    public class BootstrapEntryPoint : IInitializable
     {
         private readonly ISceneLoader _sceneLoader;
         private readonly IAnalyticsService _analyticsService;
         private readonly IAdsService _adsService;
         private readonly ILogService _logService;
 
-        public GameBootstrapper(ISceneLoader sceneLoader, IAnalyticsService analyticsService,
+        public BootstrapEntryPoint(ISceneLoader sceneLoader, IAnalyticsService analyticsService,
             IAdsService adsService, ILogService logService)
         {
             _analyticsService = analyticsService;

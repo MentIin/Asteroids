@@ -1,3 +1,4 @@
+using CodeBase.CompositionRoot.EntryPoints;
 using CodeBase.Infrastructure;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.CameraService;
@@ -21,6 +22,7 @@ namespace CodeBase.CompositionRoot
         [SerializeField] private GameObject _cameraPrefab;
         public override void InstallBindings()
         {
+            
             BindLogService();
             
             BindCamera();
@@ -63,7 +65,7 @@ namespace CodeBase.CompositionRoot
 
         private void BindGameBootstrapper()
         {
-            Container.BindInterfacesAndSelfTo<GameBootstrapper>()
+            Container.BindInterfacesAndSelfTo<BootstrapEntryPoint>()
                 .AsSingle()
                 .NonLazy();
         }
