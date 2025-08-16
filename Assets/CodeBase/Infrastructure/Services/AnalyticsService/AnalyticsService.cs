@@ -1,12 +1,16 @@
 ﻿using CodeBase.Interfaces.Infrastructure.Services;
+using Cysharp.Threading.Tasks;
 
-namespace CodeBase.Services.AnalyticsService
+namespace CodeBase.Infrastructure.Services.AnalyticsService
 {
     public class AnalyticsService : IAnalyticsService
     {
-        public void Initialize()
+        public UniTask Initialize()
         {
+            
             // initialize analytics service here
+            
+            return UniTask.CompletedTask;
         }
     }
 }

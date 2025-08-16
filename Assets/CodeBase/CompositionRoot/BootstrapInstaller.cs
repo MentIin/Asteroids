@@ -1,11 +1,11 @@
 using CodeBase.Infrastructure;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.CameraService;
-using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.SceneManagement;
-using CodeBase.Interfaces.Infrastructure.Factories;
+using CodeBase.Infrastructure.Services.AnalyticsService;
+using CodeBase.Infrastructure.Services.LogService;
+using CodeBase.Interfaces.Infrastructure.Services;
 using CodeBase.Services.AdsService;
-using CodeBase.Services.AnalyticsService;
 using CodeBase.Services.InputService;
 using CodeBase.Services.PlayerProgressService;
 using CodeBase.Services.RandomizerService;
@@ -21,79 +21,59 @@ namespace CodeBase.CompositionRoot
         [SerializeField] private GameObject _cameraPrefab;
         public override void InstallBindings()
         {
+            BindLogService();
+            
             BindCamera();
-
-            BindGameBootstrapperFactory();
-
+            
             BindSceneLoader();
 
             BindStaticDataService();
 
-            BindGameFactory();
-            
-            BindUIFactory();
-
             BindRandomizeService();
+            
+            BindInputService();
 
+            BindAssetProvider();
+            
             BindPlayerProgressService();
 
             BindAdsService();
 
             BindAnalyticsService();
             
-            BindInputService();
+            BindUIFactory();
+            
+            BindGameBootstrapper();
+        }
 
-            BindAssetProvider();
+        private void BindLogService()
+        {
+            Container.Bind<ILogService>().To<LogService>().AsSingle();
         }
 
         private void BindCamera()
         {
-            Container.Bind<Camera>().FromNewComponentOnNewPrefab(_cameraPrefab).AsSingle();
+            Container.Bind<Camera>().FromComponentInNewPrefab(_cameraPrefab)
+                .AsSingle()
+                .NonLazy();
+            
             Container.Bind<CameraService>().To<CameraService>().AsSingle();
         }
 
 
-        private void BindAssetProvider() => 
-            Container.BindInterfacesTo<AssetProvider>().AsSingle();
+        private void BindGameBootstrapper()
+        {
+            Container.BindInterfacesAndSelfTo<GameBootstrapper>()
+                .AsSingle()
+                .NonLazy();
+        }
 
-        private void BindAnalyticsService() => 
-            Container.BindInterfacesTo<AnalyticsService>().AsSingle();
+        private void BindSceneLoader() => 
+            Container.BindInterfacesAndSelfTo<SceneLoader>().AsSingle();
 
         private void BindStaticDataService() => 
             Container.BindInterfacesAndSelfTo<StaticDataService>().AsSingle();
-
-        private void BindGameBootstrapperFactory()
-        {
-            Container
-                .BindFactory<GameBootstrapper, GameBootstrapper.Factory>()
-                .FromComponentInNewPrefabResource(InfrastructureAssetPath.GameBootstrapper);
-        }
-
-        private void BindInputService() => 
-            Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
-
-        private void BindAdsService() => 
-            Container.BindInterfacesAndSelfTo<AdsService>().AsSingle();
         
-
-        private void BindPlayerProgressService()
-        {
-            Container
-                .BindInterfacesAndSelfTo<PersistentProgressService>()
-                .AsSingle();
-        }
-
-        private void BindRandomizeService() => 
-            Container.BindInterfacesAndSelfTo<RandomizerService>().AsSingle();
-
-        private void BindGameFactory()
-        {
-            Container
-                .Bind<IGameFactory>()
-                .FromSubContainerResolve()
-                .ByInstaller<GameFactoryInstaller>()
-                .AsSingle();
-        }
 
         private void BindUIFactory()
         {
@@ -103,10 +83,27 @@ namespace CodeBase.CompositionRoot
                 .ByInstaller<UIFactoryInstaller>()
                 .AsSingle();
         }
-        
 
-        private void BindSceneLoader() => 
-            Container.BindInterfacesAndSelfTo<SceneLoader>().AsSingle();
-        
+        private void BindRandomizeService() => 
+            Container.BindInterfacesAndSelfTo<RandomizerService>().AsSingle();
+
+        private void BindPlayerProgressService()
+        {
+            Container
+                .BindInterfacesAndSelfTo<PersistentProgressService>()
+                .AsSingle();
+        }
+
+        private void BindAdsService() => 
+            Container.BindInterfacesAndSelfTo<AdsService>().AsSingle();
+
+        private void BindAnalyticsService() => 
+            Container.BindInterfacesTo<AnalyticsService>().AsSingle();
+
+        private void BindInputService() => 
+            Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
+
+        private void BindAssetProvider() => 
+            Container.BindInterfacesTo<AssetProvider>().AsSingle();
     }
 }

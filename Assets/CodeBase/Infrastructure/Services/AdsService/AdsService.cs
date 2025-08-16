@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeBase.Interfaces.Infrastructure.Services;
+using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Services.AdsService
 {
@@ -16,9 +17,10 @@ namespace CodeBase.Services.AdsService
             this.log = log;
         }
 
-        public void Initialize()
+        public UniTask Initialize()
         {
             log.LogWarning("Initialization of ads service isn't implemented yet");
+            return UniTask.CompletedTask;
         }
 
         public void ShowRewardedVideo(Action onVideoFinished)

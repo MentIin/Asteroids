@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Interfaces.Infrastructure.SceneManagement
 {

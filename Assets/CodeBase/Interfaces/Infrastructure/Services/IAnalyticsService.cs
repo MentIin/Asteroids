@@ -1,7 +1,9 @@
-﻿namespace CodeBase.Interfaces.Infrastructure.Services
+﻿using Cysharp.Threading.Tasks;
+
+namespace CodeBase.Interfaces.Infrastructure.Services
 {
     public interface IAnalyticsService
     {
-        void Initialize();
+        UniTask Initialize();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Interfaces.Infrastructure.Services
 {
@@ -6,7 +7,7 @@ namespace CodeBase.Interfaces.Infrastructure.Services
     {
         event Action RewardedVideoReady;
         bool IsRewardedVideoReady { get; }
-        void Initialize();
+        UniTask Initialize();
         void ShowRewardedVideo(Action onVideoFinished);
     }
 }
