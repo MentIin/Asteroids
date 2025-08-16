@@ -9,7 +9,6 @@ using CodeBase.Services.AnalyticsService;
 using CodeBase.Services.InputService;
 using CodeBase.Services.PlayerProgressService;
 using CodeBase.Services.RandomizerService;
-using CodeBase.Services.SaveLoadService;
 using CodeBase.Services.StaticDataService;
 using CodeBase.UI.Services.Factories;
 using UnityEngine;
@@ -17,7 +16,7 @@ using Zenject;
 
 namespace CodeBase.CompositionRoot
 {
-    public class GameInstaller : MonoInstaller
+    public class BootstrapInstaller : MonoInstaller
     {
         
         [SerializeField] private Camera _camera;
@@ -25,7 +24,7 @@ namespace CodeBase.CompositionRoot
         {
             BindCamera();
 
-            BindGameBootstraperFactory();
+            BindGameBootstrapperFactory();
 
             BindCoroutineRunner();
 
@@ -39,13 +38,11 @@ namespace CodeBase.CompositionRoot
 
             BindPlayerProgressService();
 
-            BindSaveLoadService();
-
             BindAdsService();
 
-            BindInputService();
-
             BindAnalyticsService();
+            
+            BindInputService();
 
             BindAssetProvider();
         }
@@ -66,7 +63,7 @@ namespace CodeBase.CompositionRoot
         private void BindStaticDataService() => 
             Container.BindInterfacesAndSelfTo<StaticDataService>().AsSingle();
 
-        private void BindGameBootstraperFactory()
+        private void BindGameBootstrapperFactory()
         {
             Container
                 .BindFactory<GameBootstrapper, GameBootstrapper.Factory>()
@@ -78,13 +75,7 @@ namespace CodeBase.CompositionRoot
 
         private void BindAdsService() => 
             Container.BindInterfacesAndSelfTo<AdsService>().AsSingle();
-
-        private void BindSaveLoadService()
-        {
-            Container
-                .BindInterfacesAndSelfTo<SaveLoadService>()
-                .AsSingle();
-        }
+        
 
         private void BindPlayerProgressService()
         {
