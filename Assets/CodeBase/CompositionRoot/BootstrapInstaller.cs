@@ -18,8 +18,7 @@ namespace CodeBase.CompositionRoot
 {
     public class BootstrapInstaller : MonoInstaller
     {
-        
-        [SerializeField] private Camera _camera;
+        [SerializeField] private GameObject _cameraPrefab;
         public override void InstallBindings()
         {
             BindCamera();
@@ -49,7 +48,7 @@ namespace CodeBase.CompositionRoot
 
         private void BindCamera()
         {
-            Container.Bind<Camera>().FromInstance(_camera).AsSingle();
+            Container.Bind<Camera>().FromNewComponentOnNewPrefab(_cameraPrefab).AsSingle();
             Container.Bind<CameraService>().To<CameraService>().AsSingle();
         }
 
