@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CodeBase.Services.PrefabPoolingService
+namespace CodeBase.Interfaces.Infrastructure.Services
 {
     public interface IPrefabPoolingService
     {

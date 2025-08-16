@@ -1,4 +1,6 @@
-﻿namespace CodeBase.Services.PlayerProgressService
+﻿using CodeBase.Interfaces.Infrastructure.Services.PersistentProgressService;
+
+namespace CodeBase.Services.PlayerProgressService
 {
     public class PersistentProgressService : IPersistentProgressService
     {

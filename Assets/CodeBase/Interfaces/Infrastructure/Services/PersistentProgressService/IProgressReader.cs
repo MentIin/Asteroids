@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Services.PlayerProgressService
+﻿namespace CodeBase.Interfaces.Infrastructure.Services.PersistentProgressService
 {
     public interface IProgressReader
     {

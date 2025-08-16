@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CodeBase.Interfaces.Infrastructure;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.AssetManagement

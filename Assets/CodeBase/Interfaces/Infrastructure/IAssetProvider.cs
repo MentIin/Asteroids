@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CodeBase.Infrastructure.AssetManagement
+namespace CodeBase.Interfaces.Infrastructure
 {
     public interface IAssetProvider
     {

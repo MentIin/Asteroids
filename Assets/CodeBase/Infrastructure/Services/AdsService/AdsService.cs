@@ -1,5 +1,5 @@
 ﻿using System;
-using CodeBase.Infrastructure.AssetManagement.Services;
+using CodeBase.Interfaces.Infrastructure.Services;
 
 namespace CodeBase.Services.AdsService
 {

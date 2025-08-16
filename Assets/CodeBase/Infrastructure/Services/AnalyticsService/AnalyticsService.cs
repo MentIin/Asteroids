@@ -1,4 +1,6 @@
-﻿namespace CodeBase.Services.AnalyticsService
+﻿using CodeBase.Interfaces.Infrastructure.Services;
+
+namespace CodeBase.Services.AnalyticsService
 {
     public class AnalyticsService : IAnalyticsService
     {

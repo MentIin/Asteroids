@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using CodeBase.Interfaces.Infrastructure.SceneManagement;
+using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
 namespace CodeBase.Infrastructure.SceneManagement

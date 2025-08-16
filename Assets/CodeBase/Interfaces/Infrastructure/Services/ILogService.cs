@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Infrastructure.AssetManagement.Services
+﻿namespace CodeBase.Interfaces.Infrastructure.Services
 {
     public interface ILogService
     {
