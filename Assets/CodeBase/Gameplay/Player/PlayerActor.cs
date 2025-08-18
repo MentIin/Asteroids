@@ -16,22 +16,26 @@ namespace CodeBase.Gameplay.Player
         public PlayerActor(
             PlayerModel model,
             PlayerView view,
-            IInputService inputProvider,
-            SignalBus signalBus)
+            IInputService inputProvider)
         {
+            Debug.Log("PlayerActor Constructor");
             _model = model;
             _view = view;
             _inputProvider = inputProvider;
+            
+            Debug.Log(_view.gameObject.name);
         }
 
         public void Initialize()
         {
+            Debug.Log("PlayerActor Initialize");
             // Первоначальная синхронизация
             _view.UpdateView(_model.TransformData);
         }
 
         public void Tick()
         {
+            Debug.Log("PlayerActor Tick");
             Vector2 movementInput = _inputProvider.GetMoveAxis();
             float rotationInput = _inputProvider.GetRotation();
             

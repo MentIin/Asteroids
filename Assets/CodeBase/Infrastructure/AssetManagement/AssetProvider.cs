@@ -21,5 +21,16 @@ namespace CodeBase.Infrastructure.AssetManagement
         {
             throw new NotImplementedException();
         }
+
+        public TAsset Instantiate<TAsset>(string prefabPath) where TAsset : UnityEngine.Object
+        {
+            TAsset asset = Load<TAsset>(prefabPath);
+            if (asset == null)
+            {
+                throw new ArgumentException($"Asset not found at path: {prefabPath}");
+            }
+
+            return UnityEngine.Object.Instantiate(asset);
+        }
     }
 }
