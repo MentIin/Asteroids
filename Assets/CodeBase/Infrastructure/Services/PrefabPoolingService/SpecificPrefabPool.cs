@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.Services.PrefabPoolingService
+namespace CodeBase.Infrastructure.Services.PrefabPoolingService
 {
     public class SpecificPrefabPool
     {

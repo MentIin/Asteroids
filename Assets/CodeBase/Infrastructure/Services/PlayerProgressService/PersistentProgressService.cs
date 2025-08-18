@@ -1,6 +1,6 @@
 ﻿using CodeBase.Interfaces.Infrastructure.Services.PersistentProgressService;
 
-namespace CodeBase.Services.PlayerProgressService
+namespace CodeBase.Infrastructure.Services.PlayerProgressService
 {
     public class PersistentProgressService : IPersistentProgressService
     {

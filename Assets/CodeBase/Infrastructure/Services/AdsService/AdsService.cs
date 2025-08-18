@@ -2,7 +2,7 @@
 using CodeBase.Interfaces.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
 
-namespace CodeBase.Services.AdsService
+namespace CodeBase.Infrastructure.Services.AdsService
 {
     public class AdsService : IAdsService
     {

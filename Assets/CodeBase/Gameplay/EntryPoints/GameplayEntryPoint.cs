@@ -1,7 +1,7 @@
 ﻿using CodeBase.Gameplay.Factories;
 using Zenject;
 
-namespace CodeBase.CompositionRoot.EntryPoints
+namespace CodeBase.Gameplay.EntryPoints
 {
     public class GameplayEntryPoint : IInitializable
     {

@@ -1,8 +1,7 @@
-﻿using System.ComponentModel;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
-namespace CodeBase.Services.PrefabPoolingService
+namespace CodeBase.Infrastructure.Services.PrefabPoolingService
 {
     public class PrefabPoolServiceInstaller : Installer<PrefabPoolServiceInstaller>
     {

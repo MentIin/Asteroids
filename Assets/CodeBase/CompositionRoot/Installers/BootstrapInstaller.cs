@@ -1,21 +1,20 @@
 using CodeBase.CompositionRoot.EntryPoints;
-using CodeBase.Infrastructure;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.CameraService;
 using CodeBase.Infrastructure.SceneManagement;
+using CodeBase.Infrastructure.Services.AdsService;
 using CodeBase.Infrastructure.Services.AnalyticsService;
+using CodeBase.Infrastructure.Services.InputService;
 using CodeBase.Infrastructure.Services.LogService;
+using CodeBase.Infrastructure.Services.PlayerProgressService;
+using CodeBase.Infrastructure.Services.RandomizerService;
+using CodeBase.Infrastructure.Services.StaticDataService;
 using CodeBase.Interfaces.Infrastructure.Services;
-using CodeBase.Services.AdsService;
-using CodeBase.Services.InputService;
-using CodeBase.Services.PlayerProgressService;
-using CodeBase.Services.RandomizerService;
-using CodeBase.Services.StaticDataService;
 using CodeBase.UI.Services.Factories;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.CompositionRoot
+namespace CodeBase.CompositionRoot.Installers
 {
     public class BootstrapInstaller : MonoInstaller
     {

@@ -1,7 +1,7 @@
-using CodeBase.CompositionRoot.EntryPoints;
+using CodeBase.Gameplay.EntryPoints;
 using Zenject;
 
-namespace CodeBase.CompositionRoot
+namespace CodeBase.Gameplay.Installers
 {
     public class GameplaySceneInstaller : MonoInstaller
     {

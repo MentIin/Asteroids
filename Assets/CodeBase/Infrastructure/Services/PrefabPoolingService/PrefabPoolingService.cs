@@ -3,7 +3,7 @@ using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.Services.PrefabPoolingService
+namespace CodeBase.Infrastructure.Services.PrefabPoolingService
 {
     public sealed class PrefabPoolingService : IPrefabPoolingService
     {

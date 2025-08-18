@@ -1,8 +1,7 @@
-﻿using CodeBase.Infrastructure.AssetManagement;
-using CodeBase.Interfaces.Infrastructure;
+﻿using CodeBase.Interfaces.Infrastructure;
 using CodeBase.Interfaces.Infrastructure.Services;
 
-namespace CodeBase.Services.StaticDataService
+namespace CodeBase.Infrastructure.Services.StaticDataService
 {
     public class StaticDataService
     {
