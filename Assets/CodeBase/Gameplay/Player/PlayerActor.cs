@@ -16,20 +16,17 @@ namespace CodeBase.Gameplay.Player
         public PlayerActor(
             PlayerModel model,
             PlayerView view,
-            IInputService inputProvider)
+            IInputService inputProvider,
+            TickableManager tickableManager)
         {
-            Debug.Log("PlayerActor Constructor");
+            tickableManager.Add(this);
             _model = model;
             _view = view;
             _inputProvider = inputProvider;
-            
-            Debug.Log(_view.gameObject.name);
         }
 
         public void Initialize()
         {
-            Debug.Log("PlayerActor Initialize");
-            // Первоначальная синхронизация
             _view.UpdateView(_model.TransformData);
         }
 
@@ -37,7 +34,7 @@ namespace CodeBase.Gameplay.Player
         {
             Debug.Log("PlayerActor Tick");
             Vector2 movementInput = _inputProvider.GetMoveAxis();
-            float rotationInput = _inputProvider.GetRotation();
+            float rotationInput = 0f;
             
             _model.UpdateTransform(movementInput, rotationInput, Time.deltaTime);
             _model.UpdateInvulnerability(Time.deltaTime);

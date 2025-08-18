@@ -9,7 +9,7 @@ namespace CodeBase.Gameplay.Player
     
         public void UpdateView(TransformData transformData)
         {
-            transform.position = new Vector3(transformData.Position.x, transformData.Position.x, 0f);
+            transform.position = new Vector3(transformData.Position.x, transformData.Position.y, 0f);
             transform.rotation = Quaternion.Euler(0, 0, transformData.Rotation);
         }
 

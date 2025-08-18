@@ -1,5 +1,4 @@
 ﻿using CodeBase.Gameplay.Player;
-using CodeBase.Interfaces.Infrastructure;
 using CodeBase.Interfaces.Infrastructure.Services;
 using CodeBase.Models;
 using CodeBase.Models.StaticData;
@@ -22,14 +21,17 @@ namespace CodeBase.Gameplay.Factories
 
         public void CreatePlayer()
         {
-            DiContainer subContainer = _container.CreateSubContainer();
-            
             PlayerStaticData playerData = _staticDataService.ForPlayer();
-
-            subContainer.Bind<PlayerModel>().ToSelf().AsSingle().WithArguments(Vector2.zero);
-            subContainer.Bind<PlayerView>().FromComponentInNewPrefabResource(playerData.PrefabPath)
-                .AsSingle().NonLazy();
-            subContainer.BindInterfacesAndSelfTo<PlayerActor>().AsSingle();
+    
+            
+            PlayerModel model = new PlayerModel(Vector2.zero);
+            PlayerView view = _container.InstantiatePrefabResourceForComponent<PlayerView>(
+                playerData.PrefabPath
+            );
+            PlayerActor playerActor = _container.Instantiate<PlayerActor>(
+                new object[] { model, view }
+            );
+            playerActor.Initialize();
         }
     }
 }

@@ -1,5 +1,6 @@
 using CodeBase.Gameplay.EntryPoints;
 using CodeBase.Gameplay.Factories;
+using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Gameplay.Installers
