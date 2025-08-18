@@ -4,11 +4,8 @@ namespace CodeBase.Gameplay.Factories
 {
     public class EnemyFactory
     {
-        private readonly IAssetProvider _assetProvider;
-
-        public EnemyFactory(IAssetProvider assetProvider)
+        public EnemyFactory()
         {
-            _assetProvider = assetProvider;
         }
     }
 }

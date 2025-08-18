@@ -10,32 +10,26 @@ namespace CodeBase.Gameplay.Factories
 {
     public class PlayerFactory
     {
-        private readonly IAssetProvider _assetProvider;
         private readonly IStaticDataService _staticDataService;
         private readonly DiContainer _container;
 
-        public PlayerFactory(DiContainer container, IAssetProvider assetProvider,
+        public PlayerFactory(DiContainer container,
             IStaticDataService staticDataService)
         {
             _container = container;
             _staticDataService = staticDataService;
-            _assetProvider = assetProvider;
         }
 
-        public PlayerActor CreatePlayer()
+        public void CreatePlayer()
         {
             DiContainer subContainer = _container.CreateSubContainer();
             
             PlayerStaticData playerData = _staticDataService.ForPlayer();
 
             subContainer.Bind<PlayerModel>().ToSelf().AsSingle().WithArguments(Vector2.zero);
-            
-            PlayerView view = _assetProvider.Instantiate<PlayerView>(playerData.PrefabPath);
-            
-            PlayerActor player = _container.Instantiate<PlayerActor>((new object[] { model, view}));
-            
-            
-            return player;
+            subContainer.Bind<PlayerView>().FromComponentInNewPrefabResource(playerData.PrefabPath)
+                .AsSingle().NonLazy();
+            subContainer.BindInterfacesAndSelfTo<PlayerActor>().AsSingle();
         }
     }
 }

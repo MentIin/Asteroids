@@ -1,5 +1,4 @@
 using CodeBase.CompositionRoot.EntryPoints;
-using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.CameraService;
 using CodeBase.Infrastructure.SceneManagement;
 using CodeBase.Infrastructure.Services.AdsService;
@@ -33,8 +32,6 @@ namespace CodeBase.CompositionRoot.Installers
             BindRandomizeService();
             
             BindInputService();
-
-            BindAssetProvider();
             
             BindPlayerProgressService();
 
@@ -103,8 +100,5 @@ namespace CodeBase.CompositionRoot.Installers
 
         private void BindInputService() => 
             Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
-
-        private void BindAssetProvider() => 
-            Container.BindInterfacesTo<AssetProvider>().AsSingle();
     }
 }
