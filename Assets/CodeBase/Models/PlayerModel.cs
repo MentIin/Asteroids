@@ -1,12 +1,12 @@
 ﻿using CodeBase.Data;
 using UnityEngine;
 
-namespace CodeBase.Gameplay.Player
+namespace CodeBase.Models
 {
     public class PlayerModel
     {
         public TransformData TransformData;
-        public int Health = 3;
+        public Gauge Health = new Gauge(3);
         
         public bool IsInvulnerable { get; private set; }
         public float InvulnerabilityTimer { get; private set; }

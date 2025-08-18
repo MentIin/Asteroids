@@ -1,19 +1,19 @@
 ﻿using System;
 using CodeBase.Interfaces.Infrastructure.Services;
+using CodeBase.Models;
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
 
 namespace CodeBase.Gameplay.Player
 {
-    public class PlayerPresenter : IInitializable, ITickable, IDisposable
+    public class PlayerActor : IInitializable, ITickable, IDisposable
     {
         private readonly PlayerModel _model;
         private readonly PlayerView _view;
         private readonly IInputService _inputProvider;
-        private readonly SignalBus _signalBus;
 
-        public PlayerPresenter(
+        public PlayerActor(
             PlayerModel model,
             PlayerView view,
             IInputService inputProvider,
@@ -22,7 +22,6 @@ namespace CodeBase.Gameplay.Player
             _model = model;
             _view = view;
             _inputProvider = inputProvider;
-            _signalBus = signalBus;
         }
 
         public void Initialize()

@@ -7,7 +7,7 @@ namespace CodeBase.Infrastructure.Services.InputService
     {
         public Vector2 GetMoveAxis()
         {
-            throw new System.NotImplementedException();
+            return new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
 
         public float GetRotation()
