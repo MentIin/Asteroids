@@ -4,13 +4,13 @@ namespace CodeBase.Gameplay.Physic
 {
     public class CustomVelocity
     {
-        private readonly Transform _transform;
-        private Vector3 _velocity; // Используем Vector3 вместо Vector2
+        private readonly Rigidbody2D _rigidbody;
+        private Vector2 _velocity;
 
-        public CustomVelocity(Transform targetTransform)
+        public CustomVelocity(Rigidbody2D targetRigidbody)
         {
-            _transform = targetTransform;
-            _velocity = Vector3.zero;
+            _rigidbody = targetRigidbody;
+            _velocity = Vector2.zero;
         }
 
         public void AddForce(Vector2 force)
@@ -23,7 +23,16 @@ namespace CodeBase.Gameplay.Physic
         {
             if (_velocity.sqrMagnitude > Mathf.Epsilon)
             {
-                _transform.localPosition += _velocity * deltaTime;
+                _rigidbody.position += _velocity * deltaTime;
+                _velocity *= Mathf.Pow(0.55f, deltaTime);
+            }
+        }
+
+        public void HandleCollision(Collision2D other)
+        {
+            if (other.relativeVelocity.sqrMagnitude > Mathf.Epsilon)
+            {
+                _velocity -= other.relativeVelocity * 0.5f;
             }
         }
     }

@@ -24,7 +24,7 @@ namespace CodeBase.Infrastructure.Services.StaticDataService
 
             PlayerStaticData playerData = new PlayerStaticData
             {
-                PrefabPath = "Prefabs/Player/PlayerView"
+                PrefabPath = "Prefabs/Player/Player"
             };
             
             return playerData;

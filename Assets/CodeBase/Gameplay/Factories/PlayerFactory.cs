@@ -1,8 +1,6 @@
 ﻿using CodeBase.Gameplay.Player;
 using CodeBase.Interfaces.Infrastructure.Services;
-using CodeBase.Models;
 using CodeBase.Models.StaticData;
-using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Gameplay.Factories
@@ -22,16 +20,9 @@ namespace CodeBase.Gameplay.Factories
         public void CreatePlayer()
         {
             PlayerStaticData playerData = _staticDataService.ForPlayer();
-    
-            
-            PlayerModel model = new PlayerModel(Vector2.zero);
-            PlayerView view = _container.InstantiatePrefabResourceForComponent<PlayerView>(
-                playerData.PrefabPath
-            );
-            PlayerActor playerActor = _container.Instantiate<PlayerActor>(
-                new object[] { model, view }
-            );
-            playerActor.Initialize();
+
+
+            _container.InstantiatePrefabResourceForComponent<PlayerController>(playerData.PrefabPath);
         }
     }
 }
