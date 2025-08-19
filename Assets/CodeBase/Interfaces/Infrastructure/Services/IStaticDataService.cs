@@ -1,9 +1,12 @@
-﻿using CodeBase.Models.StaticData;
+﻿using CodeBase.Models;
+using CodeBase.Models.StaticData;
 
 namespace CodeBase.Interfaces.Infrastructure.Services
 {
     public interface IStaticDataService
     {
-        PlayerStaticData ForPlayer();
+        PlayerConfig ForPlayer();
+        EnemyData ForEnemy(EnemyType type);
+        void Initialize();
     }
 }

@@ -1,0 +1,9 @@
+{
+  "type": "BigAsteroid",
+  "prefabPath": "Prefabs/Enemies/BigAsteroid",
+  "stats": {
+    "health": {
+      "Value": 5
+    }
+  }
+}

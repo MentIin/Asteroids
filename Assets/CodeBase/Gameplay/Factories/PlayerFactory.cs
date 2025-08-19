@@ -19,7 +19,7 @@ namespace CodeBase.Gameplay.Factories
 
         public void CreatePlayer()
         {
-            PlayerStaticData playerData = _staticDataService.ForPlayer();
+            PlayerConfig playerData = _staticDataService.ForPlayer();
 
 
             _container.InstantiatePrefabResourceForComponent<PlayerController>(playerData.PrefabPath);

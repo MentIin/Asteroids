@@ -11,10 +11,12 @@ namespace CodeBase.CompositionRoot.EntryPoints
         private readonly IAnalyticsService _analyticsService;
         private readonly IAdsService _adsService;
         private readonly ILogService _logService;
+        private readonly IStaticDataService _staticDataService;
 
         public BootstrapEntryPoint(ISceneLoader sceneLoader, IAnalyticsService analyticsService,
-            IAdsService adsService, ILogService logService)
+            IAdsService adsService, IStaticDataService staticDataService, ILogService logService)
         {
+            _staticDataService = staticDataService;
             _analyticsService = analyticsService;
             _adsService = adsService;
             _sceneLoader = sceneLoader;
@@ -28,6 +30,7 @@ namespace CodeBase.CompositionRoot.EntryPoints
 
         private async UniTask SetUp()
         {
+            _staticDataService.Initialize();
             await _analyticsService.Initialize();
             await _adsService.Initialize();
             await _sceneLoader.Load(SceneNames.GameplayScene);

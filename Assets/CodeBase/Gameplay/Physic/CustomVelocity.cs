@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using Unity.Plastic.Newtonsoft.Json;
+using UnityEngine;
 
 namespace CodeBase.Gameplay.Physic
 {
     public class CustomVelocity
     {
         private readonly Rigidbody2D _rigidbody;
+        
         private Vector2 _velocity;
 
         public CustomVelocity(Rigidbody2D targetRigidbody)

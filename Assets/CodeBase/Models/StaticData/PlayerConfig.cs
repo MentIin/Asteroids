@@ -3,7 +3,7 @@
 namespace CodeBase.Models.StaticData
 {
     [Serializable]
-    public class PlayerStaticData
+    public class PlayerConfig
     {
         public string PrefabPath;
     }

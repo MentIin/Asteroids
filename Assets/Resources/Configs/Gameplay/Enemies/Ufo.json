@@ -1,0 +1,12 @@
+{
+  "type": "Ufo",
+  "prefabPath": "Prefabs/Enemies/BigAsteroid",
+  "stats": {
+    "health": {
+      "Value": 55
+    },
+    "speed": {
+      "Value": 0
+    }
+  }
+}
