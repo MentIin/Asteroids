@@ -1,4 +1,6 @@
-﻿using CodeBase.Gameplay.Movers;
+﻿using CodeBase.Data;
+using CodeBase.Gameplay.Enviroment;
+using CodeBase.Gameplay.Movers;
 using CodeBase.Gameplay.Physic;
 using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
@@ -6,34 +8,41 @@ using Zenject;
 
 namespace CodeBase.Gameplay.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerModel : ITickable
     {
-        [SerializeField] private Rigidbody2D _rigidbody2D;
         private IInputService _inputService;
         private IStaticDataService _staticDataService;
-        
+        private readonly Arena _arena;
+
+        private TransformData _transformData;
         private CustomVelocity _velocity;
         private IMover _mover;
 
-        [Inject]
-        public void Construct(IInputService inputService, IStaticDataService staticDataService)
+        public TransformData TransformData => _transformData;
+
+        public PlayerModel(IInputService inputService, IStaticDataService staticDataService, Arena arena)
         {
             _inputService = inputService;
             _staticDataService = staticDataService;
-            
-            _velocity = new CustomVelocity(_rigidbody2D);
+            _arena = arena;
+
+            _transformData = new TransformData(Vector2.zero);
+            _velocity = new CustomVelocity(_transformData);
             _mover = new PhysicMover(_velocity);
         }
 
-        private void Update()
+        public void Tick()
         {
             _mover.Tick(_inputService.GetMoveAxis(), Time.deltaTime);
             _velocity.Tick(Time.deltaTime);
+            _arena.TeleportIfOutsideArena(_transformData);
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        public void OnCollisionEnter2D(Collision2D other)
         {
             _velocity.HandleCollision(other);
         }
+
+        
     }
 }

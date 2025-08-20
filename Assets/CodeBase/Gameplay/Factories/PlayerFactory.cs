@@ -17,12 +17,16 @@ namespace CodeBase.Gameplay.Factories
             _staticDataService = staticDataService;
         }
 
-        public void CreatePlayer()
+        public Player.Player CreatePlayer()
         {
             PlayerConfig playerData = _staticDataService.ForPlayer();
 
-
-            _container.InstantiatePrefabResourceForComponent<PlayerController>(playerData.PrefabPath);
+            PlayerModel playerModel = _container.Instantiate<PlayerModel>();
+            Player.Player player = _container.InstantiatePrefabResourceForComponent<Player.Player>(
+                playerData.PrefabPath, new object[]{playerModel}
+                );
+            //_container.InstantiatePrefabResourceForComponent<Player>(playerData.PrefabPath);
+            return player;
         }
     }
 }

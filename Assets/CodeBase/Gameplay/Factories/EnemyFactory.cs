@@ -1,4 +1,9 @@
 ﻿using CodeBase.Data;
+using CodeBase.Gameplay.Enemies;
+using CodeBase.Gameplay.Enemies.Asteroids;
+using CodeBase.Gameplay.Enemies.Asteroids.Big;
+using CodeBase.Gameplay.Enemies.Asteroids.Small;
+using CodeBase.Gameplay.Enemies.Ufo;
 using CodeBase.Interfaces.Infrastructure;
 using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
@@ -17,10 +22,32 @@ namespace CodeBase.Gameplay.Factories
             _staticDataService = staticDataService;
         }
 
-        public GameObject SpawnEnemy(EnemyType type, Vector2 position)
+        public void SpawnEnemy(EnemyType type, Vector2 position)
         {
-            _staticDataService.ForEnemy(type);
-            return null;
+            object[] additionalArgs;
+            EnemyData enemyData = _staticDataService.ForEnemy(type);
+            switch (enemyData.Type)
+            {
+                case EnemyType.BigAsteroid:
+                    BigAsteroidModel model = _container.Instantiate<BigAsteroidModel>();
+                    additionalArgs = new object[]{model};
+                    break;
+                case EnemyType.SmallAsteroid:
+                    SmallAsteroidModel smallModel = _container.Instantiate<SmallAsteroidModel>();
+                    additionalArgs = new object[]{smallModel};
+                    break;
+                case EnemyType.Ufo:
+                    UfoModel ufoModel = _container.Instantiate<UfoModel>();
+                    additionalArgs = new object[]{ufoModel};
+                    break;
+                default:
+                    return;
+                
+            }
+
+            _container.InstantiatePrefabResourceForComponent<Enemy>(
+                enemyData.PrefabPath, position, Quaternion.identity, null, additionalArgs
+                );
         }
     }
 }

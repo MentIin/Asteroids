@@ -14,7 +14,7 @@ namespace CodeBase.Data.Tools
                 new StringEnumConverter(),
                 new IStatConverter() 
             },
-            Formatting = Formatting.Indented, // For better readability in JSON output
+            Formatting = Formatting.Indented, // For better readability
             MissingMemberHandling = MissingMemberHandling.Ignore,
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };

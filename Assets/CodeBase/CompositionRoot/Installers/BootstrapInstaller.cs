@@ -1,5 +1,5 @@
 using CodeBase.CompositionRoot.EntryPoints;
-using CodeBase.Infrastructure.CameraService;
+using CodeBase.Gameplay.Services.CameraService;
 using CodeBase.Infrastructure.SceneManagement;
 using CodeBase.Infrastructure.Services.AdsService;
 using CodeBase.Infrastructure.Services.AnalyticsService;
@@ -54,8 +54,8 @@ namespace CodeBase.CompositionRoot.Installers
             Container.Bind<Camera>().FromComponentInNewPrefab(_cameraPrefab)
                 .AsSingle()
                 .NonLazy();
-            
-            Container.Bind<CameraService>().To<CameraService>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<CameraService>().AsSingle();
         }
 
 

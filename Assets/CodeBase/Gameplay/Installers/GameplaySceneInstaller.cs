@@ -1,6 +1,7 @@
 using CodeBase.Gameplay.EntryPoints;
+using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
-using UnityEngine;
+using CodeBase.Gameplay.Services.SpawnService;
 using Zenject;
 
 namespace CodeBase.Gameplay.Installers
@@ -11,13 +12,28 @@ namespace CodeBase.Gameplay.Installers
         {
             BindFactories();
 
+            BindSpawnService();
+
+            BindArena();
+            
             BindEntryPoint();
+        }
+
+        private void BindSpawnService()
+        {
+            Container.Bind<SpawnService>().To<SpawnService>().AsSingle();
+        }
+
+        private void BindArena()
+        {
+            Container.Bind<Arena>().ToSelf().AsSingle();
         }
 
         private void BindFactories()
         {
             Container.Bind<PlayerFactory>().ToSelf().AsSingle();
             Container.Bind<EnemyFactory>().ToSelf().AsSingle();
+            Container.Bind<SpawnerFactory>().ToSelf().AsSingle();
         }
 
         private void BindEntryPoint()

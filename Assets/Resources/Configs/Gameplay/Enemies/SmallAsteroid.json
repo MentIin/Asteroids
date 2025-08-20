@@ -1,0 +1,9 @@
+{
+  "type": "SmallAsteroid",
+  "prefabPath": "Prefabs/Enemies/SmallAsteroid",
+  "stats": {
+    "health": {
+      "Value": 5
+    }
+  }
+}

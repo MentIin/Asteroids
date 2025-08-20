@@ -1,17 +1,17 @@
-﻿using Unity.Plastic.Newtonsoft.Json;
+﻿using CodeBase.Data;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Physic
 {
     public class CustomVelocity
     {
-        private readonly Rigidbody2D _rigidbody;
+        private readonly TransformData _transformData;
         
         private Vector2 _velocity;
 
-        public CustomVelocity(Rigidbody2D targetRigidbody)
+        public CustomVelocity(TransformData transformData)
         {
-            _rigidbody = targetRigidbody;
+            _transformData = transformData;
             _velocity = Vector2.zero;
         }
 
@@ -25,7 +25,7 @@ namespace CodeBase.Gameplay.Physic
         {
             if (_velocity.sqrMagnitude > Mathf.Epsilon)
             {
-                _rigidbody.position += _velocity * deltaTime;
+                _transformData.Position += _velocity * deltaTime;
                 _velocity *= Mathf.Pow(0.55f, deltaTime);
             }
         }

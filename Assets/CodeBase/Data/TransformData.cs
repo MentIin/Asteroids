@@ -2,7 +2,7 @@
 
 namespace CodeBase.Data
 {
-    public struct TransformData
+    public class TransformData
     {
         public Vector2 Position;
         public Vector2 Velocity;

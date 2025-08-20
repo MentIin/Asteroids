@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6584024337799254375}
   - component: {fileID: 5377209287186895941}
   - component: {fileID: 5148628762832284980}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4840,7 +4840,7 @@ GameObject:
   - component: {fileID: 309897298647199848}
   - component: {fileID: 4645782434353118917}
   - component: {fileID: 7259403910603549562}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4898,7 +4898,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.15
+  m_Radius: 0.6
 --- !u!50 &4645782434353118917
 Rigidbody2D:
   serializedVersion: 4
@@ -4949,7 +4949,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8822217628983802081}
   - component: {fileID: 6684663939037834015}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerModel (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5033,7 +5033,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5709727460442376834}
   - component: {fileID: 4156026254771858436}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerModel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5117,7 +5117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6818747235590895804}
   - component: {fileID: 4199107612885082648}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5134,7 +5134,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.026, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5709727460442376834}
@@ -5204,7 +5204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 320318497890749692}
   - component: {fileID: 4919250537880217016}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerModel (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
