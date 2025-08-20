@@ -29,20 +29,25 @@ namespace CodeBase.Gameplay.Factories
             switch (enemyData.Type)
             {
                 case EnemyType.BigAsteroid:
-                    BigAsteroidModel model = _container.Instantiate<BigAsteroidModel>();
+                    BigAsteroidModel model = _container.Instantiate<BigAsteroidModel>(
+                        new object[]{enemyData.Stats}
+                        );
                     additionalArgs = new object[]{model};
                     break;
                 case EnemyType.SmallAsteroid:
-                    SmallAsteroidModel smallModel = _container.Instantiate<SmallAsteroidModel>();
+                    SmallAsteroidModel smallModel = _container.Instantiate<SmallAsteroidModel>(
+                        new object[]{enemyData.Stats}
+                        );
                     additionalArgs = new object[]{smallModel};
                     break;
                 case EnemyType.Ufo:
-                    UfoModel ufoModel = _container.Instantiate<UfoModel>();
+                    UfoModel ufoModel = _container.Instantiate<UfoModel>(
+                        new object[]{enemyData.Stats}
+                        );
                     additionalArgs = new object[]{ufoModel};
                     break;
                 default:
                     return;
-                
             }
 
             _container.InstantiatePrefabResourceForComponent<Enemy>(

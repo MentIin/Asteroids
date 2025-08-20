@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
 namespace CodeBase.Gameplay.Enemies.Asteroids.Big
 {

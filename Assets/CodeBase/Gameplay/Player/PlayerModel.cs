@@ -11,7 +11,6 @@ namespace CodeBase.Gameplay.Player
     public class PlayerModel : ITickable
     {
         private IInputService _inputService;
-        private IStaticDataService _staticDataService;
         private readonly Arena _arena;
 
         private TransformData _transformData;
@@ -20,10 +19,9 @@ namespace CodeBase.Gameplay.Player
 
         public TransformData TransformData => _transformData;
 
-        public PlayerModel(IInputService inputService, IStaticDataService staticDataService, Arena arena)
+        public PlayerModel(IInputService inputService, Arena arena)
         {
             _inputService = inputService;
-            _staticDataService = staticDataService;
             _arena = arena;
 
             _transformData = new TransformData(Vector2.zero);

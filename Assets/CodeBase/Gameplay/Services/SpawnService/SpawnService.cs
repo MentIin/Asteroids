@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data;
 using CodeBase.Gameplay.Factories;
-using CodeBase.Gameplay.Spawners;
+using CodeBase.Gameplay.Services.SpawnService.Spawners;
 
 namespace CodeBase.Gameplay.Services.SpawnService
 {

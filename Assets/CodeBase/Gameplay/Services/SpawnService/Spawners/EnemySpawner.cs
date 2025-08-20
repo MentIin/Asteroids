@@ -1,13 +1,13 @@
-﻿using CodeBase.Data;
-using CodeBase.Gameplay.Factories;
-using Cysharp.Threading.Tasks;
-using System;
+﻿using System;
 using System.Threading;
+using CodeBase.Data;
 using CodeBase.Gameplay.Enviroment;
+using CodeBase.Gameplay.Factories;
 using CodeBase.Interfaces.Infrastructure.Services;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace CodeBase.Gameplay.Spawners
+namespace CodeBase.Gameplay.Services.SpawnService.Spawners
 {
     public class EnemySpawner
     {
@@ -75,7 +75,6 @@ namespace CodeBase.Gameplay.Spawners
         {
             Vector2 pos = _randomizerService.GetRandomPositionOnBoundsEdge(_arena.Size, _arena.Center, 2f);
 
-            Debug.Log("Spawn");
             _factory.SpawnEnemy(_enemyType, pos);
         }
     }

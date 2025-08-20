@@ -1,4 +1,4 @@
-﻿using CodeBase.Gameplay.Spawners;
+﻿using CodeBase.Gameplay.Services.SpawnService.Spawners;
 using Zenject;
 
 namespace CodeBase.Gameplay.Factories
