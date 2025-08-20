@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using CodeBase.Models.Stats.Main;
+using CodeBase.Data.Stats.Main;
 using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 
-namespace CodeBase.Models.Tools
+namespace CodeBase.Data.Tools
 {
     public class IStatConverter : JsonConverter
     {

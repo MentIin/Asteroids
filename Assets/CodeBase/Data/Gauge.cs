@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CodeBase.Models
+namespace CodeBase.Data
 {
     /// <summary>
     /// Class representing a gauge that can be filled or emptied, like health, energy, etc.

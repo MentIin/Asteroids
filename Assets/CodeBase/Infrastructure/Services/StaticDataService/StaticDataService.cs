@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data;
+using CodeBase.Data.StaticData;
+using CodeBase.Data.Stats;
+using CodeBase.Data.Stats.Main;
+using CodeBase.Data.Tools;
 using CodeBase.Interfaces.Infrastructure.Services;
-using CodeBase.Models;
-using CodeBase.Models.StaticData;
-using CodeBase.Models.Stats;
-using CodeBase.Models.Stats.Main;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Services.StaticDataService

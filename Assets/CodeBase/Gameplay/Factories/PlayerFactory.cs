@@ -1,6 +1,6 @@
-﻿using CodeBase.Gameplay.Player;
+﻿using CodeBase.Data.StaticData;
+using CodeBase.Gameplay.Player;
 using CodeBase.Interfaces.Infrastructure.Services;
-using CodeBase.Models.StaticData;
 using Zenject;
 
 namespace CodeBase.Gameplay.Factories

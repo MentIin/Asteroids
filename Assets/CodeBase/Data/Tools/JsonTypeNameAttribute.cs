@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeBase.Models.Tools
+namespace CodeBase.Data.Tools
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
     public class JsonTypeNameAttribute : Attribute

@@ -1,5 +1,5 @@
-﻿using CodeBase.Models;
-using CodeBase.Models.StaticData;
+﻿using CodeBase.Data;
+using CodeBase.Data.StaticData;
 
 namespace CodeBase.Interfaces.Infrastructure.Services
 {

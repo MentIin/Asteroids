@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using CodeBase.Models.Stats.Main;
-using CodeBase.Models.Tools;
 using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Converters;
 using Unity.Plastic.Newtonsoft.Json.Serialization;
 
-namespace CodeBase.Models
+namespace CodeBase.Data.Tools
 {
     public static class DataExtensions
     {
@@ -17,6 +15,7 @@ namespace CodeBase.Models
                 new IStatConverter() 
             },
             Formatting = Formatting.Indented, // For better readability in JSON output
+            MissingMemberHandling = MissingMemberHandling.Ignore,
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
 

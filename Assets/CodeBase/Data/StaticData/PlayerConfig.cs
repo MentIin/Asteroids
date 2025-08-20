@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeBase.Models.StaticData
+namespace CodeBase.Data.StaticData
 {
     [Serializable]
     public class PlayerConfig

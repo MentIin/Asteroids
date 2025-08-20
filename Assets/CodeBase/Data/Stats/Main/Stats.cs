@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using CodeBase.Models.Tools;
+using CodeBase.Data.Tools;
 
-namespace CodeBase.Models.Stats.Main
+namespace CodeBase.Data.Stats.Main
 {
     [Serializable]
     public class Stats : ISerializable

@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Models
+﻿namespace CodeBase.Data
 {
     public enum EnemyType
     {

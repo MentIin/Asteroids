@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Models.Stats.Main
+﻿namespace CodeBase.Data.Stats.Main
 {
     public interface IStat
     {

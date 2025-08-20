@@ -2,7 +2,7 @@
 using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Converters;
 
-namespace CodeBase.Models
+namespace CodeBase.Data
 {
     [Serializable]
     public struct EnemyData

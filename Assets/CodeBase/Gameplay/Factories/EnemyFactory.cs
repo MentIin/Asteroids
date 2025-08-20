@@ -1,6 +1,6 @@
-﻿using CodeBase.Interfaces.Infrastructure;
+﻿using CodeBase.Data;
+using CodeBase.Interfaces.Infrastructure;
 using CodeBase.Interfaces.Infrastructure.Services;
-using CodeBase.Models;
 using UnityEngine;
 using Zenject;
 
