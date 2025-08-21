@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeBase.Data.StatsSystem.Main;
 
 namespace CodeBase.Data.StaticData
 {
@@ -6,5 +7,6 @@ namespace CodeBase.Data.StaticData
     public class PlayerConfig
     {
         public string PrefabPath;
+        public Stats Stats;
     }
 }

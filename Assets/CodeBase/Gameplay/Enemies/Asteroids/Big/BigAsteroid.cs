@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using CodeBase.Data.StatsSystem.Main;
+using Zenject;
 
 namespace CodeBase.Gameplay.Enemies.Asteroids.Big
 {
@@ -7,9 +8,9 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
         private BigAsteroidModel _model;
 
         [Inject]
-        public void Construct(BigAsteroidModel model)
+        public void Construct(Stats stats)
         {
-            _model = model;
+            _model = new BigAsteroidModel(stats);
         }
     }
 }

@@ -1,6 +1,7 @@
 {
   "type": "Ufo",
   "prefabPath": "Prefabs/Enemies/Ufo",
+  "spawnRate": 0.1,
   "stats": {
     "health": {
       "Value": 55

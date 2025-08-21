@@ -66,7 +66,7 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
             {
                 Spawn();
                 await UniTask
-                    .WaitForSeconds(_spawnRate, cancellationToken: cancellationToken)
+                    .WaitForSeconds(1/_spawnRate, cancellationToken: cancellationToken)
                     .SuppressCancellationThrow();
             }
         }

@@ -1,0 +1,11 @@
+{
+  "prefabPath": "Prefabs/Player/Player",
+  "stats": {
+    "health": {
+      "Value": 3
+    },
+    "speed": {
+      "Value": 20
+    }
+  }
+}

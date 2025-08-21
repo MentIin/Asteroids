@@ -1,4 +1,4 @@
-﻿using CodeBase.Data.Stats.Main;
+﻿using CodeBase.Data.StatsSystem.Main;
 
 namespace CodeBase.Gameplay.Enemies.Asteroids.Big
 {

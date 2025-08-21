@@ -1,27 +1,27 @@
 ﻿using CodeBase.Data;
+using CodeBase.Data.StatsSystem.Main;
+using CodeBase.Gameplay.Enviroment;
+using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Gameplay.Player
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IArenaMember
     {
-        
-        [SerializeField] private Rigidbody2D _rigidbody2D;
-
         private PlayerModel _playerModel;
-        
-        public TransformData TransformData => _playerModel.TransformData;
+        public TransformData TransformData => _playerModel.transformData;
+
+
         [Inject]
-        public void Construct(PlayerModel model)
+        public void Construct(IInputService inputService, Stats playerStats)
         {
-            _playerModel = model;
+            _playerModel = new PlayerModel(inputService, playerStats);
         }
 
         private void Update()
         {
             _playerModel.Tick();
-            _rigidbody2D.MovePosition(_playerModel.TransformData.Position);
         }
 
         private void OnCollisionEnter2D(Collision2D other) => _playerModel.OnCollisionEnter2D(other);

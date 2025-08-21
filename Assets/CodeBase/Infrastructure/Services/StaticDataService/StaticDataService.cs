@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data;
 using CodeBase.Data.StaticData;
-using CodeBase.Data.Stats;
-using CodeBase.Data.Stats.Main;
 using CodeBase.Data.Tools;
 using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
@@ -12,79 +10,56 @@ namespace CodeBase.Infrastructure.Services.StaticDataService
     public class StaticDataService : IStaticDataService
     {
         private const string EnemyConfigsPath = "Configs/Gameplay/Enemies";
+        private const string PlayerConfigPath = "Configs/Gameplay/Player";
+        private const string MapConfigPath = "Configs/Gameplay/Map";
         
-        private Dictionary<EnemyType, EnemyData> _enemyDataDictionary;
+        private Dictionary<EnemyType, EnemyConfig> _enemyConfigsDictionary;
+        private PlayerConfig _playerConfig;
+        private MapConfig _mapConfig;
 
         public void Initialize()
         {
             //GenerateMockData();
             LoadEnemyData();
-            Debug.Log(ForEnemy(EnemyType.Ufo).Stats.GetStat<HealthStat>().Value);
-        }
-
-        private void GenerateMockData()
-        {
-            _enemyDataDictionary = new Dictionary<EnemyType, EnemyData>();
-            Stats stats = new Stats();
-            stats.AddStat(new HealthStat(5));
-            _enemyDataDictionary[EnemyType.BigAsteroid] = new EnemyData
-            {
-                PrefabPath = "Prefabs/Enemies/BigAsteroid",
-                Type = EnemyType.BigAsteroid,
-                Stats = stats
-            };
-            stats = new Stats();
-            stats.AddStat(new HealthStat(55));
-            stats.AddStat(new SpeedStat(33));
-            _enemyDataDictionary[EnemyType.Ufo] = new EnemyData
-            {
-                PrefabPath = "Prefabs/Enemies/BigAsteroid",
-                Type = EnemyType.BigAsteroid,
-                Stats = stats
-            };
-            
-            // save to json
-
-            foreach (var enemyData in _enemyDataDictionary)
-            {
-                string json = enemyData.Value.ToJson();
-                
-                // Save to Resources folder 
-                System.IO.File.WriteAllText($"Assets/Resources/{EnemyConfigsPath}/{enemyData.Key}.json", json);
-            }
-
+            LoadPlayerData();
+            LoadMapData();
         }
 
         public PlayerConfig ForPlayer()
         {
-            //PlayerConfig playerData = assetProvider.Load<PlayerConfig>("StaticData/PlayerConfig");
-
-            PlayerConfig playerData = new PlayerConfig
-            {
-                PrefabPath = "Prefabs/Player/Player"
-            };
-            
-            return playerData;
+            return _playerConfig;
+        }
+        public MapConfig ForMap()
+        {
+            return _mapConfig;
         }
 
-        public EnemyData ForEnemy(EnemyType type)
+        public EnemyConfig ForEnemy(EnemyType type)
         {
-            return _enemyDataDictionary[type];
+            return _enemyConfigsDictionary[type];
         }
 
         #region DataLoading
 
         private void LoadEnemyData()
         {
-            _enemyDataDictionary = new Dictionary<EnemyType, EnemyData>();
+            _enemyConfigsDictionary = new Dictionary<EnemyType, EnemyConfig>();
             
             TextAsset[] localConfigText = Resources.LoadAll<TextAsset>(EnemyConfigsPath);
             foreach (TextAsset textAsset in localConfigText)
             {
-                EnemyData enemyData = textAsset.text.ToDeserialized<EnemyData>();
+                EnemyConfig enemyConfig = textAsset.text.ToDeserialized<EnemyConfig>();
                 
-                _enemyDataDictionary.Add(enemyData.Type, enemyData);
+                _enemyConfigsDictionary.Add(enemyConfig.Type, enemyConfig);
             }
+        }
+        private void LoadPlayerData()
+        {
+            _playerConfig = Resources.Load<TextAsset>(PlayerConfigPath).text.ToDeserialized<PlayerConfig>();
+        }
+        private void LoadMapData()
+        {
+            _mapConfig = Resources.Load<TextAsset>(MapConfigPath).text.ToDeserialized<MapConfig>();
         }
 
         #endregion

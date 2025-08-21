@@ -1,7 +1,7 @@
-﻿using CodeBase.Data.Stats.Main;
+﻿using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Data.Tools;
 
-namespace CodeBase.Data.Stats
+namespace CodeBase.Data.StatsSystem
 {
     [JsonTypeName("health")]
     public struct HealthStat : IStat

@@ -1,15 +1,17 @@
 ﻿using System;
+using CodeBase.Data.StatsSystem.Main;
 using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Converters;
 
-namespace CodeBase.Data
+namespace CodeBase.Data.StaticData
 {
     [Serializable]
-    public struct EnemyData
+    public struct EnemyConfig
     {
         [JsonConverter(typeof(StringEnumConverter))]
         public EnemyType Type;
         public string PrefabPath;
-        public Stats.Main.Stats Stats;
+        public float SpawnRate;
+        public Stats Stats;
     }
 }

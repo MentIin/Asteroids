@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using CodeBase.Data.StatsSystem.Main;
 using Zenject;
 
 namespace CodeBase.Gameplay.Enemies.Ufo
@@ -8,9 +8,9 @@ namespace CodeBase.Gameplay.Enemies.Ufo
         private UfoModel _model;
 
         [Inject]
-        public void Construct(UfoModel model)
+        public void Construct(Stats stats)
         {
-            _model = model;
+            _model = new UfoModel();
         }
     }
 }

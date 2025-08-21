@@ -12,24 +12,27 @@ namespace CodeBase.Gameplay.EntryPoints
         private readonly PlayerFactory _playerFactory;
         private readonly Arena _arena;
         private readonly CameraService _cameraService;
-        private readonly SpawnService _spawnService;
+        private readonly EnemySpawnService _enemySpawnService;
+        private readonly PlayerProvider _playerProvider;
 
         public GameplayEntryPoint(PlayerFactory playerFactory,
             Arena arena, CameraService cameraService,
-            SpawnService spawnService)
+            EnemySpawnService enemySpawnService, PlayerProvider playerProvider)
         {
             _playerFactory = playerFactory;
             _arena = arena;
             _cameraService = cameraService;
-            _spawnService = spawnService;
+            _enemySpawnService = enemySpawnService;
+            _playerProvider = playerProvider;
         }
         public void Initialize()
         {
             Player.Player player = _playerFactory.CreatePlayer();
-            _arena.Initialize(player.TransformData);
+            _playerProvider.RegisterPlayer(player);
+            _arena.Initialize();
             _cameraService.Follow(player.transform);
             
-            _spawnService.StartSpawn();
+            _enemySpawnService.StartSpawn();
         }
     }
 }

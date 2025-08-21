@@ -26,7 +26,7 @@ namespace CodeBase.Gameplay.Physic
             if (_velocity.sqrMagnitude > Mathf.Epsilon)
             {
                 _transformData.Position += _velocity * deltaTime;
-                _velocity *= Mathf.Pow(0.55f, deltaTime);
+                _velocity *= Mathf.Pow(0.8f, deltaTime);
             }
         }
 
@@ -36,6 +36,11 @@ namespace CodeBase.Gameplay.Physic
             {
                 _velocity -= other.relativeVelocity * 0.5f;
             }
+        }
+
+        public void Set(Vector2 directionAxis)
+        {
+            _velocity = directionAxis;
         }
     }
 }

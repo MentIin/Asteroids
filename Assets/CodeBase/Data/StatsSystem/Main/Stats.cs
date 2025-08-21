@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using CodeBase.Data.Tools;
 
-namespace CodeBase.Data.Stats.Main
+namespace CodeBase.Data.StatsSystem.Main
 {
     [Serializable]
     public class Stats : ISerializable
