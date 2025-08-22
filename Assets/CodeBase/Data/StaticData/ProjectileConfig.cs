@@ -10,7 +10,7 @@ namespace CodeBase.Data.StaticData
     public class ProjectileConfig
     {
         [JsonConverter(typeof(StringEnumConverter))]
-        public BulletType Type;
+        public ProjectileType Type;
         public string PrefabPath;
         public Stats Stats;
     }

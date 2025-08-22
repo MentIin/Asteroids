@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CodeBase.Data;
 using CodeBase.Data.Enums;
 using CodeBase.Data.StaticData;
 using CodeBase.Data.Tools;
@@ -16,12 +15,13 @@ namespace CodeBase.Infrastructure.Services.StaticDataService
         private const string MapConfigPath = "Configs/Gameplay/Map";
         
         private Dictionary<EnemyType, EnemyConfig> _enemyConfigsDictionary;
+        private Dictionary<ProjectileType, ProjectileConfig> _projectileConfigsDictionary;
         private PlayerConfig _playerConfig;
         private MapConfig _mapConfig;
 
         public void Initialize()
         {
-            //GenerateMockData();
+            LoadProjectileData();
             LoadEnemyData();
             LoadPlayerData();
             LoadMapData();
@@ -34,6 +34,11 @@ namespace CodeBase.Infrastructure.Services.StaticDataService
         public MapConfig ForMap()
         {
             return _mapConfig;
+        }
+
+        public ProjectileConfig ForProjectile(ProjectileType type)
+        {
+            return _projectileConfigsDictionary[type];
         }
 
         public EnemyConfig ForEnemy(EnemyType type)
@@ -55,6 +60,17 @@ namespace CodeBase.Infrastructure.Services.StaticDataService
                 _enemyConfigsDictionary.Add(enemyConfig.Type, enemyConfig);
             }
         }
+        private void LoadProjectileData()
+        {
+            _projectileConfigsDictionary = new Dictionary<ProjectileType, ProjectileConfig>();
+            TextAsset[] localConfigText = Resources.LoadAll<TextAsset>(ProjectileConfigsPath);
+            foreach (TextAsset textAsset in localConfigText)
+            {
+                ProjectileConfig projectileConfig = textAsset.text.ToDeserialized<ProjectileConfig>();
+                
+                _projectileConfigsDictionary.Add(projectileConfig.Type, projectileConfig);
+            }
+        }
         private void LoadPlayerData()
         {
             _playerConfig = Resources.Load<TextAsset>(PlayerConfigPath).text.ToDeserialized<PlayerConfig>();
@@ -65,6 +81,5 @@ namespace CodeBase.Infrastructure.Services.StaticDataService
         }
 
         #endregion
-        
     }
 }

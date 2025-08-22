@@ -16,16 +16,15 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
         public TransformData TransformData => _model.transformData;
 
         [Inject]
-        public void Construct(Stats stats, PlayerProvider playerProvider, EnemyFactory factory, TickableManager tickableManager)
+        public void Construct(Stats stats, PlayerProvider playerProvider, EnemyFactory factory)
         {
             _playerProvider = playerProvider;
             _model = new AsteroidModel(stats, _playerProvider, transform);
-            tickableManager.Add(_model);
-            _model.Initialize();
         }
 
         private void Start()
         {
+            _model.Initialize();
             _model.SetMoveDirection(
                 _playerProvider.Player.TransformData.Position - (Vector2)transform.position
             );

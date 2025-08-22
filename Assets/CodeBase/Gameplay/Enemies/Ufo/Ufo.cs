@@ -17,14 +17,20 @@ namespace CodeBase.Gameplay.Enemies.Ufo
         public TransformData TransformData => _model.transformData;
 
         [Inject]
-        public void Construct(Stats stats, PlayerProvider playerProvider, EnemyFactory factory,
-            TickableManager tickableManager)
+        public void Construct(Stats stats, PlayerProvider playerProvider, EnemyFactory factory)
         {
             _playerProvider = playerProvider;
             _model = new UfoModel(stats, playerProvider, transform);
-            tickableManager.Add(_model);
-            
+        }
+
+        private void Start()
+        {
             _model.Initialize();
+        }
+
+        private void Update()
+        {
+            _model.Tick();
         }
 
         private void OnTriggerEnter2D(Collider2D other)

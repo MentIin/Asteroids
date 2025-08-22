@@ -1,6 +1,8 @@
 ﻿using CodeBase.Data;
+using CodeBase.Data.Enums;
 using CodeBase.Data.StatsSystem;
 using CodeBase.Data.StatsSystem.Main;
+using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Movers;
 using CodeBase.Gameplay.Physic;
 using CodeBase.Gameplay.Services.InputService;
@@ -34,7 +36,7 @@ namespace CodeBase.Gameplay.Player
 
         public void Initialize()
         {
-            //_currentHealth = _playerStats.GetStat<HealthStat>().Value;
+            _currentHealth = _playerStats.GetStat<HealthStat>().Value;
         }
 
         public void Tick()
@@ -43,14 +45,6 @@ namespace CodeBase.Gameplay.Player
             velocity.Tick(Time.deltaTime);
             
             transformData.Rotation = _inputService.GetRotation();
-            
-            if (_inputService.GetBaseAttack())
-                ShootBullet();
-        }
-
-        private void ShootBullet()
-        {
-            
         }
     }
 }

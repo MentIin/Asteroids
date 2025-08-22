@@ -16,11 +16,22 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Small
         public TransformData TransformData => _model.transformData;
 
         [Inject]
-        public void Construct(Stats stats, PlayerProvider playerProvider, TickableManager tickableManager)
+        public void Construct(Stats stats, PlayerProvider playerProvider)
         {
             _playerProvider = playerProvider;
             _model = new AsteroidModel(stats, playerProvider, transform);
-            tickableManager.Add(_model);
+        }
+        private void Start()
+        {
+            _model.Initialize();
+            _model.SetMoveDirection(
+                _playerProvider.Player.TransformData.Position - (Vector2)transform.position
+            );
+        }
+
+        private void Update()
+        {
+            _model.Tick();
         }
 
         private void OnTriggerEnter2D(Collider2D other)

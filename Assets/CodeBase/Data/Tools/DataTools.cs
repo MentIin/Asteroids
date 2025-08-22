@@ -7,6 +7,7 @@ namespace CodeBase.Data.Tools
 {
     public static class DataTools
     {
+        // can be optimized with a dictionary by caching the results
         public static Type FindStatTypeByName(string name)
         {
             // search for the type by JsonTypeNameAttribute first

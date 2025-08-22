@@ -1,9 +1,9 @@
 ﻿namespace CodeBase.Data.Enums
 {
-    public enum BulletType
+    public enum ProjectileType
     {
         None=0,
-        SimpleBullet=1,
+        Bullet=1,
         Laser=2,
     }
 }

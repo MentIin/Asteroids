@@ -1,0 +1,9 @@
+{
+  "type": "Laser",
+  "prefabPath": "Prefabs/Projectiles/Laser",
+  "stats": {
+    "damage": {
+      "Value": 10
+    }
+  }
+}

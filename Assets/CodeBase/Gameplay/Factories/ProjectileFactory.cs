@@ -6,22 +6,21 @@ using Zenject;
 
 namespace CodeBase.Gameplay.Factories
 {
-    public class BulletFactory
+    public class ProjectileFactory
     {
         private readonly DiContainer _container;
         private readonly IStaticDataService _staticDataService;
 
-        public BulletFactory(DiContainer container, IStaticDataService staticDataService)
+        public ProjectileFactory(DiContainer container, IStaticDataService staticDataService)
         {
             _container = container;
             _staticDataService = staticDataService;
         }
         
         
-        public void CreateProjectile(BulletType type, Vector2 position, Quaternion rotation)
+        public void CreateProjectile(ProjectileType type, Vector2 position, Quaternion rotation)
         {
             ProjectileConfig config = _staticDataService.ForProjectile(type);
-            
             
             _container.InstantiatePrefabResourceForComponent<MonoBehaviour>(
                 config.PrefabPath, position, rotation, null,
