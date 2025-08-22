@@ -28,7 +28,6 @@ namespace CodeBase.Gameplay.EntryPoints
         public void Initialize()
         {
             Player.Player player = _playerFactory.CreatePlayer();
-            _playerProvider.RegisterPlayer(player);
             _arena.Initialize();
             _cameraService.Follow(player.transform);
             

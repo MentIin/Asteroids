@@ -20,7 +20,6 @@ namespace CodeBase.Data.StatsSystem.Main
             _dictionary = new Dictionary<Type, IStat>();
             foreach (var entry in info)
             {
-                // Ищем тип по короткому имени или имени из атрибута
                 Type type = DataTools.FindStatTypeByName(entry.Name);
                 if (type != null && typeof(IStat).IsAssignableFrom(type))
                 {
@@ -66,7 +65,6 @@ namespace CodeBase.Data.StatsSystem.Main
         {
             foreach (var kvp in _dictionary)
             {
-                // Используем короткое имя типа или имя из атрибута
                 string typeName = DataTools.GetStatTypeName(kvp.Key);
                 info.AddValue(typeName, kvp.Value, kvp.Key);
             }

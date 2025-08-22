@@ -14,11 +14,10 @@ namespace CodeBase.Gameplay.Factories
         private readonly DiContainer _container;
 
         public PlayerFactory(DiContainer container,
-            IStaticDataService staticDataService, Arena arena, PlayerProvider playerProvider)
+            IStaticDataService staticDataService, PlayerProvider playerProvider)
         {
             _container = container;
             _staticDataService = staticDataService;
-            _arena = arena;
             _playerProvider = playerProvider;
         }
 
@@ -29,8 +28,6 @@ namespace CodeBase.Gameplay.Factories
                 playerData.PrefabPath, new object[]{playerData.Stats}
                 );
             
-            
-            _arena.RegisterMember(player);
             _playerProvider.RegisterPlayer(player);
             return player;
         }

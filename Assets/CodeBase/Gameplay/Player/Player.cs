@@ -1,4 +1,5 @@
-﻿using CodeBase.Data;
+﻿using System;
+using CodeBase.Data;
 using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Interfaces.Infrastructure.Services;
@@ -14,16 +15,18 @@ namespace CodeBase.Gameplay.Player
 
 
         [Inject]
-        public void Construct(IInputService inputService, Stats playerStats)
+        public void Construct(IInputService inputService, Stats playerStats, TickableManager tickableManager)
         {
             _playerModel = new PlayerModel(inputService, playerStats);
+            tickableManager.Add(_playerModel);
         }
 
-        private void Update()
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            _playerModel.Tick();
+            Vector2 force = (Vector2)transform.position - other.ClosestPoint(transform.position);
+            force.Normalize();
+            _playerModel.velocity.Set(force * GameConstants.CollisionKnockbackForce);
         }
 
-        private void OnCollisionEnter2D(Collision2D other) => _playerModel.OnCollisionEnter2D(other);
     }
 }

@@ -12,11 +12,11 @@ namespace CodeBase.Gameplay.Player
     public class PlayerModel : ITickable, IInitializable
     {
         public readonly TransformData transformData;
-        
+        public readonly CustomVelocity velocity;
+
         private readonly IInputService _inputService;
         private readonly Stats _playerStats;
-        
-        private readonly CustomVelocity _velocity;
+
         private readonly IMover _mover;
         
         private int _currentHealth;
@@ -28,8 +28,8 @@ namespace CodeBase.Gameplay.Player
             _playerStats = playerStats;
 
             transformData = new TransformData(Vector2.zero);
-            _velocity = new CustomVelocity(transformData);
-            _mover = new PhysicMover(_velocity);
+            velocity = new CustomVelocity(transformData);
+            _mover = new PhysicMover(velocity);
         }
 
         public void Initialize()
@@ -40,12 +40,8 @@ namespace CodeBase.Gameplay.Player
         public void Tick()
         {
             _mover.Tick(_inputService.GetMoveAxis() * _playerStats.GetStat<SpeedStat>().Value, Time.deltaTime);
-            _velocity.Tick(Time.deltaTime);
+            velocity.Tick(Time.deltaTime);
         }
-
-        public void OnCollisionEnter2D(Collision2D other)
-        {
-            _velocity.HandleCollision(other);
-        }
+        
     }
 }

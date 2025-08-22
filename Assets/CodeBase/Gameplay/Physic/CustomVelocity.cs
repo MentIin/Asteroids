@@ -30,14 +30,6 @@ namespace CodeBase.Gameplay.Physic
             }
         }
 
-        public void HandleCollision(Collision2D other)
-        {
-            if (other.relativeVelocity.sqrMagnitude > Mathf.Epsilon)
-            {
-                _velocity -= other.relativeVelocity * 0.5f;
-            }
-        }
-
         public void Set(Vector2 directionAxis)
         {
             _velocity = directionAxis;

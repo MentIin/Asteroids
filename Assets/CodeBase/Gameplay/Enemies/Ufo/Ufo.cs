@@ -1,4 +1,5 @@
-﻿using CodeBase.Data;
+﻿using System;
+using CodeBase.Data;
 using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
@@ -16,18 +17,21 @@ namespace CodeBase.Gameplay.Enemies.Ufo
         public TransformData TransformData => _model.transformData;
 
         [Inject]
-        public void Construct(Stats stats, PlayerProvider playerProvider, EnemyFactory factory)
+        public void Construct(Stats stats, PlayerProvider playerProvider, EnemyFactory factory,
+            TickableManager tickableManager)
         {
             _playerProvider = playerProvider;
-            _model = new UfoModel(stats);
+            _model = new UfoModel(stats, playerProvider, transform);
+            tickableManager.Add(_model);
+            
+            _model.Initialize();
         }
 
-        private void Update()
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            _model.SetMoveDirection(
-                _playerProvider.Player.TransformData.Position - (Vector2)transform.position
-            );
-            _model.Tick();
+            Vector2 force = (Vector2)transform.position - other.ClosestPoint(transform.position);
+            force.Normalize();
+            _model.velocity.Set(force * GameConstants.CollisionKnockbackForce);
         }
     }
 }

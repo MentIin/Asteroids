@@ -17,6 +17,7 @@ namespace CodeBase.Gameplay.Enviroment
         public Vector2 Center => Extends;
         
         private List<IArenaMember> _members = new List<IArenaMember>();
+        private IArenaMember _coreMember;
 
         public Arena(IStaticDataService staticDataService, PlayerProvider playerProvider)
         {
@@ -27,6 +28,7 @@ namespace CodeBase.Gameplay.Enviroment
         public void Initialize()
         {
             Size = _staticDataService.ForMap().Size;
+            _coreMember = _playerProvider.Player;
         }
         public void Tick()
         {
@@ -35,11 +37,24 @@ namespace CodeBase.Gameplay.Enviroment
 
         private void HandleMembers()
         {
-            foreach (var member in _members)
+            HandleMember(_coreMember);
+            
+            for (int i=_members.Count-1; i>=0; i--)
             {
-                TeleportIfOutsideArena(member.TransformData);
-                member.transform.position = GetViewPosition(member.TransformData);
+                if (_members[i] == null)
+                    _members.RemoveAt(i);
+                else
+                {
+                    HandleMember(_members[i]);
+                    //_members[i].transform.GetComponent<Rigidbody2D>().MovePosition(GetViewPosition(_members[i].TransformData));
+                }
             }
+        }
+
+        private void HandleMember(IArenaMember member)
+        {
+            TeleportIfOutsideArena(member.TransformData);
+            member.transform.position = GetViewPosition(member.TransformData);
         }
 
         private void TeleportIfOutsideArena(TransformData transformData)
@@ -60,7 +75,7 @@ namespace CodeBase.Gameplay.Enviroment
         {
             Vector2 res = new Vector2(data.Position.x, data.Position.y);
             
-            if (Mathf.Abs(data.Position.x - _playerProvider.Player.TransformData.Position.x) > Extends.x)
+            if (Mathf.Abs(data.Position.x - _coreMember.TransformData.Position.x) > Extends.x)
             {
                 if (res.x - Extends.x < 0)
                 {
@@ -69,7 +84,8 @@ namespace CodeBase.Gameplay.Enviroment
                 {
                     res.x -= Size.x;
                 }
-            }else if (Mathf.Abs(data.Position.y - _playerProvider.Player.TransformData.Position.y) > Extends.y)
+            }
+            if (Mathf.Abs(data.Position.y - _coreMember.TransformData.Position.y) > Extends.y)
             {
                 if (res.y - Extends.y < 0)
                 {

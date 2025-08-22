@@ -6,9 +6,9 @@ using CodeBase.Gameplay.Player;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.Gameplay.Enemies.Ufo
+namespace CodeBase.Gameplay.Enemies.Asteroids
 {
-    public class UfoModel : ITickable, IInitializable
+    public class AsteroidModel : ITickable, IInitializable
     {
         public readonly CustomVelocity velocity;
         public readonly TransformData transformData;
@@ -20,7 +20,7 @@ namespace CodeBase.Gameplay.Enemies.Ufo
         
         private Vector2 _directionAxis;
 
-        public UfoModel(Stats stats, PlayerProvider playerProvider, Transform viewTransform)
+        public AsteroidModel(Stats stats, PlayerProvider playerProvider, Transform viewTransform)
         {
             _stats = stats;
             _playerProvider = playerProvider;
