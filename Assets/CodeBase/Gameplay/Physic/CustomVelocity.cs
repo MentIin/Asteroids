@@ -6,8 +6,8 @@ namespace CodeBase.Gameplay.Physic
     public class CustomVelocity
     {
         private readonly TransformData _transformData;
-        
         private Vector2 _velocity;
+        private float _angularVelocity;
 
         public CustomVelocity(TransformData transformData)
         {
@@ -20,6 +20,10 @@ namespace CodeBase.Gameplay.Physic
             _velocity.x += force.x;
             _velocity.y += force.y;
         }
+        public void AddAngularForce(float force)
+        {
+            _angularVelocity += force;
+        }
 
         public void Tick(float deltaTime)
         {
@@ -28,6 +32,8 @@ namespace CodeBase.Gameplay.Physic
                 _transformData.Position += _velocity * deltaTime;
                 _velocity *= Mathf.Pow(0.8f, deltaTime);
             }
+            _transformData.Rotation += _angularVelocity * deltaTime;
+            _angularVelocity *= Mathf.Pow(GameConstants.PhysicAngularBump, deltaTime);
         }
 
         public void Set(Vector2 directionAxis)

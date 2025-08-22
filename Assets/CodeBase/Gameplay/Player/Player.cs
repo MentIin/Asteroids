@@ -33,6 +33,7 @@ namespace CodeBase.Gameplay.Player
         private void Update()
         {
             _playerModel.Tick();
+            transform.rotation = _playerModel.transformData.RotationQuaternion;
             if (_inputService.GetBaseAttack())
                 ShootBullet();
         }

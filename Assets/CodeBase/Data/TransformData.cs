@@ -8,6 +8,8 @@ namespace CodeBase.Data
         public float Rotation;
         public Vector2 Direction => 
             new Vector2(Mathf.Cos(Rotation * Mathf.Deg2Rad), Mathf.Sin(Rotation * Mathf.Deg2Rad));
+        public Quaternion RotationQuaternion => 
+            Quaternion.Euler(0f, 0f, Rotation);
         
         public TransformData(Vector2 position)
         {

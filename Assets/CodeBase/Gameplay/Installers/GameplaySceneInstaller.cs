@@ -38,6 +38,7 @@ namespace CodeBase.Gameplay.Installers
 
         private void BindArena()
         {
+            Container.BindTickableExecutionOrder<Arena>(-100);
             Container.BindInterfacesAndSelfTo<Arena>().AsSingle();
         }
 

@@ -1,9 +1,6 @@
 ﻿using CodeBase.Data;
-using CodeBase.Data.Enums;
 using CodeBase.Data.StatsSystem;
 using CodeBase.Data.StatsSystem.Main;
-using CodeBase.Gameplay.Factories;
-using CodeBase.Gameplay.Movers;
 using CodeBase.Gameplay.Physic;
 using CodeBase.Gameplay.Services.InputService;
 using UnityEngine;
@@ -18,8 +15,6 @@ namespace CodeBase.Gameplay.Player
 
         private readonly IInputService _inputService;
         private readonly Stats _playerStats;
-
-        private readonly IMover _mover;
         
         private int _currentHealth;
 
@@ -31,7 +26,6 @@ namespace CodeBase.Gameplay.Player
 
             transformData = new TransformData(Vector2.zero);
             velocity = new CustomVelocity(transformData);
-            _mover = new PhysicMover(velocity);
         }
 
         public void Initialize()
@@ -41,10 +35,9 @@ namespace CodeBase.Gameplay.Player
 
         public void Tick()
         {
-            _mover.Tick(_inputService.GetMoveAxis() * _playerStats.GetStat<SpeedStat>().Value, Time.deltaTime);
+            velocity.AddForce(_inputService.GetMovement() * transformData.Direction * Time.deltaTime * _playerStats.GetStat<SpeedStat>().Value);
+            velocity.AddAngularForce(_inputService.GetRotation());
             velocity.Tick(Time.deltaTime);
-            
-            transformData.Rotation = _inputService.GetRotation();
         }
     }
 }

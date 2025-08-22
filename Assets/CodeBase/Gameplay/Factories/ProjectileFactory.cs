@@ -1,5 +1,6 @@
 ﻿using CodeBase.Data.Enums;
 using CodeBase.Data.StaticData;
+using CodeBase.Gameplay.Projectiles;
 using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
 using Zenject;
@@ -22,7 +23,7 @@ namespace CodeBase.Gameplay.Factories
         {
             ProjectileConfig config = _staticDataService.ForProjectile(type);
             
-            _container.InstantiatePrefabResourceForComponent<MonoBehaviour>(
+            _container.InstantiatePrefabResourceForComponent<Projectile>(
                 config.PrefabPath, position, rotation, null,
                 new object[] {config.Stats}
                     );

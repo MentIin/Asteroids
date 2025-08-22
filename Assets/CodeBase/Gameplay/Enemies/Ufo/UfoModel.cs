@@ -1,6 +1,5 @@
 ﻿using CodeBase.Data;
 using CodeBase.Data.StatsSystem.Main;
-using CodeBase.Gameplay.Movers;
 using CodeBase.Gameplay.Physic;
 using CodeBase.Gameplay.Player;
 using UnityEngine;
@@ -16,7 +15,6 @@ namespace CodeBase.Gameplay.Enemies.Ufo
         private readonly Stats _stats;
         private readonly PlayerProvider _playerProvider;
         private readonly Transform _viewTransform;
-        private readonly IMover _mover;
         
         private Vector2 _directionAxis;
 
@@ -27,7 +25,6 @@ namespace CodeBase.Gameplay.Enemies.Ufo
             _viewTransform = viewTransform;
             transformData = new TransformData(Vector2.zero);
             velocity = new CustomVelocity(transformData);
-            _mover = new PhysicMover(velocity);
         }
         public void Initialize()
         {
@@ -38,7 +35,7 @@ namespace CodeBase.Gameplay.Enemies.Ufo
 
         public void Tick()
         {
-            _mover.Tick(_directionAxis, Time.deltaTime);
+            velocity.AddForce(_directionAxis * Time.deltaTime);
             velocity.Tick(Time.deltaTime);
         }
 
