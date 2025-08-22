@@ -10,9 +10,7 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Small
     public class SmallAsteroidModel : ITickable
     {
         private readonly Stats _stats;
-
         public readonly TransformData transformData;
-        
         private readonly CustomVelocity _velocity;
         private readonly IMover _mover;
         
@@ -34,8 +32,6 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Small
 
         public void Tick()
         {
-            Debug.Log(_directionAxis);
-            Debug.Log(transformData.Position);
             _mover.Tick(_directionAxis, Time.deltaTime);
             _velocity.Tick(Time.deltaTime);
         }

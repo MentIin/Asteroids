@@ -73,7 +73,7 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
 
         private void Spawn()
         {
-            Vector2 pos = _randomizerService.GetRandomPositionOnBoundsEdge(_arena.Size, _arena.Center, 2f);
+            Vector2 pos = _randomizerService.GetRandomPositionOnBoundsEdge(_arena.Size, _arena.Center, 10f);
 
             _factory.SpawnEnemy(_enemyType, pos);
         }

@@ -39,7 +39,7 @@ namespace CodeBase.Gameplay.Player
 
         public void Tick()
         {
-            _mover.Tick(_inputService.GetMoveAxis(), Time.deltaTime);
+            _mover.Tick(_inputService.GetMoveAxis() * _playerStats.GetStat<SpeedStat>().Value, Time.deltaTime);
             _velocity.Tick(Time.deltaTime);
         }
 
