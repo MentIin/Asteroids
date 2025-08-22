@@ -16,7 +16,6 @@ namespace CodeBase.Gameplay.Services.CameraService
 
         public void Follow(Transform target)
         {
-            Debug.Log(target.gameObject.name);
             _target = target;
         }
 

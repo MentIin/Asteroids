@@ -5,6 +5,9 @@
   "stats": {
     "health": {
       "Value": 5
+    },
+    "speed": {
+      "Value": 2
     }
   }
 }

@@ -1,4 +1,5 @@
 ﻿using CodeBase.Data;
+using CodeBase.Data.StatsSystem;
 using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Movers;
 using CodeBase.Gameplay.Physic;
@@ -27,7 +28,7 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Small
 
         public void SetMoveDirection(Vector2 dir)
         {
-            _directionAxis = dir.normalized;
+            _directionAxis = dir.normalized * _stats.GetStat<SpeedStat>().Value;
         }
 
         public void Tick()
