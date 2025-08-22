@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
-namespace CodeBase.Interfaces.Infrastructure.Services
+namespace CodeBase.Gameplay.Services.InputService
 {
     public interface IInputService
     {
         Vector2 GetMoveAxis();
         float GetRotation();
+        bool GetBaseAttack();
     }
 }

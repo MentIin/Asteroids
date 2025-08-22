@@ -1,9 +1,8 @@
 using CodeBase.CompositionRoot.EntryPoints;
-using CodeBase.Gameplay.Services.CameraService;
 using CodeBase.Infrastructure.SceneManagement;
 using CodeBase.Infrastructure.Services.AdsService;
 using CodeBase.Infrastructure.Services.AnalyticsService;
-using CodeBase.Infrastructure.Services.InputService;
+using CodeBase.Infrastructure.Services.Camera;
 using CodeBase.Infrastructure.Services.LogService;
 using CodeBase.Infrastructure.Services.PlayerProgressService;
 using CodeBase.Infrastructure.Services.RandomizerService;
@@ -20,7 +19,6 @@ namespace CodeBase.CompositionRoot.Installers
         [SerializeField] private GameObject _cameraPrefab;
         public override void InstallBindings()
         {
-            
             BindLogService();
             
             BindCamera();
@@ -30,8 +28,6 @@ namespace CodeBase.CompositionRoot.Installers
             BindStaticDataService();
 
             BindRandomizeService();
-            
-            BindInputService();
             
             BindPlayerProgressService();
 
@@ -97,8 +93,5 @@ namespace CodeBase.CompositionRoot.Installers
 
         private void BindAnalyticsService() => 
             Container.BindInterfacesTo<AnalyticsService>().AsSingle();
-
-        private void BindInputService() => 
-            Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
     }
 }

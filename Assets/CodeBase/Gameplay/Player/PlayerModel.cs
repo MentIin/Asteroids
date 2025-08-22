@@ -3,7 +3,7 @@ using CodeBase.Data.StatsSystem;
 using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Movers;
 using CodeBase.Gameplay.Physic;
-using CodeBase.Interfaces.Infrastructure.Services;
+using CodeBase.Gameplay.Services.InputService;
 using UnityEngine;
 using Zenject;
 
@@ -41,7 +41,16 @@ namespace CodeBase.Gameplay.Player
         {
             _mover.Tick(_inputService.GetMoveAxis() * _playerStats.GetStat<SpeedStat>().Value, Time.deltaTime);
             velocity.Tick(Time.deltaTime);
+            
+            transformData.Rotation = _inputService.GetRotation();
+            
+            if (_inputService.GetBaseAttack())
+                ShootBullet();
         }
-        
+
+        private void ShootBullet()
+        {
+            
+        }
     }
 }

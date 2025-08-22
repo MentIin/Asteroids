@@ -7,12 +7,11 @@ using Unity.Plastic.Newtonsoft.Json.Converters;
 namespace CodeBase.Data.StaticData
 {
     [Serializable]
-    public struct EnemyConfig
+    public class ProjectileConfig
     {
         [JsonConverter(typeof(StringEnumConverter))]
-        public EnemyType Type;
+        public BulletType Type;
         public string PrefabPath;
-        public float SpawnRate;
         public Stats Stats;
     }
 }

@@ -1,8 +1,8 @@
 ﻿using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Player;
-using CodeBase.Gameplay.Services.CameraService;
 using CodeBase.Gameplay.Services.SpawnService;
+using CodeBase.Interfaces.Infrastructure.Services;
 using Zenject;
 
 namespace CodeBase.Gameplay.EntryPoints
@@ -11,12 +11,12 @@ namespace CodeBase.Gameplay.EntryPoints
     {
         private readonly PlayerFactory _playerFactory;
         private readonly Arena _arena;
-        private readonly CameraService _cameraService;
+        private readonly ICameraService _cameraService;
         private readonly EnemySpawnService _enemySpawnService;
         private readonly PlayerProvider _playerProvider;
 
         public GameplayEntryPoint(PlayerFactory playerFactory,
-            Arena arena, CameraService cameraService,
+            Arena arena, ICameraService cameraService,
             EnemySpawnService enemySpawnService, PlayerProvider playerProvider)
         {
             _playerFactory = playerFactory;

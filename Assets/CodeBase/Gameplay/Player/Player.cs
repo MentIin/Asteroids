@@ -2,6 +2,7 @@
 using CodeBase.Data;
 using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Enviroment;
+using CodeBase.Gameplay.Services.InputService;
 using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
 using Zenject;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data;
+using CodeBase.Data.Enums;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Services.SpawnService.Spawners;
 using CodeBase.Interfaces.Infrastructure.Services;

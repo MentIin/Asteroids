@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data;
+using CodeBase.Data.Enums;
 using CodeBase.Data.StaticData;
 using CodeBase.Data.Tools;
 using CodeBase.Interfaces.Infrastructure.Services;
@@ -10,6 +11,7 @@ namespace CodeBase.Infrastructure.Services.StaticDataService
     public class StaticDataService : IStaticDataService
     {
         private const string EnemyConfigsPath = "Configs/Gameplay/Enemies";
+        private const string ProjectileConfigsPath = "Configs/Gameplay/Projectiles";
         private const string PlayerConfigPath = "Configs/Gameplay/Player";
         private const string MapConfigPath = "Configs/Gameplay/Map";
         

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using CodeBase.Data;
+using CodeBase.Data.Enums;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Interfaces.Infrastructure.Services;

@@ -1,16 +1,17 @@
-﻿using UnityEngine;
+﻿using CodeBase.Interfaces.Infrastructure.Services;
+using UnityEngine;
 using Zenject;
 
-namespace CodeBase.Gameplay.Services.CameraService
+namespace CodeBase.Infrastructure.Services.Camera
 {
-    public class CameraService : ILateTickable
+    public class CameraService : ICameraService, ILateTickable
     {
-        private readonly Camera _camera;
+        private readonly UnityEngine.Camera _camera;
         private Transform _target;
 
-        public CameraService(Camera camera)
+        public UnityEngine.Camera Camera => _camera;
+        public CameraService(UnityEngine.Camera camera)
         {
-            // Store the camera reference if needed
             _camera = camera;
         }
 

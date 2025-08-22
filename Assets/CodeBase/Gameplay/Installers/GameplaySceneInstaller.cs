@@ -2,6 +2,7 @@ using CodeBase.Gameplay.EntryPoints;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Player;
+using CodeBase.Gameplay.Services.InputService;
 using CodeBase.Gameplay.Services.SpawnService;
 using Zenject;
 
@@ -18,6 +19,8 @@ namespace CodeBase.Gameplay.Installers
             BindArena();
             
             BindPlayerProvider();
+            
+            BindInputService();
             
             BindEntryPoint();
         }
@@ -43,6 +46,9 @@ namespace CodeBase.Gameplay.Installers
             Container.Bind<EnemyFactory>().ToSelf().AsSingle();
             Container.Bind<SpawnerFactory>().ToSelf().AsSingle();
         }
+
+        private void BindInputService() =>
+            Container.Bind<IInputService>().To<PCInputService>().AsSingle();
 
         private void BindEntryPoint()
         {

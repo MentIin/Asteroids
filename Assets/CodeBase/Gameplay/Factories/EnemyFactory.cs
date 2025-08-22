@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data;
+using CodeBase.Data.Enums;
 using CodeBase.Data.StaticData;
 using CodeBase.Gameplay.Enemies;
 using CodeBase.Gameplay.Enemies.Asteroids;
