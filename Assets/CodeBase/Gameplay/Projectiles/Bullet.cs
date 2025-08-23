@@ -1,20 +1,26 @@
 ﻿using System;
+using CodeBase.Data;
 using CodeBase.Data.StatsSystem;
 using CodeBase.Data.StatsSystem.Main;
+using CodeBase.Gameplay.Enviroment;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Gameplay.Projectiles
 {
-    public class Bullet : Projectile
+    public class Bullet : Projectile, IArenaMember
     {
+        public TransformData TransformData => _transformData;
+        
         private Stats _stats;
-
+        private TransformData _transformData;
+        
         [Inject]
         public void Construct(Stats stats)
         {
             _stats = stats;
+            _transformData = new TransformData(transform);
         }
 
         private void Start()
@@ -24,7 +30,7 @@ namespace CodeBase.Gameplay.Projectiles
 
         private void Update()
         {
-            transform.position += transform.right * Time.deltaTime* (_stats.GetStat<SpeedStat>().Value);
+            _transformData.Position += _transformData.Direction * Time.deltaTime* (_stats.GetStat<SpeedStat>().Value);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -41,5 +47,6 @@ namespace CodeBase.Gameplay.Projectiles
             if (this != null)
                 Destroy(this.gameObject);
         }
+
     }
 }

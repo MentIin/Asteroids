@@ -22,5 +22,10 @@ namespace CodeBase.Data
             Position = newPosition;
             Rotation = newRotation;
         }
+        public TransformData(Transform transform)
+        {
+            Position = transform.position;
+            Rotation = transform.eulerAngles.z;
+        }
     }
 }
