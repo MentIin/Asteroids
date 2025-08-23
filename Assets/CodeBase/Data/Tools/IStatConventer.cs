@@ -17,9 +17,16 @@ namespace CodeBase.Data.Tools
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.Null) return null;
-            
+
             JObject jsonObject = JObject.Load(reader);
             
+            if (objectType != typeof(IStat))
+            {
+                 var instance = Activator.CreateInstance(objectType);
+                 serializer.Populate(jsonObject.CreateReader(), instance);
+                 return instance;
+            }
+
             if (jsonObject.Properties().Any(p => p.Name.Equals("Value", StringComparison.OrdinalIgnoreCase)))
             {
                 var typeName = objectType.Name;

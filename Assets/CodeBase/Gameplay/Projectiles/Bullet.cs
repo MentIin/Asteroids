@@ -30,6 +30,8 @@ namespace CodeBase.Gameplay.Projectiles
 
         private void Update()
         {
+            Debug.Log( (_stats.GetStat<SpeedStat>().Value));
+            
             _transformData.Position += _transformData.Direction * Time.deltaTime* (_stats.GetStat<SpeedStat>().Value);
         }
 
@@ -38,7 +40,10 @@ namespace CodeBase.Gameplay.Projectiles
             if (other.TryGetComponent(out IDamageable damageable))
             {
                 damageable.TakeDamage();
-                Destroy(this.gameObject);
+                if (!_stats.ContainsStat<PierceStat>())
+                {
+                    Destroy(this.gameObject);
+                }
             }
         }
         private async UniTaskVoid DestroyAfterLifetime()

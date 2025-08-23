@@ -7,6 +7,9 @@
     },
     "speed": {
       "Value": 0
-    }
+    },
+    "pierce": {
+      "Infinite": true
+    } 
   }
 }
