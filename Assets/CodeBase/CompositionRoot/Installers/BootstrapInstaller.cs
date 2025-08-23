@@ -1,8 +1,10 @@
 using CodeBase.CompositionRoot.EntryPoints;
+using CodeBase.Gameplay.Services.InputService;
 using CodeBase.Infrastructure.SceneManagement;
 using CodeBase.Infrastructure.Services.AdsService;
 using CodeBase.Infrastructure.Services.AnalyticsService;
 using CodeBase.Infrastructure.Services.Camera;
+using CodeBase.Infrastructure.Services.InputService;
 using CodeBase.Infrastructure.Services.LogService;
 using CodeBase.Infrastructure.Services.PlayerProgressService;
 using CodeBase.Infrastructure.Services.RandomizerService;
@@ -30,6 +32,8 @@ namespace CodeBase.CompositionRoot.Installers
             BindRandomizeService();
             
             BindPlayerProgressService();
+            
+            BindInputService();
 
             BindAdsService();
 
@@ -44,6 +48,10 @@ namespace CodeBase.CompositionRoot.Installers
         {
             Container.Bind<ILogService>().To<LogService>().AsSingle();
         }
+        
+
+        private void BindInputService() =>
+            Container.Bind<IInputService>().To<PCInputService>().AsSingle();
 
         private void BindCamera()
         {

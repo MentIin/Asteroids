@@ -8,7 +8,7 @@ using Zenject;
 
 namespace CodeBase.Gameplay.Enemies.Asteroids.Big
 {
-    public class BigAsteroid : Enemy, IArenaMember
+    public class BigAsteroid : Enemy, IArenaMember, IDamageable
     {
         private AsteroidModel _model;
         private PlayerProvider _playerProvider;
@@ -39,6 +39,11 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
             Vector2 force = (Vector2)transform.position - other.ClosestPoint(transform.position);
             force.Normalize();
             _model.velocity.Set(force * GameConstants.CollisionKnockbackForce);
+        }
+
+        public void TakeDamage()
+        {
+            Destroy(this.gameObject);
         }
     }
 }

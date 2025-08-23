@@ -2,8 +2,11 @@
   "type": "Laser",
   "prefabPath": "Prefabs/Projectiles/Laser",
   "stats": {
-    "damage": {
-      "Value": 10
+    "lifetime": {
+      "Value": 0.2
+    },
+    "speed": {
+      "Value": 0
     }
   }
 }

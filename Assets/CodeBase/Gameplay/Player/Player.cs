@@ -36,6 +36,13 @@ namespace CodeBase.Gameplay.Player
             transform.rotation = _playerModel.transformData.RotationQuaternion;
             if (_inputService.GetBaseAttack())
                 ShootBullet();
+            if (_inputService.GetSpecialAttack())
+                SpecialAttack();
+        }
+
+        private void SpecialAttack()
+        {
+            _projectileFactory.CreateProjectile(ProjectileType.Laser, transform.position, transform.rotation);
         }
 
         private void ShootBullet()

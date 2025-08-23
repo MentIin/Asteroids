@@ -9,7 +9,7 @@ using Zenject;
 
 namespace CodeBase.Gameplay.Enemies.Ufo
 {
-    public class Ufo : Enemy, IArenaMember
+    public class Ufo : Enemy, IArenaMember, IDamageable
     {
         private UfoModel _model;
         private PlayerProvider _playerProvider;
@@ -38,6 +38,11 @@ namespace CodeBase.Gameplay.Enemies.Ufo
             Vector2 force = (Vector2)transform.position - other.ClosestPoint(transform.position);
             force.Normalize();
             _model.velocity.Set(force * GameConstants.CollisionKnockbackForce);
+        }
+
+        public void TakeDamage()
+        {
+            Destroy(this.gameObject);
         }
     }
 }

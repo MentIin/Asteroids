@@ -1,8 +1,7 @@
-﻿using CodeBase.Gameplay.Player;
-using CodeBase.Interfaces.Infrastructure.Services;
+﻿using CodeBase.Gameplay.Services.InputService;
 using UnityEngine;
 
-namespace CodeBase.Gameplay.Services.InputService
+namespace CodeBase.Infrastructure.Services.InputService
 {
     public class PCInputService : IInputService
     {
@@ -19,6 +18,11 @@ namespace CodeBase.Gameplay.Services.InputService
         public bool GetBaseAttack()
         {
             return Input.GetMouseButtonDown(0);
+        }
+
+        public bool GetSpecialAttack()
+        {
+            return Input.GetMouseButtonDown(1);
         }
     }
 }

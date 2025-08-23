@@ -1,5 +1,4 @@
-﻿using System;
-using CodeBase.Data;
+﻿using CodeBase.Data;
 using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Player;
@@ -8,7 +7,7 @@ using Zenject;
 
 namespace CodeBase.Gameplay.Enemies.Asteroids.Small
 {
-    public class SmallAsteroid : Enemy, IArenaMember
+    public class SmallAsteroid : Enemy, IArenaMember, IDamageable
     {
         private AsteroidModel _model;
         private PlayerProvider _playerProvider;
@@ -39,6 +38,11 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Small
             Vector2 force = (Vector2)transform.position - other.ClosestPoint(transform.position);
             force.Normalize();
             _model.velocity.Set(force * GameConstants.CollisionKnockbackForce);
+        }
+
+        public void TakeDamage()
+        {
+            Destroy(this.gameObject);
         }
     }
 }

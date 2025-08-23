@@ -3,9 +3,9 @@
   "prefabPath": "Prefabs/Projectiles/Bullet",
   "stats": {
     "speed": {
-      "Value": 3
+      "Value": 20
     },
-    "damage": {
+    "lifetime": {
       "Value": 1
     }
   }

@@ -21,8 +21,6 @@ namespace CodeBase.Gameplay.Installers
             
             BindPlayerProvider();
             
-            BindInputService();
-            
             BindEntryPoint();
         }
 
@@ -49,9 +47,6 @@ namespace CodeBase.Gameplay.Installers
             Container.Bind<SpawnerFactory>().ToSelf().AsSingle();
             Container.Bind<ProjectileFactory>().ToSelf().AsSingle();
         }
-
-        private void BindInputService() =>
-            Container.Bind<IInputService>().To<PCInputService>().AsSingle();
 
         private void BindEntryPoint()
         {

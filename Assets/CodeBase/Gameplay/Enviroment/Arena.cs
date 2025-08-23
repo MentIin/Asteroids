@@ -41,12 +41,12 @@ namespace CodeBase.Gameplay.Enviroment
             
             for (int i=_members.Count-1; i>=0; i--)
             {
-                if (_members[i] == null)
+                UnityEngine.Object memberObject = _members[i] as UnityEngine.Object;
+                if (memberObject == null)
                     _members.RemoveAt(i);
                 else
                 {
                     HandleMember(_members[i]);
-                    //_members[i].transform.GetComponent<Rigidbody2D>().MovePosition(GetViewPosition(_members[i].TransformData));
                 }
             }
         }
