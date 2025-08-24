@@ -7,30 +7,22 @@ using Zenject;
 
 namespace CodeBase.Gameplay.Enemies.Asteroids
 {
-    public class AsteroidModel : ITickable, IInitializable
+    public class AsteroidModel : ITickable
     {
         public readonly CustomVelocity velocity;
         public readonly TransformData transformData;
         
         private readonly Stats _stats;
-        private readonly PlayerProvider _playerProvider;
         private readonly Transform _viewTransform;
         
         private Vector2 _directionAxis;
 
-        public AsteroidModel(Stats stats, PlayerProvider playerProvider, Transform viewTransform)
+        public AsteroidModel(Stats stats, Transform viewTransform)
         {
             _stats = stats;
-            _playerProvider = playerProvider;
             _viewTransform = viewTransform;
             transformData = new TransformData(viewTransform);
             velocity = new CustomVelocity(transformData);
-        }
-        public void Initialize()
-        {
-            SetMoveDirection(
-                _playerProvider.Player.TransformData.Position - (Vector2)_viewTransform.position
-            );
         }
 
         public void Tick()

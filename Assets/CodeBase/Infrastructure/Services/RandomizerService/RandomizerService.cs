@@ -36,5 +36,10 @@ namespace CodeBase.Infrastructure.Services.RandomizerService
             
             return res + center;
         }
+
+        public float Range(float from, float to)
+        {
+            return (float)(_random.NextDouble() * (to - from) + from);
+        }
     }
 }

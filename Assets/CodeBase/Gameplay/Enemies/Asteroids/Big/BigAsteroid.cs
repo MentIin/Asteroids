@@ -2,7 +2,6 @@
 using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
-using CodeBase.Gameplay.Player;
 using UnityEngine;
 using Zenject;
 
@@ -11,23 +10,13 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
     public class BigAsteroid : Enemy, IArenaMember, IDamageable
     {
         private AsteroidModel _model;
-        private PlayerProvider _playerProvider;
         
         public TransformData TransformData => _model.transformData;
 
         [Inject]
-        public void Construct(Stats stats, PlayerProvider playerProvider, EnemyFactory factory)
+        public void Construct(Stats stats, EnemyFactory factory)
         {
-            _playerProvider = playerProvider;
-            _model = new AsteroidModel(stats, _playerProvider, transform);
-        }
-
-        private void Start()
-        {
-            _model.Initialize();
-            _model.SetMoveDirection(
-                _playerProvider.Player.TransformData.Position - (Vector2)transform.position
-            );
+            _model = new AsteroidModel(stats, transform);
         }
 
         private void Update()

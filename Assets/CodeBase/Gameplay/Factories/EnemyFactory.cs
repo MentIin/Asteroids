@@ -20,6 +20,7 @@ namespace CodeBase.Gameplay.Factories
         private readonly DiContainer _container;
         private readonly IStaticDataService _staticDataService;
         private readonly Arena _arena;
+        private readonly IRandomizerService _randomizerService;
 
         private Dictionary<EnemyType, System.Type> _enemyTypes = new Dictionary<EnemyType, System.Type>
         {
@@ -28,25 +29,40 @@ namespace CodeBase.Gameplay.Factories
             { EnemyType.Ufo, typeof(Ufo) }
         };
 
-        public EnemyFactory(DiContainer container, IStaticDataService staticDataService, Arena arena)
+        public EnemyFactory(DiContainer container, IStaticDataService staticDataService, Arena arena,
+            IRandomizerService randomizerService)
         {
             _container = container;
             _staticDataService = staticDataService;
             _arena = arena;
+            _randomizerService = randomizerService;
         }
 
         public void SpawnEnemy(EnemyType type, Vector2 position)
         {
             EnemyConfig enemyConfig = _staticDataService.ForEnemy(type);
             object[] additionalArgs = new object[]{enemyConfig.Stats};
+            
+            Quaternion rotation = GetRandomRotation(position);
             Enemy component = _container.InstantiatePrefabResourceForComponent<Enemy>(
-                enemyConfig.PrefabPath, position, Quaternion.identity, null, additionalArgs
+                enemyConfig.PrefabPath, position, rotation, null, additionalArgs
             );
             
             if (component is IArenaMember member)
             {
                 _arena.RegisterMember(member);
             }
+        }
+
+        private Quaternion GetRandomRotation(Vector2 position)
+        {
+            Vector2 randomPointInBounds = new Vector2(
+                _randomizerService.Range(-_arena.Size.x, _arena.Size.x),
+                _randomizerService.Range(-_arena.Size.y, _arena.Size.y)
+            );
+            Vector2 directionToRandomPoint = (randomPointInBounds - position).normalized;
+            float angle = Mathf.Atan2(directionToRandomPoint.y, directionToRandomPoint.x) * Mathf.Rad2Deg;
+            return Quaternion.Euler(0, 0, angle);
         }
     }
 }
