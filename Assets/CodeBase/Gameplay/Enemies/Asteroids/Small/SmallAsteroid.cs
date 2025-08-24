@@ -11,7 +11,7 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Small
         [Inject]
         public void Construct(Stats stats)
         {
-            _model = new AsteroidModel(stats,  transform);
+            _model = new AsteroidModel(stats);
             TransformData = _model.transformData;
         }
         private void Update()

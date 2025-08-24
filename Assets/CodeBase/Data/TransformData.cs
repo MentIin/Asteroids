@@ -10,7 +10,12 @@ namespace CodeBase.Data
             new Vector2(Mathf.Cos(Rotation * Mathf.Deg2Rad), Mathf.Sin(Rotation * Mathf.Deg2Rad));
         public Quaternion RotationQuaternion => 
             Quaternion.Euler(0f, 0f, Rotation);
-        
+
+        public TransformData()
+        {
+            Position = Vector2.zero;
+            Rotation = 0f;
+        }
         public TransformData(Vector2 position)
         {
             Position = position;

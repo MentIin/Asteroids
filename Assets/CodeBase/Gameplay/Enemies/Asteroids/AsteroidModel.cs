@@ -13,19 +13,17 @@ namespace CodeBase.Gameplay.Enemies.Asteroids
         public readonly TransformData transformData;
         
         private readonly Stats _stats;
-        
-        private Vector2 _directionAxis;
 
-        public AsteroidModel(Stats stats, Transform viewTransform)
+        public AsteroidModel(Stats stats)
         {
             _stats = stats;
-            transformData = new TransformData(viewTransform);
+            transformData = new TransformData();
             velocity = new CustomVelocity(transformData);
         }
 
         public void Tick()
         {
-            velocity.AddForce(_directionAxis * (Time.deltaTime * _stats.GetStat<SpeedStat>().Value));
+            velocity.AddForce(transformData.Direction * (Time.deltaTime * _stats.GetStat<SpeedStat>().Value));
             velocity.Tick(Time.deltaTime);
         }
     }

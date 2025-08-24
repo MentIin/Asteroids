@@ -12,7 +12,7 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
 {
     public class BigAsteroid : Enemy, IDamageable
     {
-        private const int NUMBER_OF_SMALL_ASTEROOIDS = 3;
+        private const int NUMBER_OF_SMALL_ASTEROIDS = 3;
         private AsteroidModel _model;
         
         private ObjectPool<SmallAsteroid> _smallAsteroidPool;
@@ -23,14 +23,15 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
         public void Construct(Stats stats, EnemyFactory factory, IRandomizerService randomizerService)
         {
             _randomizerService = randomizerService;
-            _model = new AsteroidModel(stats, transform);
+            _model = new AsteroidModel(stats);
             TransformData = _model.transformData;
             _smallAsteroidPool = new ObjectPool<SmallAsteroid>(
                 () => factory.SpawnEnemy(EnemyType.SmallAsteroid) as SmallAsteroid,
+                onGet: smallAsteroid => smallAsteroid.gameObject.SetActive(true),
                 onRelease: smallAsteroid => smallAsteroid.gameObject.SetActive(false),
                 onDestroy: smallAsteroid => GameObject.Destroy(smallAsteroid.gameObject),
-                maxSize: NUMBER_OF_SMALL_ASTEROOIDS);
-            _smallAsteroidPool.PreWarm(NUMBER_OF_SMALL_ASTEROOIDS);
+                maxSize: NUMBER_OF_SMALL_ASTEROIDS);
+            _smallAsteroidPool.PreWarm(NUMBER_OF_SMALL_ASTEROIDS);
                 
         }
 
@@ -55,7 +56,7 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
         private void SpawnSmallAsteroids()
         {
             // Spawn 3 small asteroids at the position of the big asteroid
-            for (int i = 0; i < NUMBER_OF_SMALL_ASTEROOIDS; i++)
+            for (int i = 0; i < NUMBER_OF_SMALL_ASTEROIDS; i++)
             {
                 SmallAsteroid smallAsteroid = _smallAsteroidPool.Get();
                 smallAsteroid.OnReturnToPool += OnReturnToPool;
@@ -68,8 +69,13 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
         private void OnReturnToPool(IPoolable obj)
         {
             _smallAsteroidsCount--;
+            
             if (_smallAsteroidsCount <= 0)
             {
+                for (int i = 0; i < NUMBER_OF_SMALL_ASTEROIDS; i++)
+                {
+                    obj.OnReturnToPool -= OnReturnToPool;
+                }
                 ReturnToPool();
             }
         }

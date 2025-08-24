@@ -24,7 +24,7 @@ namespace CodeBase.Gameplay.Enemies.Ufo
             _stats = stats;
             _playerProvider = playerProvider;
             _viewTransform = viewTransform;
-            transformData = new TransformData(viewTransform.position);
+            transformData = new TransformData();
             velocity = new CustomVelocity(transformData);
         }
 

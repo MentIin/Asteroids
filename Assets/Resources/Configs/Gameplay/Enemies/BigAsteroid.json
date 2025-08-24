@@ -1,10 +1,10 @@
 {
   "type": "BigAsteroid",
   "prefabPath": "Prefabs/Enemies/BigAsteroid",
-  "spawnRate": 0.5,
+  "spawnRate": 0.4,
   "stats": {
     "speed": {
-      "Value": 2
+      "Value": 1
     }
   }
 }

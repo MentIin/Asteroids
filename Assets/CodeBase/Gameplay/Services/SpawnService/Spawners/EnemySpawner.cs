@@ -62,6 +62,7 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
             
             _enemyPool = new ObjectPool<Enemy>(
                 () => _factory.SpawnEnemy(_enemyType),
+                onGet: enemy =>  enemy.gameObject.SetActive(true),
                 onRelease: enemy => enemy.gameObject.SetActive(false),
                 onDestroy: enemy => GameObject.Destroy(enemy.gameObject),
                 maxSize: _maxEnemies);
@@ -81,12 +82,13 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
 
         private void Spawn()
         {
+            if (_enemyPool.CountInactive == 0)
+                return;
             Vector2 pos = _randomizerService.GetRandomPositionOnBoundsEdge(_arena.Size, _arena.Center, ADDITIONAL_OFFSET);
 
             Enemy enemy = _enemyPool.Get();
             enemy.TransformData.Position = pos;
             enemy.TransformData.Rotation = GetRandomRotation(pos);
-            Debug.Log(pos);
         }
         private float GetRandomRotation(Vector2 position)
         {
