@@ -1,4 +1,17 @@
 {
-	"name": "ViewModels",
-	"references":[ "GUID:94564ffd3cfd3064eb7be35f7e7ca4dc" ]
+    "name": "ViewModels",
+    "rootNamespace": "",
+    "references": [
+        "",
+        "Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
