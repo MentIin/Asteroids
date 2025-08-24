@@ -41,5 +41,17 @@ namespace CodeBase.Infrastructure.Services.RandomizerService
         {
             return (float)(_random.NextDouble() * (to - from) + from);
         }
+
+        public float RandomRotation()
+        {
+            return Range(0, 360f);
+        }
+
+        public Vector2 RandomDirection()
+        {
+            float angle = Range(0f, 360f);
+            float radian = angle * Mathf.Deg2Rad;
+            return new Vector2(Mathf.Cos(radian), Mathf.Sin(radian)).normalized;
+        }
     }
 }

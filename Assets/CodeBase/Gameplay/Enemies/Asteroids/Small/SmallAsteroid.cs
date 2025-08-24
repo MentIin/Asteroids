@@ -1,12 +1,10 @@
-﻿using CodeBase.Data;
-using CodeBase.Data.StatsSystem.Main;
-using CodeBase.Gameplay.Enviroment;
+﻿using CodeBase.Data.StatsSystem.Main;
 using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Gameplay.Enemies.Asteroids.Small
 {
-    public class SmallAsteroid : Enemy, IArenaMember, IDamageable
+    public class SmallAsteroid : Enemy, IDamageable
     {
         private AsteroidModel _model;
 

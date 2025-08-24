@@ -1,4 +1,5 @@
 ﻿using CodeBase.Data;
+using CodeBase.Data.StatsSystem;
 using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Physic;
 using CodeBase.Gameplay.Player;
@@ -7,7 +8,7 @@ using Zenject;
 
 namespace CodeBase.Gameplay.Enemies.Ufo
 {
-    public class UfoModel : ITickable, IInitializable
+    public class UfoModel : ITickable
     {
         public readonly CustomVelocity velocity;
         public readonly TransformData transformData;
@@ -26,16 +27,14 @@ namespace CodeBase.Gameplay.Enemies.Ufo
             transformData = new TransformData(viewTransform.position);
             velocity = new CustomVelocity(transformData);
         }
-        public void Initialize()
+
+        public void Tick()
         {
             SetMoveDirection(
                 _playerProvider.Player.TransformData.Position - (Vector2)_viewTransform.position
             );
-        }
-
-        public void Tick()
-        {
-            velocity.AddForce(_directionAxis * Time.deltaTime);
+            
+            velocity.AddForce(_directionAxis * (Time.deltaTime * _stats.GetStat<SpeedStat>().Value));
             velocity.Tick(Time.deltaTime);
         }
 
