@@ -3,7 +3,6 @@ using CodeBase.Gameplay.EntryPoints;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Player;
-using CodeBase.Gameplay.Services.InputService;
 using CodeBase.Gameplay.Services.SpawnService;
 using Zenject;
 

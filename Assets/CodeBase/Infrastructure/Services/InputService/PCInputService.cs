@@ -1,4 +1,4 @@
-﻿using CodeBase.Gameplay.Services.InputService;
+﻿using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Services.InputService

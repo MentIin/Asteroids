@@ -1,4 +1,4 @@
-namespace CodeBase.UI.Services.Factories
+namespace CodeBase.UI.Factories
 {
     public class UIFactoryAssets
     {

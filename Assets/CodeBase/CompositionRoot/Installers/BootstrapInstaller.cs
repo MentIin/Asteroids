@@ -1,5 +1,4 @@
 using CodeBase.CompositionRoot.EntryPoints;
-using CodeBase.Gameplay.Services.InputService;
 using CodeBase.Infrastructure.SceneManagement;
 using CodeBase.Infrastructure.Services.AdsService;
 using CodeBase.Infrastructure.Services.AnalyticsService;
@@ -10,7 +9,7 @@ using CodeBase.Infrastructure.Services.PlayerProgressService;
 using CodeBase.Infrastructure.Services.RandomizerService;
 using CodeBase.Infrastructure.Services.StaticDataService;
 using CodeBase.Interfaces.Infrastructure.Services;
-using CodeBase.UI.Services.Factories;
+using CodeBase.UI.Factories;
 using UnityEngine;
 using Zenject;
 
@@ -92,7 +91,7 @@ namespace CodeBase.CompositionRoot.Installers
         private void BindPlayerProgressService()
         {
             Container
-                .BindInterfacesAndSelfTo<PersistentProgressService>()
+                .BindInterfacesAndSelfTo<ScoreService>()
                 .AsSingle();
         }
 

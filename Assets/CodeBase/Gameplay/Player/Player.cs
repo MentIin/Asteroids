@@ -4,7 +4,6 @@ using CodeBase.Data.Enums;
 using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
-using CodeBase.Gameplay.Services.InputService;
 using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
 using Zenject;

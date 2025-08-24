@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace CodeBase.UI.Services.Factories
+namespace CodeBase.UI.Factories
 {
     public class UIFactoryInstaller : Installer<UIFactoryInstaller>
     {
