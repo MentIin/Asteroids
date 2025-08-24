@@ -46,7 +46,7 @@ namespace CodeBase.Gameplay.ObjectPool
             {
                 T obj = _createFunc();
                 obj.OnReturnToPool += (poolable) => Release((T)poolable);
-                _pool.Push(obj);
+                Release(obj); // Ensure the object is unactive
                 CountAll++;
             }
         }
@@ -75,8 +75,8 @@ namespace CodeBase.Gameplay.ObjectPool
 
         public void Release(T element)
         {
-            if (_pool.Contains(element))
-                throw new InvalidOperationException("Trying to release object that has already been released");
+            if (_pool.Contains(element)) 
+                throw new InvalidOperationException("Trying to release an object that is already in the pool.");
 
             _onRelease?.Invoke(element);
 

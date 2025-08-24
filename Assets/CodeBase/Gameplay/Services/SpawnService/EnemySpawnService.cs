@@ -28,11 +28,9 @@ namespace CodeBase.Gameplay.Services.SpawnService
         private void CreateEnemySpawner(EnemyType type)
         {
             EnemySpawner enemySpawner = _spawnerFactory.CreateDefaultEnemySpawner();
-            enemySpawner.SetType(type);
             int max = _staticDataService.ForMap().MaxEnemiesCount / NUMBER_OF_SPAWNERS;
-            enemySpawner.SetSpawnData(_staticDataService.ForEnemy(type).SpawnRate, max);
+            enemySpawner.SetSpawnData(type, _staticDataService.ForEnemy(type).SpawnRate, max);
             
-            enemySpawner.PreWarm();
             enemySpawner.StartSpawning();
             
             _enemySpawners.Add(enemySpawner);

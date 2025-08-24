@@ -33,15 +33,6 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
             _arena = arena;
             _factory = factory;
             _randomizerService = randomizerService;
-            _enemyPool = new ObjectPool<Enemy>(
-                () => _factory.SpawnEnemy(_enemyType),
-                onRelease: enemy => enemy.gameObject.SetActive(false),
-                onDestroy: enemy => GameObject.Destroy(enemy.gameObject),
-                maxSize: _maxEnemies);
-        }
-        public void PreWarm()
-        {
-            _enemyPool.PreWarm(_maxEnemies);
         }
 
         public void StartSpawning()
@@ -63,15 +54,18 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
             _isSpawning = false;
         }
 
-        public void SetSpawnData(float newRate, int max)
+        public void SetSpawnData(EnemyType type, float newRate, int max)
         {
+            _enemyType = type;
             _maxEnemies = max;
             _spawnRate = newRate;
-        }
-
-        public void SetType(EnemyType enemyType)
-        {
-            _enemyType = enemyType;
+            
+            _enemyPool = new ObjectPool<Enemy>(
+                () => _factory.SpawnEnemy(_enemyType),
+                onRelease: enemy => enemy.gameObject.SetActive(false),
+                onDestroy: enemy => GameObject.Destroy(enemy.gameObject),
+                maxSize: _maxEnemies);
+            _enemyPool.PreWarm(_maxEnemies);
         }
 
         private async UniTaskVoid SpawnLoop(CancellationToken cancellationToken)
@@ -92,6 +86,7 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
             Enemy enemy = _enemyPool.Get();
             enemy.TransformData.Position = pos;
             enemy.TransformData.Rotation = GetRandomRotation(pos);
+            Debug.Log(pos);
         }
         private float GetRandomRotation(Vector2 position)
         {

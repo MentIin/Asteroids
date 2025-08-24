@@ -9,7 +9,6 @@ namespace CodeBase.Gameplay.Enemies.Ufo
     public class Ufo : Enemy, IDamageable
     {
         private UfoModel _model;
-        
 
         [Inject]
         public void Construct(Stats stats, PlayerProvider playerProvider, EnemyFactory factory)

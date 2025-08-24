@@ -30,6 +30,7 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
                 onRelease: smallAsteroid => smallAsteroid.gameObject.SetActive(false),
                 onDestroy: smallAsteroid => GameObject.Destroy(smallAsteroid.gameObject),
                 maxSize: NUMBER_OF_SMALL_ASTEROOIDS);
+            _smallAsteroidPool.PreWarm(NUMBER_OF_SMALL_ASTEROOIDS);
                 
         }
 
