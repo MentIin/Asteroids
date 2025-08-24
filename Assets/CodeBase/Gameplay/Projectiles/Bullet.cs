@@ -30,8 +30,6 @@ namespace CodeBase.Gameplay.Projectiles
 
         private void Update()
         {
-            Debug.Log( (_stats.GetStat<SpeedStat>().Value));
-            
             _transformData.Position += _transformData.Direction * Time.deltaTime* (_stats.GetStat<SpeedStat>().Value);
         }
 
