@@ -14,13 +14,13 @@ namespace CodeBase.Gameplay.Enemies.Ufo
         private UfoModel _model;
         private PlayerProvider _playerProvider;
         
-        public TransformData TransformData => _model.transformData;
 
         [Inject]
         public void Construct(Stats stats, PlayerProvider playerProvider, EnemyFactory factory)
         {
             _playerProvider = playerProvider;
             _model = new UfoModel(stats, playerProvider, transform);
+            TransformData = _model.transformData;
         }
 
         private void Start()
@@ -42,7 +42,7 @@ namespace CodeBase.Gameplay.Enemies.Ufo
 
         public void TakeDamage()
         {
-            Destroy(this.gameObject);
+           ReturnToPool();
         }
     }
 }

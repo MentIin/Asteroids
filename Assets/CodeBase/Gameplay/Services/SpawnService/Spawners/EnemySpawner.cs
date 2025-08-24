@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading;
-using CodeBase.Data;
+﻿using System.Threading;
 using CodeBase.Data.Enums;
+using CodeBase.Gameplay.Enemies;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
+using CodeBase.Gameplay.ObjectPool;
 using CodeBase.Interfaces.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -12,6 +12,8 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
 {
     public class EnemySpawner
     {
+        private const float ADDITIONAL_OFFSET = 20f;
+        
         private readonly Arena _arena;
         private readonly EnemyFactory _factory;
         private readonly IRandomizerService _randomizerService;
@@ -20,6 +22,10 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
         
         private CancellationTokenSource _spawnCts;
         private bool _isSpawning;
+        
+        private ObjectPool<Enemy> _enemyPool;
+
+        private int _maxEnemies;
 
         public EnemySpawner(EnemyFactory factory, IRandomizerService randomizerService,
             Arena arena)
@@ -27,6 +33,15 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
             _arena = arena;
             _factory = factory;
             _randomizerService = randomizerService;
+            _enemyPool = new ObjectPool<Enemy>(
+                () => _factory.SpawnEnemy(_enemyType),
+                onRelease: enemy => enemy.gameObject.SetActive(false),
+                onDestroy: enemy => GameObject.Destroy(enemy.gameObject),
+                maxSize: _maxEnemies);
+        }
+        public void PreWarm()
+        {
+            _enemyPool.PreWarm(_maxEnemies);
         }
 
         public void StartSpawning()
@@ -48,11 +63,9 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
             _isSpawning = false;
         }
 
-        public void SetSpawnRate(float newRate)
+        public void SetSpawnData(float newRate, int max)
         {
-            if (newRate <= 0)
-                throw new ArgumentException("Spawn rate must be positive");
-            
+            _maxEnemies = max;
             _spawnRate = newRate;
         }
 
@@ -74,9 +87,22 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
 
         private void Spawn()
         {
-            Vector2 pos = _randomizerService.GetRandomPositionOnBoundsEdge(_arena.Size, _arena.Center, 10f);
+            Vector2 pos = _randomizerService.GetRandomPositionOnBoundsEdge(_arena.Size, _arena.Center, ADDITIONAL_OFFSET);
 
-            _factory.SpawnEnemy(_enemyType, pos);
+            Enemy enemy = _enemyPool.Get();
+            enemy.TransformData.Position = pos;
+            enemy.TransformData.Rotation = GetRandomRotation(pos);
         }
+        private float GetRandomRotation(Vector2 position)
+        {
+            Vector2 randomPointInBounds = new Vector2(
+                _randomizerService.Range(-_arena.Size.x, _arena.Size.x),
+                _randomizerService.Range(-_arena.Size.y, _arena.Size.y)
+            );
+            Vector2 directionToRandomPoint = (randomPointInBounds - position).normalized;
+            float angle = Mathf.Atan2(directionToRandomPoint.y, directionToRandomPoint.x) * Mathf.Rad2Deg;
+            return angle;
+        }
+        
     }
 }

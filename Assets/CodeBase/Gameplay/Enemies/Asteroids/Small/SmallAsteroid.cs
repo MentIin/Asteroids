@@ -9,13 +9,12 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Small
     public class SmallAsteroid : Enemy, IArenaMember, IDamageable
     {
         private AsteroidModel _model;
-        
-        public TransformData TransformData => _model.transformData;
 
         [Inject]
         public void Construct(Stats stats)
         {
             _model = new AsteroidModel(stats,  transform);
+            TransformData = _model.transformData;
         }
         private void Update()
         {
@@ -30,7 +29,7 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Small
 
         public void TakeDamage()
         {
-            Destroy(this.gameObject);
+            ReturnToPool();
         }
     }
 }

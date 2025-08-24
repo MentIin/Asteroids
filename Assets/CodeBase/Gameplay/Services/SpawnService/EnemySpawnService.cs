@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CodeBase.Data;
 using CodeBase.Data.Enums;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Services.SpawnService.Spawners;
@@ -9,6 +8,7 @@ namespace CodeBase.Gameplay.Services.SpawnService
 {
     public class EnemySpawnService
     {
+        private const int NUMBER_OF_SPAWNERS = 2;
         private readonly SpawnerFactory _spawnerFactory;
         private readonly IStaticDataService _staticDataService;
         private readonly List<EnemySpawner> _enemySpawners = new List<EnemySpawner>();
@@ -21,7 +21,6 @@ namespace CodeBase.Gameplay.Services.SpawnService
 
         public void StartSpawn()
         {
-            CreateEnemySpawner(EnemyType.SmallAsteroid);
             CreateEnemySpawner(EnemyType.BigAsteroid);
             CreateEnemySpawner(EnemyType.Ufo);
         }
@@ -30,8 +29,12 @@ namespace CodeBase.Gameplay.Services.SpawnService
         {
             EnemySpawner enemySpawner = _spawnerFactory.CreateDefaultEnemySpawner();
             enemySpawner.SetType(type);
-            enemySpawner.SetSpawnRate(_staticDataService.ForEnemy(type).SpawnRate);
+            int max = _staticDataService.ForMap().MaxEnemiesCount / NUMBER_OF_SPAWNERS;
+            enemySpawner.SetSpawnData(_staticDataService.ForEnemy(type).SpawnRate, max);
+            
+            enemySpawner.PreWarm();
             enemySpawner.StartSpawning();
+            
             _enemySpawners.Add(enemySpawner);
         }
     }

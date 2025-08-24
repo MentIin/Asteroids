@@ -38,31 +38,21 @@ namespace CodeBase.Gameplay.Factories
             _randomizerService = randomizerService;
         }
 
-        public void SpawnEnemy(EnemyType type, Vector2 position)
+        public Enemy SpawnEnemy(EnemyType type)
         {
             EnemyConfig enemyConfig = _staticDataService.ForEnemy(type);
             object[] additionalArgs = new object[]{enemyConfig.Stats};
             
-            Quaternion rotation = GetRandomRotation(position);
             Enemy component = _container.InstantiatePrefabResourceForComponent<Enemy>(
-                enemyConfig.PrefabPath, position, rotation, null, additionalArgs
+                enemyConfig.PrefabPath, additionalArgs
             );
             
             if (component is IArenaMember member)
             {
                 _arena.RegisterMember(member);
             }
-        }
 
-        private Quaternion GetRandomRotation(Vector2 position)
-        {
-            Vector2 randomPointInBounds = new Vector2(
-                _randomizerService.Range(-_arena.Size.x, _arena.Size.x),
-                _randomizerService.Range(-_arena.Size.y, _arena.Size.y)
-            );
-            Vector2 directionToRandomPoint = (randomPointInBounds - position).normalized;
-            float angle = Mathf.Atan2(directionToRandomPoint.y, directionToRandomPoint.x) * Mathf.Rad2Deg;
-            return Quaternion.Euler(0, 0, angle);
+            return component;
         }
     }
 }

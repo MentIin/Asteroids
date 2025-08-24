@@ -1,5 +1,4 @@
-﻿using CodeBase.Data;
-using CodeBase.Data.StatsSystem.Main;
+﻿using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
 using UnityEngine;
@@ -10,13 +9,12 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
     public class BigAsteroid : Enemy, IArenaMember, IDamageable
     {
         private AsteroidModel _model;
-        
-        public TransformData TransformData => _model.transformData;
 
         [Inject]
         public void Construct(Stats stats, EnemyFactory factory)
         {
             _model = new AsteroidModel(stats, transform);
+            TransformData = _model.transformData;
         }
 
         private void Update()
@@ -32,7 +30,7 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
 
         public void TakeDamage()
         {
-            Destroy(this.gameObject);
+            ReturnToPool();
         }
     }
 }
