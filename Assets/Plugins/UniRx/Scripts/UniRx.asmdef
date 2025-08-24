@@ -1,10 +1,6 @@
 {
-    "name": "ViewModels",
-    "rootNamespace": "",
-    "references": [
-        "UniRx",
-        "Core"
-    ],
+    "name": "UniRx",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -12,6 +8,5 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+    "versionDefines": []
 }
