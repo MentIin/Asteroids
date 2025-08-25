@@ -75,8 +75,7 @@ namespace CodeBase.Gameplay.ObjectPool
 
         public void Release(T element)
         {
-            if (_pool.Contains(element)) 
-                throw new InvalidOperationException("Trying to release an object that is already in the pool.");
+            if (_pool.Contains(element)) return;
 
             _onRelease?.Invoke(element);
 

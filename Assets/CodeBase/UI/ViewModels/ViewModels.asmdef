@@ -5,7 +5,8 @@
         "UniRx",
         "Core",
         "Zenject",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

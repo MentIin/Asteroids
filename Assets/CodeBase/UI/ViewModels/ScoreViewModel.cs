@@ -1,12 +1,15 @@
 ﻿using System;
 using CodeBase.Interfaces.Infrastructure.Services;
+using CodeBase.UI.Binders.Main;
 using UniRx;
+using UnityEngine;
 using Zenject;
 
 namespace CodeBase.UI.ViewModels
 {
-    public class ScoreViewModel : IInitializable, IDisposable
+    public class ScoreViewModel : IInitializable, IDisposable, IViewModel
     {
+        [Data("Score")]
         public ReactiveProperty<string> Score = new();
         
         private readonly IScoreService _scoreService;
@@ -18,6 +21,7 @@ namespace CodeBase.UI.ViewModels
         public void Initialize()
         {
             OnScoreChanged();
+            Debug.Log("ScoreViewModel Initialize with score: " + _scoreService.Score);
             _scoreService.ScoreChanged += OnScoreChanged;
         }
 

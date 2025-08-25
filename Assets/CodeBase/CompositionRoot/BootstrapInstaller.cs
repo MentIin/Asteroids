@@ -8,6 +8,7 @@ using CodeBase.Infrastructure.Services.PlayerProgressService;
 using CodeBase.Infrastructure.Services.RandomizerService;
 using CodeBase.Infrastructure.Services.StaticDataService;
 using CodeBase.Interfaces.Infrastructure.Services;
+using CodeBase.Interfaces.Infrastructure.Services.UI;
 using CodeBase.UI.Factories;
 using CodeBase.UI.ViewModels;
 using UnityEngine;
@@ -47,7 +48,7 @@ namespace CodeBase.CompositionRoot
 
         private void BindViewModels()
         {
-            Container.BindInterfacesAndSelfTo<ScoreViewModel>().NonLazy();
+            Container.BindInterfacesAndSelfTo<ScoreViewModel>().AsSingle().NonLazy();
         }
 
         private void BindLogService()
@@ -83,14 +84,8 @@ namespace CodeBase.CompositionRoot
             Container.BindInterfacesAndSelfTo<StaticDataService>().AsSingle();
         
 
-        private void BindUIFactory()
-        {
-            Container
-                .Bind<UIFactory>()
-                .FromSubContainerResolve()
-                .ByInstaller<UIFactoryInstaller>()
-                .AsSingle();
-        }
+        private void BindUIFactory() =>
+            Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
 
         private void BindRandomizeService() => 
             Container.BindInterfacesAndSelfTo<RandomizerService>().AsSingle();
