@@ -15,19 +15,24 @@ namespace CodeBase.Gameplay.EntryPoints
         private readonly ICameraService _cameraService;
         private readonly EnemySpawnService _enemySpawnService;
         private readonly IUIFactory _uiFactory;
+        private readonly IScoreService _scoreService;
 
         public GameplayEntryPoint(PlayerFactory playerFactory,
             Arena arena, ICameraService cameraService,
-            EnemySpawnService enemySpawnService, IUIFactory uiFactory)
+            EnemySpawnService enemySpawnService, IUIFactory uiFactory,
+            IScoreService scoreService)
         {
             _playerFactory = playerFactory;
             _arena = arena;
             _cameraService = cameraService;
             _enemySpawnService = enemySpawnService;
             _uiFactory = uiFactory;
+            _scoreService = scoreService;
         }
         public void Initialize()
         {
+            _scoreService.ResetScore();
+            
             Player.Player player = _playerFactory.CreatePlayer();
             _arena.Initialize();
             _cameraService.Follow(player.transform);
@@ -35,6 +40,7 @@ namespace CodeBase.Gameplay.EntryPoints
             _enemySpawnService.StartSpawn();
             
             _uiFactory.CreateHUD();
+            
         }
     }
 }
