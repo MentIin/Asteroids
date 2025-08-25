@@ -3,7 +3,9 @@
     "rootNamespace": "",
     "references": [
         "UniRx",
-        "Core"
+        "Core",
+        "Zenject",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

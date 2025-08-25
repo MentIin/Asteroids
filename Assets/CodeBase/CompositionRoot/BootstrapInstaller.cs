@@ -1,4 +1,3 @@
-using CodeBase.CompositionRoot.EntryPoints;
 using CodeBase.Infrastructure.SceneManagement;
 using CodeBase.Infrastructure.Services.AdsService;
 using CodeBase.Infrastructure.Services.AnalyticsService;
@@ -10,10 +9,11 @@ using CodeBase.Infrastructure.Services.RandomizerService;
 using CodeBase.Infrastructure.Services.StaticDataService;
 using CodeBase.Interfaces.Infrastructure.Services;
 using CodeBase.UI.Factories;
+using CodeBase.UI.ViewModels;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.CompositionRoot.Installers
+namespace CodeBase.CompositionRoot
 {
     public class BootstrapInstaller : MonoInstaller
     {
@@ -30,7 +30,7 @@ namespace CodeBase.CompositionRoot.Installers
 
             BindRandomizeService();
             
-            BindPlayerProgressService();
+            BindPlayerScoreService();
             
             BindInputService();
 
@@ -40,7 +40,14 @@ namespace CodeBase.CompositionRoot.Installers
             
             BindUIFactory();
             
+            BindViewModels();
+            
             BindGameBootstrapper();
+        }
+
+        private void BindViewModels()
+        {
+            Container.BindInterfacesAndSelfTo<ScoreViewModel>().NonLazy();
         }
 
         private void BindLogService()
@@ -88,11 +95,10 @@ namespace CodeBase.CompositionRoot.Installers
         private void BindRandomizeService() => 
             Container.BindInterfacesAndSelfTo<RandomizerService>().AsSingle();
 
-        private void BindPlayerProgressService()
+        private void BindPlayerScoreService()
         {
             Container
-                .BindInterfacesAndSelfTo<ScoreService>()
-                .AsSingle();
+                .Bind<IScoreService>().To<ScoreService>().AsSingle();
         }
 
         private void BindAdsService() => 

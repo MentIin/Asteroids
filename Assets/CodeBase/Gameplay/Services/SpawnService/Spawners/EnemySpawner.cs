@@ -1,5 +1,5 @@
 ﻿using System.Threading;
-using CodeBase.Data.Enums;
+using CodeBase.Data.StaticData;
 using CodeBase.Gameplay.Enemies;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;

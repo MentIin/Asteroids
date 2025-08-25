@@ -1,6 +1,6 @@
 ﻿using System;
 using CodeBase.Data;
-using CodeBase.Data.Enums;
+using CodeBase.Data.StaticData;
 using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;

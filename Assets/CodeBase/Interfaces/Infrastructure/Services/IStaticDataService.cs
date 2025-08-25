@@ -1,5 +1,4 @@
-﻿using CodeBase.Data.Enums;
-using CodeBase.Data.StaticData;
+﻿using CodeBase.Data.StaticData;
 
 namespace CodeBase.Interfaces.Infrastructure.Services
 {

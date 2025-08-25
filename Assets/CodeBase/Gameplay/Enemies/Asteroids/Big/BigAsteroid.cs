@@ -1,4 +1,4 @@
-﻿using CodeBase.Data.Enums;
+﻿using CodeBase.Data.StaticData;
 using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Enemies.Asteroids.Small;
 using CodeBase.Gameplay.Factories;
@@ -59,14 +59,14 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
             for (int i = 0; i < NUMBER_OF_SMALL_ASTEROIDS; i++)
             {
                 SmallAsteroid smallAsteroid = _smallAsteroidPool.Get();
-                smallAsteroid.OnReturnToPool += OnReturnToPool;
+                smallAsteroid.OnReturnToPool += OnSmallAsteroidReturnToPool;
                 smallAsteroid.TransformData.Position = TransformData.Position;
                 smallAsteroid.TransformData.Rotation = _randomizerService.RandomRotation();
                 _smallAsteroidsCount++;
             }
         }
 
-        private void OnReturnToPool(IPoolable obj)
+        private void OnSmallAsteroidReturnToPool(IPoolable obj)
         {
             _smallAsteroidsCount--;
             
@@ -74,7 +74,7 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
             {
                 for (int i = 0; i < NUMBER_OF_SMALL_ASTEROIDS; i++)
                 {
-                    obj.OnReturnToPool -= OnReturnToPool;
+                    obj.OnReturnToPool -= OnSmallAsteroidReturnToPool;
                 }
                 ReturnToPool();
             }

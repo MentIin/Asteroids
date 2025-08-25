@@ -3,7 +3,7 @@ using CodeBase.Interfaces.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
 using Zenject;
 
-namespace CodeBase.CompositionRoot.EntryPoints
+namespace CodeBase.CompositionRoot
 {
     public class BootstrapEntryPoint : IInitializable
     {

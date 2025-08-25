@@ -1,5 +1,4 @@
 ﻿using System;
-using CodeBase.Data.Enums;
 using CodeBase.Data.StatsSystem.Main;
 using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Converters;

@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Data.Enums
+﻿namespace CodeBase.Data.StaticData
 {
     public enum ProjectileType
     {

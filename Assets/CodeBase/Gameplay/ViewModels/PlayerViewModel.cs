@@ -1,4 +1,4 @@
-﻿namespace CodeBase.UI.ViewModels
+﻿namespace CodeBase.Gameplay.ViewModels
 {
     public class PlayerViewModel
     {
