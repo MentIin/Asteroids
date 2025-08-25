@@ -12,6 +12,7 @@ namespace CodeBase.Data.StaticData
         public EnemyType Type;
         public string PrefabPath;
         public float SpawnRate;
+        public int ScoreReward;
         public Stats Stats;
     }
 }

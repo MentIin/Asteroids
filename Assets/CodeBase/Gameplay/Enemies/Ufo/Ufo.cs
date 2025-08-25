@@ -1,6 +1,7 @@
-﻿using CodeBase.Data.StatsSystem.Main;
+﻿using CodeBase.Data.StaticData;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Player;
+using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
 using Zenject;
 
@@ -9,11 +10,16 @@ namespace CodeBase.Gameplay.Enemies.Ufo
     public class Ufo : Enemy, IDamageable
     {
         private UfoModel _model;
+        private IScoreService _scoreService;
+        private EnemyConfig _config;
 
         [Inject]
-        public void Construct(Stats stats, PlayerProvider playerProvider, EnemyFactory factory)
+        public void Construct(EnemyConfig config, PlayerProvider playerProvider, EnemyFactory factory,
+            IScoreService scoreService)
         {
-            _model = new UfoModel(stats, playerProvider, transform);
+            _config = config;
+            _scoreService = scoreService;
+            _model = new UfoModel(config.Stats, playerProvider, transform);
             TransformData = _model.transformData;
         }
 
@@ -31,6 +37,7 @@ namespace CodeBase.Gameplay.Enemies.Ufo
 
         public void TakeDamage()
         {
+            _scoreService.AddScore(_config.ScoreReward);
            ReturnToPool();
         }
     }

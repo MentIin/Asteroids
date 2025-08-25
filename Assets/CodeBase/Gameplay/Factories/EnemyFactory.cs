@@ -40,7 +40,7 @@ namespace CodeBase.Gameplay.Factories
         public Enemy SpawnEnemy(EnemyType type)
         {
             EnemyConfig enemyConfig = _staticDataService.ForEnemy(type);
-            object[] additionalArgs = new object[]{enemyConfig.Stats};
+            object[] additionalArgs = new object[]{enemyConfig};
             
             Enemy component = _container.InstantiatePrefabResourceForComponent<Enemy>(
                 enemyConfig.PrefabPath, additionalArgs

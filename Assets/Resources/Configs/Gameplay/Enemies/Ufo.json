@@ -2,6 +2,7 @@
   "type": "Ufo",
   "prefabPath": "Prefabs/Enemies/Ufo",
   "spawnRate": 0.1,
+  "scoreReward": 30,
   "stats": {
     "speed": {
       "Value": 2

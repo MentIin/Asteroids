@@ -11,7 +11,7 @@ namespace CodeBase.UI
 {
     public class DataBinder : MonoBehaviour
     {
-        #region Статическая часть: поиск и кэширование биндеров
+        #region static
         // static cache
         private static readonly List<BinderInfo> s_binderInfos;
         
@@ -113,7 +113,7 @@ namespace CodeBase.UI
             if (viewModelType != null)
             {
                 var viewModel = ResolveViewModel(viewModelType);
-                var dataProperty = FindDataProperty(viewModel, dataId, fieldValue.GetType());
+                var dataProperty = FindDataProperty(viewModel, dataId);
                 if (dataProperty != null)
                 {
                     CreateBinding(fieldValue, dataProperty, dataId);
@@ -130,7 +130,7 @@ namespace CodeBase.UI
             if (viewModelType != null)
             {
                 var viewModel = ResolveViewModel(viewModelType);
-                var dataProperty = FindDataProperty(viewModel, dataId, propertyValue.GetType());
+                var dataProperty = FindDataProperty(viewModel, dataId);
                 if (dataProperty != null)
                 {
                     CreateBinding(propertyValue, dataProperty, dataId);
@@ -187,7 +187,7 @@ namespace CodeBase.UI
                     continue;
                 Debug.Log("Checking ViewModel type: " + type.Name);
                     
-                // Проверяем свойства
+                // properties
                 var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                 Debug.Log("  Found properties: " + string.Join(", ", properties.Select(p => p.Name)));
                 foreach (var property in properties)
@@ -200,7 +200,7 @@ namespace CodeBase.UI
                     }
                 }
                 
-                // Проверяем поля
+                // fields
                 var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                 Debug.Log("  Found fields: " + string.Join(", ", fields.Select(f => f.Name)));
                 foreach (var field in fields)
@@ -220,7 +220,7 @@ namespace CodeBase.UI
             return null;
         }
 
-        private object FindDataProperty(object viewModel, string dataId, Type expectedType)
+        private object FindDataProperty(object viewModel, string dataId)
         {
             var type = viewModel.GetType();
             

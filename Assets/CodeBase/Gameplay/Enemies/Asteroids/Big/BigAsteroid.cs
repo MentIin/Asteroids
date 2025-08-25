@@ -18,12 +18,16 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
         private ObjectPool<SmallAsteroid> _smallAsteroidPool;
         private IRandomizerService _randomizerService;
         private int _smallAsteroidsCount;
+        private IScoreService _scoreService;
+        private EnemyConfig _config;
 
         [Inject]
-        public void Construct(Stats stats, EnemyFactory factory, IRandomizerService randomizerService)
+        public void Construct(EnemyConfig config, EnemyFactory factory, IScoreService scoreService, IRandomizerService randomizerService)
         {
+            _config = config;
+            _scoreService = scoreService;
             _randomizerService = randomizerService;
-            _model = new AsteroidModel(stats);
+            _model = new AsteroidModel(config.Stats);
             TransformData = _model.transformData;
             _smallAsteroidPool = new ObjectPool<SmallAsteroid>(
                 () => factory.SpawnEnemy(EnemyType.SmallAsteroid) as SmallAsteroid,
@@ -51,6 +55,7 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
         {
             SpawnSmallAsteroids();
             this.gameObject.SetActive(false);
+            _scoreService.AddScore(_config.ScoreReward);
         }
 
         private void SpawnSmallAsteroids()
