@@ -3,6 +3,7 @@ using CodeBase.Data.StatsSystem;
 using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Physic;
 using CodeBase.Gameplay.Player;
+using CodeBase.Gameplay.Services.Providers;
 using UnityEngine;
 using Zenject;
 

@@ -1,4 +1,5 @@
-﻿using CodeBase.Data;
+﻿using System;
+using CodeBase.Data;
 using CodeBase.Data.StatsSystem;
 using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Physic;
@@ -17,7 +18,11 @@ namespace CodeBase.Gameplay.Player
         private readonly Stats _playerStats;
         
         private int _currentHealth;
+        private float _invulnerabilityTimer;
+        private float INVULNERABILITY_TIME=3f;
 
+        public bool IsInvulnerable => _invulnerabilityTimer > 0;
+        public event Action Died;
 
         public PlayerModel(IInputService inputService, Stats playerStats)
         {
@@ -35,9 +40,27 @@ namespace CodeBase.Gameplay.Player
 
         public void Tick()
         {
-            velocity.AddForce(_inputService.GetMovement() * transformData.Direction * Time.deltaTime * _playerStats.GetStat<SpeedStat>().Value);
-            velocity.AddAngularForce(_inputService.GetRotation());
+            if (_invulnerabilityTimer > 0)
+                _invulnerabilityTimer -= Time.deltaTime;
+            if (!IsInvulnerable)
+            {
+                velocity.AddForce(_inputService.GetMovement() * transformData.Direction * Time.deltaTime * _playerStats.GetStat<SpeedStat>().Value);
+                velocity.AddAngularForce(_inputService.GetRotation());
+            }
             velocity.Tick(Time.deltaTime);
+        }
+
+        public void TakeDamage()
+        {
+            if (!IsInvulnerable)
+            {
+                _currentHealth--;
+                _invulnerabilityTimer = INVULNERABILITY_TIME;
+                if (_currentHealth <= 0)
+                {
+                    Died?.Invoke();
+                }
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using CodeBase.Data.StaticData;
-using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Enemies.Asteroids.Small;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.ObjectPool;
@@ -10,7 +9,7 @@ using IPoolable = CodeBase.Gameplay.ObjectPool.IPoolable;
 
 namespace CodeBase.Gameplay.Enemies.Asteroids.Big
 {
-    public class BigAsteroid : Enemy, IDamageable
+    public class BigAsteroid : Enemy, IDamageable, IPushable
     {
         private const int NUMBER_OF_SMALL_ASTEROIDS = 3;
         private AsteroidModel _model;
@@ -46,9 +45,14 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Vector2 force = (Vector2)transform.position - other.ClosestPoint(transform.position);
-            force.Normalize();
-            _model.velocity.Set(force * GameConstants.CollisionKnockbackForce);
+            if (other.TryGetComponent(out IPushable pushable))
+            {
+                pushable.Push((other.transform.position - transform.position).normalized * GameConstants.CollisionKnockbackForce);
+            }
+            if (other.TryGetComponent(out IDamageable damageable))
+            {
+                damageable.TakeDamage();
+            }
         }
 
         public void TakeDamage()
@@ -83,6 +87,11 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Big
                 }
                 ReturnToPool();
             }
+        }
+
+        public void Push(Vector2 forceVector)
+        {
+            _model.velocity.Set(forceVector);
         }
     }
 }

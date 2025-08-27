@@ -5,11 +5,19 @@ namespace CodeBase.Data
     public class TransformData
     {
         public Vector2 Position;
-        public float Rotation;
+
+        public float Rotation
+        {
+            get => _rotation;
+            set => _rotation = value % 360f;
+        }
+
         public Vector2 Direction => 
             new Vector2(Mathf.Cos(Rotation * Mathf.Deg2Rad), Mathf.Sin(Rotation * Mathf.Deg2Rad));
         public Quaternion RotationQuaternion => 
             Quaternion.Euler(0f, 0f, Rotation);
+        
+        private float _rotation;
 
         public TransformData()
         {

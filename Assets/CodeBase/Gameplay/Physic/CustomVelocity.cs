@@ -10,6 +10,7 @@ namespace CodeBase.Gameplay.Physic
         private float _angularVelocity;
 
         public float Speed => _velocity.magnitude;
+        public Vector2 Velocity => _velocity;
 
         public CustomVelocity(TransformData transformData)
         {
@@ -32,7 +33,7 @@ namespace CodeBase.Gameplay.Physic
             if (_velocity.sqrMagnitude > Mathf.Epsilon)
             {
                 _transformData.Position += _velocity * deltaTime;
-                _velocity *= Mathf.Pow(0.8f, deltaTime);
+                _velocity *= Mathf.Pow(GameConstants.PhysicBump, deltaTime);
             }
             _transformData.Rotation += _angularVelocity * deltaTime;
             _angularVelocity *= Mathf.Pow(GameConstants.PhysicAngularBump, deltaTime);

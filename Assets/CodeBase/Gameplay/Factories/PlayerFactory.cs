@@ -1,6 +1,7 @@
 ﻿using CodeBase.Data.StaticData;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Player;
+using CodeBase.Gameplay.Services.Providers;
 using CodeBase.Interfaces.Infrastructure.Services;
 using Zenject;
 

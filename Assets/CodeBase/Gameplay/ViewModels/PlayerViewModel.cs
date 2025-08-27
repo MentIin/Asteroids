@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeBase.Common.Attributes;
 using CodeBase.Gameplay.Player;
+using CodeBase.Gameplay.Services.Providers;
 using CodeBase.Interfaces.UI;
 using UniRx;
 using Zenject;
@@ -40,7 +41,7 @@ namespace CodeBase.Gameplay.ViewModels
             Observable.EveryUpdate()
                 .Subscribe(_ =>
                 {
-                    Speed.Value = "Speed: " + Math.Round(_playerProvider.Player.Speed, 2);
+                    Speed.Value = "Speed: " + Math.Round(_playerProvider.Player.Speed, 1);
                 })
                 .AddTo(_disposables);
         }
@@ -51,7 +52,7 @@ namespace CodeBase.Gameplay.ViewModels
                 .Subscribe(_ =>
                 {
                     Rotation.Value = "Rotation: " + Math.Round(
-                        _playerProvider.Player.TransformData.Rotation, 2);
+                        _playerProvider.Player.TransformData.Rotation);
                 })
                 .AddTo(_disposables);
         }

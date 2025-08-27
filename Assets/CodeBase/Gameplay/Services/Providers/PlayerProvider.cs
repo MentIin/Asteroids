@@ -1,13 +1,13 @@
-﻿namespace CodeBase.Gameplay.Player
+﻿namespace CodeBase.Gameplay.Services.Providers
 {
     public class PlayerProvider
     {
-        private Player _player;
+        private Player.Player _player;
 
-        public Player Player => _player;
+        public Player.Player Player => _player;
         public bool PlayerExists => _player != null;
         
-        public void RegisterPlayer(Player player)
+        public void RegisterPlayer(Player.Player player)
         {
             _player = player;
         }

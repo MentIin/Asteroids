@@ -2,6 +2,7 @@ using CodeBase.Gameplay.EntryPoints;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Player;
+using CodeBase.Gameplay.Services.Providers;
 using CodeBase.Gameplay.Services.SpawnService;
 using CodeBase.Gameplay.ViewModels;
 using CodeBase.Interfaces.Infrastructure.Services.UI;

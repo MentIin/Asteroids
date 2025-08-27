@@ -1,12 +1,11 @@
 ﻿using CodeBase.Data.StaticData;
-using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Gameplay.Enemies.Asteroids.Small
 {
-    public class SmallAsteroid : Enemy, IDamageable
+    public class SmallAsteroid : Enemy, IDamageable, IPushable
     {
         private AsteroidModel _model;
         private EnemyConfig _config;
@@ -26,15 +25,25 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Small
         }
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Vector2 force = (Vector2)transform.position - other.ClosestPoint(transform.position);
-            force.Normalize();
-            _model.velocity.Set(force * GameConstants.CollisionKnockbackForce);
+            if (other.TryGetComponent(out IPushable pushable))
+            {
+                pushable.Push((other.transform.position - transform.position).normalized * GameConstants.CollisionKnockbackForce);
+            }
+            if (other.TryGetComponent(out IDamageable damageable))
+            {
+                damageable.TakeDamage();
+            }
         }
 
         public void TakeDamage()
         {
             _scoreService.AddScore(_config.ScoreReward);
             ReturnToPool();
+        }
+
+        public void Push(Vector2 forceVector)
+        {
+            _model.velocity.Set(forceVector);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data;
 using CodeBase.Gameplay.Player;
+using CodeBase.Gameplay.Services.Providers;
 using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
 using Zenject;
@@ -37,16 +38,19 @@ namespace CodeBase.Gameplay.Enviroment
 
         private void HandleMembers()
         {
-            HandleMember(_coreMember);
-            
-            for (int i=_members.Count-1; i>=0; i--)
+            if ((Object)_coreMember != null)
             {
-                UnityEngine.Object memberObject = _members[i] as UnityEngine.Object;
-                if (memberObject == null)
-                    _members.RemoveAt(i);
-                else
+                HandleMember(_coreMember);
+                
+                for (int i=_members.Count-1; i>=0; i--)
                 {
-                    HandleMember(_members[i]);
+                    UnityEngine.Object memberObject = _members[i] as Object;
+                    if (memberObject == null)
+                        _members.RemoveAt(i);
+                    else
+                    {
+                        HandleMember(_members[i]);
+                    }
                 }
             }
         }

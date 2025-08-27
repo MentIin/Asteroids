@@ -1,13 +1,13 @@
 ﻿using CodeBase.Data.StaticData;
 using CodeBase.Gameplay.Factories;
-using CodeBase.Gameplay.Player;
+using CodeBase.Gameplay.Services.Providers;
 using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Gameplay.Enemies.Ufo
 {
-    public class Ufo : Enemy, IDamageable
+    public class Ufo : Enemy, IDamageable, IPushable
     {
         private UfoModel _model;
         private IScoreService _scoreService;
@@ -30,15 +30,25 @@ namespace CodeBase.Gameplay.Enemies.Ufo
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Vector2 force = (Vector2)transform.position - other.ClosestPoint(transform.position);
-            force.Normalize();
-            _model.velocity.Set(force * GameConstants.CollisionKnockbackForce);
+            if (other.TryGetComponent(out IPushable pushable))
+            {
+                pushable.Push((other.transform.position - transform.position).normalized * GameConstants.CollisionKnockbackForce);
+            }
+            if (other.TryGetComponent(out IDamageable damageable))
+            {
+                damageable.TakeDamage();
+            }
         }
 
         public void TakeDamage()
         {
             _scoreService.AddScore(_config.ScoreReward);
            ReturnToPool();
+        }
+
+        public void Push(Vector2 forceVector)
+        {
+            _model.velocity.Set(forceVector);
         }
     }
 }
