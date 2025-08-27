@@ -1,6 +1,6 @@
 ﻿namespace CodeBase
 {
-    public class SceneNames
+    public static class SceneNames
     {
         public const string GameplayScene = "GameplayScene";
     }
