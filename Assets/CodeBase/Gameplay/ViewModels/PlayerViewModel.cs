@@ -34,6 +34,24 @@ namespace CodeBase.Gameplay.ViewModels
             ObservePosition();
             ObserveRotation();
             ObserveSpeed();
+            ObserveLaser();
+        }
+
+        private void ObserveLaser()
+        {
+            Observable.EveryUpdate()
+                .Subscribe(_ =>
+                {
+                    LaserChargesLeft.Value = "Charges: " + _playerProvider.Player.LaserCharges;
+                })
+                .AddTo(_disposables);
+            Observable.EveryUpdate()
+                .Subscribe(_ =>
+                {
+                    LaserChargeReload.Value = "Reload: " + Math.Round(
+                        _playerProvider.Player.LaserChargeReload, 2);
+                })
+                .AddTo(_disposables);
         }
 
         private void ObserveSpeed()

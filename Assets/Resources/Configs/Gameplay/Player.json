@@ -6,6 +6,15 @@
     },
     "speed": {
       "Value": 5
+    },
+    "weapon": {
+      "ReloadTime": 0.2,
+      "ProjectileType": "Bullet"
+    },
+    "skill": {
+      "ReloadTime": 2,
+      "MaxCharges": 5,
+      "ProjectileType": "Laser"
     }
   }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using CodeBase.Data;
+using CodeBase.Data.StaticData;
 using CodeBase.Data.StatsSystem;
 using CodeBase.Data.StatsSystem.Main;
+using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Physic;
 using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
@@ -15,18 +17,29 @@ namespace CodeBase.Gameplay.Player
         public readonly CustomVelocity velocity;
 
         private readonly IInputService _inputService;
+        private readonly ProjectileFactory _projectileFactory;
         private readonly Stats _playerStats;
+
+        private const float INVULNERABILITY_TIME = 3f;
         
         private int _currentHealth;
         private float _invulnerabilityTimer;
-        private float INVULNERABILITY_TIME=3f;
+
+        private int _laserCharges;
+        private float _laserChargesReload;
+        
+        private float _gunReload;
+        
 
         public bool IsInvulnerable => _invulnerabilityTimer > 0;
+        public int LaserCharges => _laserCharges;
+        public float LaserChargesReload => _laserChargesReload;
         public event Action Died;
 
-        public PlayerModel(IInputService inputService, Stats playerStats)
+        public PlayerModel(IInputService inputService, ProjectileFactory projectileFactory, Stats playerStats)
         {
             _inputService = inputService;
+            _projectileFactory = projectileFactory;
             _playerStats = playerStats;
 
             transformData = new TransformData(Vector2.zero);
@@ -40,14 +53,25 @@ namespace CodeBase.Gameplay.Player
 
         public void Tick()
         {
-            if (_invulnerabilityTimer > 0)
-                _invulnerabilityTimer -= Time.deltaTime;
+            _invulnerabilityTimer -= Time.deltaTime;
+            HandleAttack();
+            
             if (!IsInvulnerable)
             {
                 velocity.AddForce(_inputService.GetMovement() * transformData.Direction * Time.deltaTime * _playerStats.GetStat<SpeedStat>().Value);
                 velocity.AddAngularForce(_inputService.GetRotation());
             }
             velocity.Tick(Time.deltaTime);
+        }
+
+        private void HandleAttack()
+        {
+            ReloadTick();
+            
+            if (_inputService.GetBaseAttack())
+                ShootBullet();
+            if (_inputService.GetSpecialAttack())
+                SpecialAttack();
         }
 
         public void TakeDamage()
@@ -60,6 +84,50 @@ namespace CodeBase.Gameplay.Player
                 {
                     Died?.Invoke();
                 }
+            }
+        }
+
+        private void ReloadTick()
+        {
+            _gunReload -= Time.deltaTime;
+
+            _laserChargesReload -= Time.deltaTime;
+            _laserChargesReload = Mathf.Max(0f, _laserChargesReload);
+
+            if (_laserChargesReload <= 0)
+            {
+                if (_laserCharges == _playerStats.GetStat<SkillStat>().MaxCharges)
+                {
+                    _laserChargesReload = 0f;
+                }
+                else
+                {
+                    _laserChargesReload = _playerStats.GetStat<SkillStat>().ReloadTime;
+                    _laserCharges++;
+
+                }
+            }
+        }
+
+        private void SpecialAttack()
+        {
+            if (_laserCharges > 0)
+            {
+                _laserCharges--;
+                _projectileFactory.CreateProjectile(_playerStats.GetStat<SkillStat>().ProjectileType,
+                    transformData.Position,
+                    transformData.RotationQuaternion);
+            }
+        }
+
+        private void ShootBullet()
+        {
+            if (_gunReload <= 0)
+            {
+                _gunReload = _playerStats.GetStat<WeaponStat>().ReloadTime;
+                _projectileFactory.CreateProjectile(_playerStats.GetStat<WeaponStat>().ProjectileType,
+                    transformData.Position,
+                    transformData.RotationQuaternion);
             }
         }
     }

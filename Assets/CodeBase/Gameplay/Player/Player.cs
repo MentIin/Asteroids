@@ -12,20 +12,18 @@ namespace CodeBase.Gameplay.Player
     public class Player : MonoBehaviour, IArenaMember, IDamageable, IPushable
     {
         private PlayerModel _playerModel;
-        private IInputService _inputService;
-        private ProjectileFactory _projectileFactory;
         [SerializeField] private ParticleSystem _particleSystem;
         
         public TransformData TransformData => _playerModel.transformData;
         public float Speed => _playerModel.velocity.Speed;
+        public int LaserCharges => _playerModel.LaserCharges;
+        public float LaserChargeReload => _playerModel.LaserChargesReload;
 
 
         [Inject]
         public void Construct(IInputService inputService, Stats playerStats, ProjectileFactory projectileFactory)
         {
-            _playerModel = new PlayerModel(inputService, playerStats);
-            _inputService = inputService;
-            _projectileFactory = projectileFactory;
+            _playerModel = new PlayerModel(inputService, projectileFactory, playerStats);
         }
         private void Start()
         {
@@ -36,10 +34,6 @@ namespace CodeBase.Gameplay.Player
         {
             _playerModel.Tick();
             transform.rotation = _playerModel.transformData.RotationQuaternion;
-            if (_inputService.GetBaseAttack())
-                ShootBullet();
-            if (_inputService.GetSpecialAttack())
-                SpecialAttack();
 
             if (!_particleSystem.isPlaying && _playerModel.IsInvulnerable)
             {
@@ -50,15 +44,7 @@ namespace CodeBase.Gameplay.Player
             }
         }
 
-        private void SpecialAttack()
-        {
-            _projectileFactory.CreateProjectile(ProjectileType.Laser, transform.position, transform.rotation);
-        }
-
-        private void ShootBullet()
-        {
-            _projectileFactory.CreateProjectile(ProjectileType.Bullet, transform.position, transform.rotation);
-        }
+        
 
         private void OnTriggerEnter2D(Collider2D other)
         {
