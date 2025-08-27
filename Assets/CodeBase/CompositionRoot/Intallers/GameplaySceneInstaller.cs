@@ -3,25 +3,39 @@ using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Player;
 using CodeBase.Gameplay.Services.SpawnService;
+using CodeBase.Gameplay.ViewModels;
+using CodeBase.Interfaces.Infrastructure.Services.UI;
+using CodeBase.UI.Factories;
 using Zenject;
 
-namespace CodeBase.Gameplay.Installers
+namespace CodeBase.CompositionRoot.Intallers
 {
     public class GameplaySceneInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
-            BindFactories();
+            BindGameFactories();
+            
+            BindUIFactory();
 
             BindSpawnService();
 
             BindArena();
             
             BindPlayerProvider();
+
+            BindViewModels();
             
             BindEntryPoint();
         }
 
+        private void BindViewModels()
+        {
+            Container.BindInterfacesAndSelfTo<PlayerViewModel>().AsSingle().NonLazy();
+        }
+        private void BindUIFactory() =>
+            Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
+        
         private void BindPlayerProvider()
         {
             Container.Bind<PlayerProvider>().To<PlayerProvider>().AsSingle();
@@ -38,7 +52,7 @@ namespace CodeBase.Gameplay.Installers
             Container.BindInterfacesAndSelfTo<Arena>().AsSingle();
         }
 
-        private void BindFactories()
+        private void BindGameFactories()
         {
             Container.Bind<PlayerFactory>().ToSelf().AsSingle();
             Container.Bind<EnemyFactory>().ToSelf().AsSingle();

@@ -9,6 +9,8 @@ namespace CodeBase.Gameplay.Physic
         private Vector2 _velocity;
         private float _angularVelocity;
 
+        public float Speed => _velocity.magnitude;
+
         public CustomVelocity(TransformData transformData)
         {
             _transformData = transformData;

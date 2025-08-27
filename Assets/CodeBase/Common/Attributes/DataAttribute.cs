@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeBase.UI.Binders.Main
+namespace CodeBase.Common.Attributes
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class DataAttribute : Attribute

@@ -1,4 +1,4 @@
-﻿namespace CodeBase.UI
+﻿namespace CodeBase.Interfaces.UI
 {
     public interface IViewModel
     {

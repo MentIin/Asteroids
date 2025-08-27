@@ -1,13 +1,14 @@
-﻿using UnityEngine;
-using Zenject;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
+using CodeBase.Common.Attributes;
+using CodeBase.Interfaces.UI;
 using UniRx;
-using CodeBase.UI.Binders.Main; 
+using UnityEngine;
+using Zenject;
 
-namespace CodeBase.UI
+namespace CodeBase.UI.Binders.Main
 {
     public class DataBinder : MonoBehaviour
     {
@@ -66,15 +67,7 @@ namespace CodeBase.UI
 
         private void BindData()
         {
-            var components = _targetView != null 
-                ? new[] { _targetView } 
-                : GetComponentsInChildren<Component>(true);
-
-            foreach (var component in components)
-            {
-                if (component == null) continue;
-                BindComponent(component);
-            }
+            BindComponent(_targetView);
         }
 
         private void BindComponent(UnityEngine.Object component)
@@ -209,7 +202,7 @@ namespace CodeBase.UI
                     var dataAttribute = field.GetCustomAttribute<DataAttribute>();
                     Debug.Log("    DataAttribute: " + (dataAttribute));
                     Debug.Log(expectedType + " " +field.FieldType);
-                    if (dataAttribute.Id == dataId)
+                    if (dataAttribute != null && dataAttribute.Id == dataId)
                     {
                         return type;
                     }

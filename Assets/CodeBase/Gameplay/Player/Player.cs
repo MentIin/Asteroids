@@ -16,6 +16,7 @@ namespace CodeBase.Gameplay.Player
         private IInputService _inputService;
         private ProjectileFactory _projectileFactory;
         public TransformData TransformData => _playerModel.transformData;
+        public float Speed => _playerModel.velocity.Speed;
 
 
         [Inject]

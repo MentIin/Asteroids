@@ -4,6 +4,7 @@ using CodeBase.Gameplay.Player;
 using CodeBase.Gameplay.Services.SpawnService;
 using CodeBase.Interfaces.Infrastructure.Services;
 using CodeBase.Interfaces.Infrastructure.Services.UI;
+using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Gameplay.EntryPoints

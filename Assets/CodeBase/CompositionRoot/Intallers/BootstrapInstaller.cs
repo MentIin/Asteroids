@@ -8,13 +8,11 @@ using CodeBase.Infrastructure.Services.PlayerProgressService;
 using CodeBase.Infrastructure.Services.RandomizerService;
 using CodeBase.Infrastructure.Services.StaticDataService;
 using CodeBase.Interfaces.Infrastructure.Services;
-using CodeBase.Interfaces.Infrastructure.Services.UI;
-using CodeBase.UI.Factories;
 using CodeBase.UI.ViewModels;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.CompositionRoot
+namespace CodeBase.CompositionRoot.Intallers
 {
     public class BootstrapInstaller : MonoInstaller
     {
@@ -39,7 +37,6 @@ namespace CodeBase.CompositionRoot
 
             BindAnalyticsService();
             
-            BindUIFactory();
             
             BindViewModels();
             
@@ -83,9 +80,6 @@ namespace CodeBase.CompositionRoot
         private void BindStaticDataService() => 
             Container.BindInterfacesAndSelfTo<StaticDataService>().AsSingle();
         
-
-        private void BindUIFactory() =>
-            Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
 
         private void BindRandomizeService() => 
             Container.BindInterfacesAndSelfTo<RandomizerService>().AsSingle();
