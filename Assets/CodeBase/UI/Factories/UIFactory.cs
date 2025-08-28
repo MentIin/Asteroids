@@ -21,5 +21,10 @@ namespace CodeBase.UI.Factories
             GameObject gameObject = _container.InstantiatePrefabResource(UIFactoryAssets.HUD);
             _mobileInputProvider.Register(gameObject.GetComponentInChildren<MobileInput>());
         }
+
+        public void CreateMainMenu()
+        {
+            GameObject gameObject = _container.InstantiatePrefabResource(UIFactoryAssets.MainMenu);
+        }
     }
 }

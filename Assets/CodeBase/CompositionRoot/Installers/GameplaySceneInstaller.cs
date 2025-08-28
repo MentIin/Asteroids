@@ -1,20 +1,25 @@
-using CodeBase.Gameplay.EntryPoints;
+using CodeBase.CompositionRoot.EntryPoints;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
-using CodeBase.Gameplay.Player;
 using CodeBase.Gameplay.Services.Providers;
 using CodeBase.Gameplay.Services.SpawnService;
 using CodeBase.Gameplay.ViewModels;
+using CodeBase.Infrastructure.Services.InputService;
 using CodeBase.Interfaces.Infrastructure.Services.UI;
+using CodeBase.UI.Controls;
 using CodeBase.UI.Factories;
 using Zenject;
 
-namespace CodeBase.CompositionRoot.Intallers
+namespace CodeBase.CompositionRoot.Installers
 {
     public class GameplaySceneInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
+            BindMobileInputProvider();
+            
+            BindInputService();
+            
             BindGameFactories();
             
             BindUIFactory();
@@ -66,6 +71,14 @@ namespace CodeBase.CompositionRoot.Intallers
             Container.BindInterfacesAndSelfTo<GameplayEntryPoint>()
                 .AsSingle()
                 .NonLazy();
+        }
+        
+        private void BindInputService() =>
+            Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
+        
+        private void BindMobileInputProvider()
+        {
+            Container.Bind<IMobileInputProvider>().To<MobileInputProvider>().AsSingle();
         }
     }
 }

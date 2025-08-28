@@ -32,11 +32,11 @@ namespace CodeBase.Infrastructure.Services.InputService
         {
             if (Input.anyKey)
             {
-                _mobileInputProvider.MobileInput.Hide();
+                _mobileInputProvider.MobileInput?.Hide();
                 _currentInputStrategy = new PCInputStrategy();
             }else if (Input.touchCount > 0)
             {
-                _mobileInputProvider.MobileInput.Show();
+                _mobileInputProvider.MobileInput?.Show();
                 _currentInputStrategy = new MobileInputStrategy(_mobileInputProvider);
             }
         }

@@ -3,7 +3,7 @@ using CodeBase.Interfaces.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
 using Zenject;
 
-namespace CodeBase.CompositionRoot
+namespace CodeBase.CompositionRoot.EntryPoints
 {
     public class BootstrapEntryPoint : IInitializable
     {
@@ -33,7 +33,7 @@ namespace CodeBase.CompositionRoot
             _staticDataService.Initialize();
             await _analyticsService.Initialize();
             await _adsService.Initialize();
-            await _sceneLoader.Load(SceneNames.GameplayScene);
+            await _sceneLoader.Load(SceneNames.MainMenuScene);
             
             _adsService.ShowInterstitial(null);
         }

@@ -1,13 +1,11 @@
 ﻿using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
-using CodeBase.Gameplay.Player;
 using CodeBase.Gameplay.Services.SpawnService;
 using CodeBase.Interfaces.Infrastructure.Services;
 using CodeBase.Interfaces.Infrastructure.Services.UI;
-using UnityEngine;
 using Zenject;
 
-namespace CodeBase.Gameplay.EntryPoints
+namespace CodeBase.CompositionRoot.EntryPoints
 {
     public class GameplayEntryPoint : IInitializable
     {
@@ -34,7 +32,7 @@ namespace CodeBase.Gameplay.EntryPoints
         {
             _scoreService.ResetScore();
             
-            Player.Player player = _playerFactory.CreatePlayer();
+            Gameplay.Player.Player player = _playerFactory.CreatePlayer();
             _arena.Initialize();
             _cameraService.Follow(player.transform);
             

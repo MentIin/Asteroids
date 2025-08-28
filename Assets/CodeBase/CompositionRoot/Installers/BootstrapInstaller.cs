@@ -1,11 +1,12 @@
+using CodeBase.CompositionRoot.EntryPoints;
 using CodeBase.Infrastructure.SceneManagement;
 using CodeBase.Infrastructure.Services.AdsService;
 using CodeBase.Infrastructure.Services.AnalyticsService;
 using CodeBase.Infrastructure.Services.Camera;
 using CodeBase.Infrastructure.Services.InputService;
 using CodeBase.Infrastructure.Services.LogService;
-using CodeBase.Infrastructure.Services.PlayerProgressService;
 using CodeBase.Infrastructure.Services.RandomizerService;
+using CodeBase.Infrastructure.Services.ScoreService;
 using CodeBase.Infrastructure.Services.StaticDataService;
 using CodeBase.Interfaces.Infrastructure.Services;
 using CodeBase.Interfaces.Infrastructure.Services.UI;
@@ -14,7 +15,7 @@ using CodeBase.UI.ViewModels;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.CompositionRoot.Intallers
+namespace CodeBase.CompositionRoot.Installers
 {
     public class BootstrapInstaller : MonoInstaller
     {
@@ -33,10 +34,6 @@ namespace CodeBase.CompositionRoot.Intallers
             
             BindPlayerScoreService();
 
-            BindMobileInputProvider();
-            
-            BindInputService();
-
             BindAdsService();
 
             BindAnalyticsService();
@@ -47,10 +44,6 @@ namespace CodeBase.CompositionRoot.Intallers
             BindGameBootstrapper();
         }
 
-        private void BindMobileInputProvider()
-        {
-            Container.Bind<IMobileInputProvider>().To<MobileInputProvider>().AsSingle();
-        }
 
         private void BindViewModels()
         {
@@ -62,9 +55,6 @@ namespace CodeBase.CompositionRoot.Intallers
             Container.Bind<ILogService>().To<LogService>().AsSingle();
         }
 
-
-        private void BindInputService() =>
-            Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
 
         private void BindCamera()
         {

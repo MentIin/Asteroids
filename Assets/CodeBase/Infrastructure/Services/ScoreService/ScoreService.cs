@@ -1,7 +1,7 @@
 ﻿using System;
 using CodeBase.Interfaces.Infrastructure.Services;
 
-namespace CodeBase.Infrastructure.Services.PlayerProgressService
+namespace CodeBase.Infrastructure.Services.ScoreService
 {
     public class ScoreService : IScoreService
     {
