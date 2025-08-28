@@ -8,6 +8,8 @@ using CodeBase.Infrastructure.Services.PlayerProgressService;
 using CodeBase.Infrastructure.Services.RandomizerService;
 using CodeBase.Infrastructure.Services.StaticDataService;
 using CodeBase.Interfaces.Infrastructure.Services;
+using CodeBase.Interfaces.Infrastructure.Services.UI;
+using CodeBase.UI.Controls;
 using CodeBase.UI.ViewModels;
 using UnityEngine;
 using Zenject;
@@ -30,6 +32,8 @@ namespace CodeBase.CompositionRoot.Intallers
             BindRandomizeService();
             
             BindPlayerScoreService();
+
+            BindMobileInputProvider();
             
             BindInputService();
 
@@ -43,6 +47,11 @@ namespace CodeBase.CompositionRoot.Intallers
             BindGameBootstrapper();
         }
 
+        private void BindMobileInputProvider()
+        {
+            Container.Bind<IMobileInputProvider>().To<MobileInputProvider>().AsSingle();
+        }
+
         private void BindViewModels()
         {
             Container.BindInterfacesAndSelfTo<ScoreViewModel>().AsSingle().NonLazy();
@@ -52,10 +61,10 @@ namespace CodeBase.CompositionRoot.Intallers
         {
             Container.Bind<ILogService>().To<LogService>().AsSingle();
         }
-        
+
 
         private void BindInputService() =>
-            Container.Bind<IInputService>().To<PCInputService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
 
         private void BindCamera()
         {
