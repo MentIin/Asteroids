@@ -100,7 +100,7 @@ namespace CodeBase.CompositionRoot.Intallers
         }
 
         private void BindAdsService() => 
-            Container.BindInterfacesAndSelfTo<AdsService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelPlayAdsService>().AsSingle();
 
         private void BindAnalyticsService() => 
             Container.BindInterfacesTo<AnalyticsService>().AsSingle();

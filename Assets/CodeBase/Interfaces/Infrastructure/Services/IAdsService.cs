@@ -5,9 +5,8 @@ namespace CodeBase.Interfaces.Infrastructure.Services
 {
     public interface IAdsService
     {
-        event Action RewardedVideoReady;
-        bool IsRewardedVideoReady { get; }
+        bool IsInterstitialAvailable { get; }
         UniTask Initialize();
-        void ShowRewardedVideo(Action onVideoFinished);
+        void ShowInterstitial(Action callback);
     }
 }

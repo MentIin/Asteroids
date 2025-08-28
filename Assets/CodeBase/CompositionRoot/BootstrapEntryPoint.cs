@@ -34,6 +34,8 @@ namespace CodeBase.CompositionRoot
             await _analyticsService.Initialize();
             await _adsService.Initialize();
             await _sceneLoader.Load(SceneNames.GameplayScene);
+            
+            _adsService.ShowInterstitial(null);
         }
     }
 }

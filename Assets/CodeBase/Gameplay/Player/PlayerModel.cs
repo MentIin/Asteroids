@@ -67,11 +67,13 @@ namespace CodeBase.Gameplay.Player
         private void HandleAttack()
         {
             ReloadTick();
-            
-            if (_inputService.GetBaseAttack())
-                ShootBullet();
-            if (_inputService.GetSpecialAttack())
-                SpecialAttack();
+            if (!IsInvulnerable)
+            {
+                if (_inputService.GetBaseAttack())
+                    ShootBullet();
+                if (_inputService.GetSpecialAttack())
+                    SpecialAttack();
+            }
         }
 
         public void TakeDamage()
