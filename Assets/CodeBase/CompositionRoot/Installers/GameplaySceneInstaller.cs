@@ -16,8 +16,6 @@ namespace CodeBase.CompositionRoot.Installers
     {
         public override void InstallBindings()
         {
-            BindMobileInputProvider();
-            
             BindInputService();
             
             BindGameFactories();
@@ -75,10 +73,5 @@ namespace CodeBase.CompositionRoot.Installers
         
         private void BindInputService() =>
             Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
-        
-        private void BindMobileInputProvider()
-        {
-            Container.Bind<IMobileInputProvider>().To<MobileInputProvider>().AsSingle();
-        }
     }
 }

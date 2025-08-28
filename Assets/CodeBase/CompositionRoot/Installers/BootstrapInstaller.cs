@@ -24,6 +24,8 @@ namespace CodeBase.CompositionRoot.Installers
         {
             BindLogService();
             
+            BindMobileInputProvider();
+            
             BindCamera();
             
             BindSceneLoader();
@@ -38,12 +40,10 @@ namespace CodeBase.CompositionRoot.Installers
 
             BindAnalyticsService();
             
-            
             BindViewModels();
             
             BindGameBootstrapper();
         }
-
 
         private void BindViewModels()
         {
@@ -94,5 +94,10 @@ namespace CodeBase.CompositionRoot.Installers
 
         private void BindAnalyticsService() => 
             Container.BindInterfacesTo<AnalyticsService>().AsSingle();
+                
+        private void BindMobileInputProvider()
+        {
+            Container.Bind<IMobileInputProvider>().To<MobileInputProvider>().AsSingle();
+        }
     }
 }
