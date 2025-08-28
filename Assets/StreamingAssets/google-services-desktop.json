@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "125695220365",
+    "project_id": "test-9b3fa",
+    "storage_bucket": "test-9b3fa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125695220365:android:0c76cec56204b99f6460c4",
+        "android_client_info": {
+          "package_name": "com.mentlin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAo_SnrE1mliqrmuOBJjsJ7-kgzkt61cd0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

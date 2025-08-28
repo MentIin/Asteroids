@@ -67,3 +67,4 @@ SerializedBuildInfo/*
 Assets/StreamingAssets/build_info
 UserSettings/**
 MemoryCaptures/**
+Assets/Resources/Configs/Analitic/google-services.json
