@@ -10,16 +10,11 @@ namespace CodeBase.Gameplay.Factories
     {
         private readonly DiContainer _container;
         private readonly IStaticDataService _staticDataService;
-        private readonly Arena _arena;
-        private readonly IRandomizerService _randomizerService;
 
-        public EnemyFactory(DiContainer container, IStaticDataService staticDataService, Arena arena,
-            IRandomizerService randomizerService)
+        public EnemyFactory(DiContainer container, IStaticDataService staticDataService)
         {
             _container = container;
             _staticDataService = staticDataService;
-            _arena = arena;
-            _randomizerService = randomizerService;
         }
 
         public Enemy SpawnEnemy(EnemyType type)
@@ -30,11 +25,6 @@ namespace CodeBase.Gameplay.Factories
             Enemy component = _container.InstantiatePrefabResourceForComponent<Enemy>(
                 enemyConfig.PrefabPath, additionalArgs
             );
-            
-            if (component is IArenaMember member)
-            {
-                _arena.RegisterMember(member);
-            }
 
             return component;
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data;
+using CodeBase.Gameplay.Enemies;
 using CodeBase.Gameplay.Player;
 using CodeBase.Gameplay.Services.Providers;
 using CodeBase.Interfaces.Infrastructure.Services;
@@ -18,18 +19,21 @@ namespace CodeBase.Gameplay.Enviroment
         public Vector2 Center => Extends;
         
         private List<IArenaMember> _members = new List<IArenaMember>();
+        private Dictionary<IArenaMember, bool> _canBeTeleportedDictionary;
         private IArenaMember _coreMember;
 
         public Arena(IStaticDataService staticDataService, PlayerProvider playerProvider)
         {
             _staticDataService = staticDataService;
             _playerProvider = playerProvider;
+            _canBeTeleportedDictionary = new Dictionary<IArenaMember, bool>();
         }
 
         public void Initialize()
         {
             Size = _staticDataService.ForMap().Size;
             _coreMember = _playerProvider.Player;
+            _canBeTeleportedDictionary[_coreMember] = true;
         }
         public void Tick()
         {
@@ -57,7 +61,18 @@ namespace CodeBase.Gameplay.Enviroment
 
         private void HandleMember(IArenaMember member)
         {
-            TeleportIfOutsideArena(member.TransformData);
+            if (_canBeTeleportedDictionary[member])
+            {
+                TeleportIfOutsideArena(member.TransformData);
+            }
+            if (!_canBeTeleportedDictionary[member])
+            {
+                if (CheckIfInsideArenaBounds(member.TransformData))
+                {
+                    _canBeTeleportedDictionary[member] = true;
+                }
+            }
+            
             member.transform.position = GetViewPosition(member.TransformData);
         }
 
@@ -70,8 +85,19 @@ namespace CodeBase.Gameplay.Enviroment
             else if (transformData.Position.y > Size.y) transformData.Position.y -= Size.y;
         }
 
+        private bool CheckIfInsideArenaBounds(TransformData transformData)
+        {
+            if (transformData.Position.x < 0) return false;
+            if (transformData.Position.x > Size.x) return false;
+
+            if (transformData.Position.y < 0) return false;
+            if (transformData.Position.y > Size.y) return false;
+            return true;
+        }
+
         public void RegisterMember(IArenaMember arenaMember)
         {
+            _canBeTeleportedDictionary[arenaMember] = false;
             _members.Add(arenaMember);
         }
 
@@ -101,6 +127,12 @@ namespace CodeBase.Gameplay.Enviroment
             }
             
             return res;
+        }
+
+        public void RemoveMember(IArenaMember member)
+        {
+            _canBeTeleportedDictionary.Remove(member);
+            _members.Remove(member);
         }
     }
 }

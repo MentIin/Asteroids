@@ -13,9 +13,9 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
 {
     public class EnemySpawnerOnEnemyDeath : IInitializable, IDisposable
     {
+        private readonly EnemyPoolFactory _poolFactory;
         private readonly Arena _arena;
         private readonly SignalBus _signalBus;
-        private readonly EnemyFactory _factory;
         private readonly IRandomizerService _randomizerService;
         private EnemyType _observingEnemyType;
         private EnemyType _spawningEnemyType;
@@ -24,12 +24,12 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
         private int _maxEnemies;
         private int _spawnPerDeath;
 
-        public EnemySpawnerOnEnemyDeath(EnemyFactory factory, IRandomizerService randomizerService,
+        public EnemySpawnerOnEnemyDeath(EnemyPoolFactory poolFactory, IRandomizerService randomizerService,
             Arena arena, SignalBus signalBus)
         {
+            _poolFactory = poolFactory;
             _arena = arena;
             _signalBus = signalBus;
-            _factory = factory;
             _randomizerService = randomizerService;
             _observingEnemyType = EnemyType.None;
         }
@@ -58,12 +58,7 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
             _spawningEnemyType = spawningType;
             _maxEnemies = max;
             
-            _enemyPool = new ObjectPool<Enemy>(
-                () => _factory.SpawnEnemy(_spawningEnemyType),
-                onGet: enemy =>  enemy.gameObject.SetActive(true),
-                onRelease: enemy => enemy.gameObject.SetActive(false),
-                onDestroy: enemy => GameObject.Destroy(enemy.gameObject),
-                maxSize: _maxEnemies);
+            _enemyPool = _poolFactory.Create(spawningType, max, _arena);
             _enemyPool.PreWarm(_maxEnemies);
         }
 

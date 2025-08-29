@@ -14,10 +14,10 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
 {
     public class EnemySpawner : IDisposable
     {
-        private const float ADDITIONAL_OFFSET = 20f;
-        
+        private const float ADDITIONAL_OFFSET = 200f;
+
+        private readonly EnemyPoolFactory _poolFactory;
         private readonly Arena _arena;
-        private readonly EnemyFactory _factory;
         private readonly IRandomizerService _randomizerService;
         private EnemyType _enemyType;
         private float _spawnRate = 1f;
@@ -29,12 +29,22 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
 
         private int _maxEnemies;
 
-        public EnemySpawner(EnemyFactory factory, IRandomizerService randomizerService,
+        public EnemySpawner(EnemyPoolFactory poolFactory, IRandomizerService randomizerService,
             Arena arena)
         {
+            _poolFactory = poolFactory;
             _arena = arena;
-            _factory = factory;
             _randomizerService = randomizerService;
+        }
+
+        public void SetSpawnData(EnemyType type, float newRate, int max)
+        {
+            _enemyType = type;
+            _maxEnemies = max;
+            _spawnRate = newRate;
+
+            _enemyPool = _poolFactory.Create(type, max, _arena);
+            _enemyPool.PreWarm(_maxEnemies);
         }
 
         public void StartSpawning()
@@ -56,25 +66,6 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
             _isSpawning = false;
         }
 
-        public void SetSpawnData(EnemyType type, float newRate, int max)
-        {
-            _enemyType = type;
-            _maxEnemies = max;
-            _spawnRate = newRate;
-            
-            _enemyPool = new ObjectPool<Enemy>(
-                () => _factory.SpawnEnemy(_enemyType),
-                onGet: enemy =>  enemy.gameObject.SetActive(true),
-                onRelease: enemy => enemy.gameObject.SetActive(false),
-                onDestroy: enemy =>
-                {
-                    if (enemy != null) Object.Destroy(enemy.gameObject);
-                },
-                maxSize: _maxEnemies
-                );
-            _enemyPool.PreWarm(_maxEnemies);
-        }
-
         private async UniTaskVoid SpawnLoop(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
@@ -90,7 +81,8 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
         {
             if (_enemyPool.CountInactive == 0)
                 return;
-            Vector2 pos = _randomizerService.GetRandomPositionOnBoundsEdge(_arena.Size, _arena.Center, ADDITIONAL_OFFSET);
+            Vector2 pos = _randomizerService.GetRandomPositionOnBoundsEdge(_arena.Size,
+                _arena.Center, ADDITIONAL_OFFSET);
 
             Enemy enemy = _enemyPool.Get();
             enemy.TransformData.Position = pos;

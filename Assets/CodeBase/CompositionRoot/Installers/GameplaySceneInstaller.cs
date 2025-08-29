@@ -1,6 +1,7 @@
 using CodeBase.CompositionRoot.EntryPoints;
 using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
+using CodeBase.Gameplay.ObjectPool;
 using CodeBase.Gameplay.Services.Providers;
 using CodeBase.Gameplay.Services.SpawnService;
 using CodeBase.Gameplay.ViewModels;
@@ -58,6 +59,7 @@ namespace CodeBase.CompositionRoot.Installers
             Container.Bind<EnemyFactory>().ToSelf().AsSingle();
             Container.Bind<SpawnerFactory>().ToSelf().AsSingle();
             Container.Bind<ProjectileFactory>().ToSelf().AsSingle();
+            Container.Bind<EnemyPoolFactory>().ToSelf().AsSingle();
         }
 
         private void BindEntryPoint()
