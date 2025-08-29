@@ -1,4 +1,5 @@
-﻿using CodeBase.Data.StaticData;
+﻿using CodeBase.Data.Signals;
+using CodeBase.Data.StaticData;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Services.Providers;
 using CodeBase.Interfaces.Infrastructure.Services;
@@ -12,13 +13,13 @@ namespace CodeBase.Gameplay.Enemies.Ufo
         private UfoModel _model;
         private IScoreService _scoreService;
         private EnemyConfig _config;
+        private SignalBus _signalBus;
 
         [Inject]
-        public void Construct(EnemyConfig config, PlayerProvider playerProvider, EnemyFactory factory,
-            IScoreService scoreService)
+        public void Construct(EnemyConfig config, PlayerProvider playerProvider, SignalBus signalBus)
         {
             _config = config;
-            _scoreService = scoreService;
+            _signalBus = signalBus;
             _model = new UfoModel(config.Stats, playerProvider, transform);
             TransformData = _model.transformData;
         }
@@ -42,8 +43,8 @@ namespace CodeBase.Gameplay.Enemies.Ufo
 
         public void TakeDamage()
         {
-            _scoreService.AddScore(_config.ScoreReward);
-           ReturnToPool();
+            _signalBus.Fire(new EnemyDiedSignal(_config, _model.transformData));
+            ReturnToPool();
         }
 
         public void Push(Vector2 forceVector)

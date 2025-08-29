@@ -2,7 +2,6 @@
 using CodeBase.Common.Attributes;
 using CodeBase.Interfaces.Infrastructure.Services;
 using CodeBase.Interfaces.UI;
-using CodeBase.UI.Binders.Main;
 using UniRx;
 using UnityEngine;
 using Zenject;

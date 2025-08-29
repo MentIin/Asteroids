@@ -15,5 +15,10 @@ namespace CodeBase.Gameplay.Factories
         {
             return _container.Instantiate<EnemySpawner>();
         }
+
+        public EnemySpawnerOnEnemyDeath CreateEnemySpawnerOnEnemyDeath()
+        {
+            return _container.Instantiate<EnemySpawnerOnEnemyDeath>();
+        }
     }
 }

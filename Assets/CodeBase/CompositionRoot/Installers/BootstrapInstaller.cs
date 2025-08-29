@@ -1,4 +1,5 @@
 using CodeBase.CompositionRoot.EntryPoints;
+using CodeBase.Data.Signals;
 using CodeBase.Infrastructure.SceneManagement;
 using CodeBase.Infrastructure.Services.AdsService;
 using CodeBase.Infrastructure.Services.AnalyticsService;
@@ -39,14 +40,23 @@ namespace CodeBase.CompositionRoot.Installers
             BindRandomizeService();
             
             BindPlayerScoreService();
-
+            
             BindAdsService();
 
             BindAnalyticsService();
-            
+
             BindViewModels();
+
+            InstallSignalBus();
             
             BindGameBootstrapper();
+        }
+
+        private void InstallSignalBus()
+        {
+            SignalBusInstaller.Install(Container);
+            Container.DeclareSignal<PlayerDiedSignal>();
+            Container.DeclareSignal<EnemyDiedSignal>();
         }
 
         private void BindInputDetector()
@@ -91,8 +101,7 @@ namespace CodeBase.CompositionRoot.Installers
 
         private void BindPlayerScoreService()
         {
-            Container
-                .Bind<IScoreService>().To<ScoreService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ScoreService>().AsSingle();
         }
 
         private void BindAdsService() => 

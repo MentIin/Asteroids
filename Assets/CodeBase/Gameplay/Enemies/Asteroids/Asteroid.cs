@@ -1,28 +1,30 @@
-﻿using CodeBase.Data.StaticData;
-using CodeBase.Interfaces.Infrastructure.Services;
+﻿using CodeBase.Data.Signals;
+using CodeBase.Data.StaticData;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.Gameplay.Enemies.Asteroids.Small
+namespace CodeBase.Gameplay.Enemies.Asteroids
 {
-    public class SmallAsteroid : Enemy, IDamageable, IPushable
+    public class Asteroid : Enemy, IDamageable, IPushable
     {
         private AsteroidModel _model;
         private EnemyConfig _config;
-        private IScoreService _scoreService;
+        private SignalBus _signalBus;
 
         [Inject]
-        public void Construct(EnemyConfig config, IScoreService scoreService)
+        public void Construct(EnemyConfig config, SignalBus signalBus)
         {
-            _scoreService = scoreService;
             _config = config;
             _model = new AsteroidModel(config.Stats);
             TransformData = _model.transformData;
+            _signalBus = signalBus;
         }
+
         private void Update()
         {
             _model.Tick();
         }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out IPushable pushable))
@@ -37,7 +39,7 @@ namespace CodeBase.Gameplay.Enemies.Asteroids.Small
 
         public void TakeDamage()
         {
-            _scoreService.AddScore(_config.ScoreReward);
+            _signalBus.Fire(new EnemyDiedSignal(_config, _model.transformData));
             ReturnToPool();
         }
 

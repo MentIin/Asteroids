@@ -14,6 +14,10 @@ namespace CodeBase.Infrastructure.Services.AnalyticsService
 
         public async UniTask Initialize()
         {
+#if UNITY_EDITOR
+            Debug.Log("Firebase Analytics would be initialized in build");
+            _isInitialized = true;
+#else
             var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
             
             if (dependencyStatus == DependencyStatus.Available)
@@ -27,6 +31,7 @@ namespace CodeBase.Infrastructure.Services.AnalyticsService
                 Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
                 _isInitialized = false;
             }
+#endif
         }
 
         public UniTask SendEvent(string eventName)
