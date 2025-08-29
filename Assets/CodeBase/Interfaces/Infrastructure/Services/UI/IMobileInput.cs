@@ -1,4 +1,6 @@
-﻿namespace CodeBase.Interfaces.Infrastructure.Services.UI
+﻿using System;
+
+namespace CodeBase.Interfaces.Infrastructure.Services.UI
 {
     public interface IMobileInput
     {
@@ -6,6 +8,7 @@
         float Rotation { get; }
         bool Attack { get; }
         bool Skill { get; }
+        public event Action Destroyed;
         void Show();
         void Hide();
     }

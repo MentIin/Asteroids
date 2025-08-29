@@ -14,7 +14,7 @@ namespace CodeBase.CompositionRoot.Installers
         }
 
         private void BindUIFactory() =>
-            Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UIFactory>().AsSingle();
         
         private void BindEntryPoint()
         {

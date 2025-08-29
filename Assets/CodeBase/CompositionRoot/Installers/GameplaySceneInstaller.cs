@@ -4,9 +4,6 @@ using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Services.Providers;
 using CodeBase.Gameplay.Services.SpawnService;
 using CodeBase.Gameplay.ViewModels;
-using CodeBase.Infrastructure.Services.InputService;
-using CodeBase.Interfaces.Infrastructure.Services.UI;
-using CodeBase.UI.Controls;
 using CodeBase.UI.Factories;
 using Zenject;
 
@@ -35,8 +32,9 @@ namespace CodeBase.CompositionRoot.Installers
         {
             Container.BindInterfacesAndSelfTo<PlayerViewModel>().AsSingle().NonLazy();
         }
+        
         private void BindUIFactory() =>
-            Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UIFactory>().AsSingle();
         
         private void BindPlayerProvider()
         {
@@ -45,7 +43,7 @@ namespace CodeBase.CompositionRoot.Installers
 
         private void BindSpawnService()
         {
-            Container.Bind<EnemySpawnService>().To<EnemySpawnService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemySpawnService>().AsSingle();
         }
 
         private void BindArena()

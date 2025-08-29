@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using CodeBase.Data.StaticData;
 using CodeBase.Gameplay.Enemies;
 using CodeBase.Gameplay.Enviroment;
@@ -7,10 +8,11 @@ using CodeBase.Gameplay.ObjectPool;
 using CodeBase.Interfaces.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace CodeBase.Gameplay.Services.SpawnService.Spawners
 {
-    public class EnemySpawner
+    public class EnemySpawner : IDisposable
     {
         private const float ADDITIONAL_OFFSET = 20f;
         
@@ -64,8 +66,12 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
                 () => _factory.SpawnEnemy(_enemyType),
                 onGet: enemy =>  enemy.gameObject.SetActive(true),
                 onRelease: enemy => enemy.gameObject.SetActive(false),
-                onDestroy: enemy => GameObject.Destroy(enemy.gameObject),
-                maxSize: _maxEnemies);
+                onDestroy: enemy =>
+                {
+                    if (enemy != null) Object.Destroy(enemy.gameObject);
+                },
+                maxSize: _maxEnemies
+                );
             _enemyPool.PreWarm(_maxEnemies);
         }
 
@@ -100,6 +106,10 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
             float angle = Mathf.Atan2(directionToRandomPoint.y, directionToRandomPoint.x) * Mathf.Rad2Deg;
             return angle;
         }
-        
+
+        public void Dispose()
+        {
+            _enemyPool.Clear();
+        }
     }
 }

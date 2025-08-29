@@ -1,4 +1,5 @@
-﻿using CodeBase.Interfaces.Infrastructure.Services.UI;
+﻿using System;
+using CodeBase.Interfaces.Infrastructure.Services.UI;
 using CodeBase.UI.Controls.CodeBase.UI.Controls;
 using UnityEngine;
 
@@ -15,7 +16,13 @@ namespace CodeBase.UI.Controls
         public float Rotation => MoveDirection.x;
         public bool Attack => _attack.IsPressed;
         public bool Skill => _skill.IsPressed;
+        public event Action Destroyed;
         public void Show() => gameObject.SetActive(true);
         public void Hide() => gameObject.SetActive(false);
+
+        private void OnDestroy()
+        {
+            Destroyed?.Invoke();
+        }
     }
 }

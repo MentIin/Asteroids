@@ -1,4 +1,6 @@
-﻿using CodeBase.Gameplay.Enviroment;
+﻿using System;
+using CodeBase.Data.Signals;
+using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Services.SpawnService;
 using CodeBase.Interfaces.Infrastructure.Services;
@@ -39,7 +41,6 @@ namespace CodeBase.CompositionRoot.EntryPoints
             _enemySpawnService.StartSpawn();
             
             _uiFactory.CreateHUD();
-            
         }
     }
 }

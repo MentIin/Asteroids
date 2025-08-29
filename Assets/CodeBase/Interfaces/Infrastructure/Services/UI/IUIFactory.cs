@@ -4,5 +4,6 @@
     {
         void CreateHUD();
         void CreateMainMenu();
+        void CreateDeathScreen();
     }
 }

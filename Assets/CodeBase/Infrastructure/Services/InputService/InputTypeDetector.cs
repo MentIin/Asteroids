@@ -20,12 +20,21 @@ namespace CodeBase.Infrastructure.Services.InputService
         {
             if (Input.anyKey)
             {
-                _mobileInputProvider.MobileInput?.Hide();
+                SetMobileInputVisability(false);
                 _inputService.SetInputType(InputType.Keyboard);
             }else if (Input.touchCount > 0)
             {
-                _mobileInputProvider.MobileInput?.Show();
+                SetMobileInputVisability(true);
                 _inputService.SetInputType(InputType.Touchscreen);
+            }
+        }
+
+        private void SetMobileInputVisability(bool to)
+        {
+            if (_mobileInputProvider.Available)
+            {
+                if (to == true) _mobileInputProvider.MobileInput.Show();
+                else _mobileInputProvider.MobileInput.Hide();
             }
         }
     }
