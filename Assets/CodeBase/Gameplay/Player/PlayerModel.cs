@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CodeBase.Data;
 using CodeBase.Data.StaticData;
 using CodeBase.Data.StatsSystem;
@@ -6,6 +7,7 @@ using CodeBase.Data.StatsSystem.Main;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Physic;
 using CodeBase.Interfaces.Infrastructure.Services;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -23,7 +25,6 @@ namespace CodeBase.Gameplay.Player
         private const float INVULNERABILITY_TIME = 3f;
         
         private int _currentHealth;
-        private float _invulnerabilityTimer;
 
         private int _laserCharges;
         private float _laserChargesReload;
@@ -31,10 +32,13 @@ namespace CodeBase.Gameplay.Player
         private float _gunReload;
         
 
-        public bool IsInvulnerable => _invulnerabilityTimer > 0;
+        public bool IsInvulnerable { get; private set; }
         public int LaserCharges => _laserCharges;
         public float LaserChargesReload => _laserChargesReload;
         public event Action Died;
+
+        public event Action BecomeInvulnerable;
+        public event Action StopBeingInvulnerable;
 
         public PlayerModel(IInputService inputService, ProjectileFactory projectileFactory, Stats playerStats)
         {
@@ -53,7 +57,6 @@ namespace CodeBase.Gameplay.Player
 
         public void Tick()
         {
-            _invulnerabilityTimer -= Time.deltaTime;
             HandleAttack();
             
             if (!IsInvulnerable)
@@ -81,7 +84,7 @@ namespace CodeBase.Gameplay.Player
             if (!IsInvulnerable)
             {
                 _currentHealth--;
-                _invulnerabilityTimer = INVULNERABILITY_TIME;
+                Invulnerability();
                 if (_currentHealth <= 0)
                 {
                     Died?.Invoke();
@@ -89,6 +92,14 @@ namespace CodeBase.Gameplay.Player
             }
         }
 
+        private async UniTask Invulnerability()
+        {
+            BecomeInvulnerable?.Invoke();
+            IsInvulnerable = true;
+            await UniTask.WaitForSeconds(INVULNERABILITY_TIME);
+            StopBeingInvulnerable?.Invoke();
+            IsInvulnerable = false;
+        }
         private void ReloadTick()
         {
             _gunReload -= Time.deltaTime;

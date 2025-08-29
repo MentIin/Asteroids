@@ -4974,6 +4974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0600b1d2f924427ca8d60be3cd46f4e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 309897298647199848}
   _particleSystem: {fileID: 5377209287186895941}
 --- !u!1 &899106403363970525
 GameObject:
