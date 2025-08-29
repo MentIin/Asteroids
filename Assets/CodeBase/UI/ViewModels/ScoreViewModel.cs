@@ -22,7 +22,6 @@ namespace CodeBase.UI.ViewModels
         public void Initialize()
         {
             OnScoreChanged();
-            Debug.Log("ScoreViewModel Initialize with score: " + _scoreService.Score);
             _scoreService.ScoreChanged += OnScoreChanged;
         }
 

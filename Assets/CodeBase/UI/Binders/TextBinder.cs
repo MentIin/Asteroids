@@ -19,7 +19,6 @@ namespace CodeBase.UI.Binders
         }
         public void Bind()
         {
-            Debug.Log("TextBinder Bind: " + _reactiveProperty.Value);
             this.OnNext(_reactiveProperty.Value);
             _handle = _reactiveProperty.Subscribe(this);
         }
