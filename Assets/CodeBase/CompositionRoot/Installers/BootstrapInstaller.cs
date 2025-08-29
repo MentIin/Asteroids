@@ -93,7 +93,7 @@ namespace CodeBase.CompositionRoot.Installers
             Container.BindInterfacesAndSelfTo<LevelPlayAdsService>().AsSingle();
 
         private void BindAnalyticsService() => 
-            Container.BindInterfacesTo<AnalyticsService>().AsSingle();
+            Container.BindInterfacesTo<FirebaseAnalyticsService>().AsSingle();
                 
         private void BindMobileInputProvider()
         {
