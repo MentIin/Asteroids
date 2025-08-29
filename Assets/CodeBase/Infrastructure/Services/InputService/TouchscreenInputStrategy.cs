@@ -2,11 +2,11 @@
 
 namespace CodeBase.Infrastructure.Services.InputService
 {
-    public class MobileInputStrategy : IInputStrategy
+    public class TouchscreenInputStrategy : IInputStrategy
     {
         private readonly IMobileInputProvider _mobileInputProvider;
 
-        public MobileInputStrategy(IMobileInputProvider mobileInputProvider)
+        public TouchscreenInputStrategy(IMobileInputProvider mobileInputProvider)
         {
             _mobileInputProvider = mobileInputProvider;
         }

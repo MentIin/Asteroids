@@ -2,7 +2,7 @@
 
 namespace CodeBase.Infrastructure.Services.InputService
 {
-    public class PCInputStrategy : IInputStrategy
+    public class KeyboardInputStrategy : IInputStrategy
     {
         public float GetMovement() => Input.GetAxis("Vertical");
 
