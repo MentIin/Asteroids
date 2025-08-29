@@ -22,6 +22,10 @@ namespace CodeBase.CompositionRoot.Installers
         [SerializeField] private GameObject _cameraPrefab;
         public override void InstallBindings()
         {
+            BindInputService();
+
+            BindInputDetector();
+
             BindLogService();
             
             BindMobileInputProvider();
@@ -45,6 +49,11 @@ namespace CodeBase.CompositionRoot.Installers
             BindGameBootstrapper();
         }
 
+        private void BindInputDetector()
+        {
+            Container.BindInterfacesAndSelfTo<InputTypeDetector>().AsSingle();
+        }
+
         private void BindViewModels()
         {
             Container.BindInterfacesAndSelfTo<ScoreViewModel>().AsSingle().NonLazy();
@@ -54,8 +63,6 @@ namespace CodeBase.CompositionRoot.Installers
         {
             Container.Bind<ILogService>().To<LogService>().AsSingle();
         }
-
-
         private void BindCamera()
         {
             Container.Bind<Camera>().FromComponentInNewPrefab(_cameraPrefab)
@@ -64,7 +71,6 @@ namespace CodeBase.CompositionRoot.Installers
 
             Container.BindInterfacesAndSelfTo<CameraService>().AsSingle();
         }
-
 
         private void BindGameBootstrapper()
         {
@@ -99,5 +105,7 @@ namespace CodeBase.CompositionRoot.Installers
         {
             Container.Bind<IMobileInputProvider>().To<MobileInputProvider>().AsSingle();
         }
+        private void BindInputService() =>
+            Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
     }
 }

@@ -29,11 +29,9 @@ namespace CodeBase.Infrastructure.Services.InputService
             switch (type)
             {
                 case InputType.Touchscreen:
-                    _mobileInputProvider.MobileInput?.Show();
                     _currentInputStrategy = new TouchscreenInputStrategy(_mobileInputProvider);
                     break;
                 case InputType.Keyboard:
-                    _mobileInputProvider.MobileInput?.Hide();
                     _currentInputStrategy = new KeyboardInputStrategy();
                     break;
             }

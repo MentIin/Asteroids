@@ -16,8 +16,6 @@ namespace CodeBase.CompositionRoot.Installers
     {
         public override void InstallBindings()
         {
-            BindInputService();
-            
             BindGameFactories();
             
             BindUIFactory();
@@ -71,7 +69,5 @@ namespace CodeBase.CompositionRoot.Installers
                 .NonLazy();
         }
         
-        private void BindInputService() =>
-            Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
     }
 }
