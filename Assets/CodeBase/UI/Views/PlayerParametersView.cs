@@ -1,5 +1,4 @@
 ﻿using CodeBase.Common.Attributes;
-using CodeBase.UI.Binders.Main;
 using TMPro;
 using UnityEngine;
 

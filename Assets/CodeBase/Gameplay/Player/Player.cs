@@ -1,84 +1,140 @@
 ﻿using System;
 using CodeBase.Data;
-using CodeBase.Data.Signals;
-using CodeBase.Data.StaticData;
+using CodeBase.Data.StatsSystem;
 using CodeBase.Data.StatsSystem.Main;
-using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
+using CodeBase.Gameplay.Physic;
 using CodeBase.Interfaces.Infrastructure.Services;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Gameplay.Player
 {
-    public class Player : MonoBehaviour, IArenaMember, IDamageable, IPushable
+    public class Player : ITickable, IInitializable
     {
-        [SerializeField] private Collider2D _collider;
-        [SerializeField] private ParticleSystem _particleSystem;
+        public readonly TransformData transformData;
+        public readonly CustomVelocity velocity;
+
+        private readonly IInputService _inputService;
+        private readonly ProjectileFactory _projectileFactory;
+        private readonly Stats _playerStats;
+
+        private const float INVULNERABILITY_TIME = 3f;
         
-        private PlayerModel _playerModel;
-        private SignalBus _signalBus;
+        private int _currentHealth;
 
-        public TransformData TransformData => _playerModel.transformData;
-        public float Speed => _playerModel.velocity.Speed;
-        public int LaserCharges => _playerModel.LaserCharges;
-        public float LaserChargeReload => _playerModel.LaserChargesReload;
+        private int _laserCharges;
+        private float _laserChargesReload;
+        
+        private float _gunReload;
+        
 
+        public bool IsInvulnerable { get; private set; }
+        public int LaserCharges => _laserCharges;
+        public float LaserChargesReload => _laserChargesReload;
+        public event Action Died;
 
-        [Inject]
-        public void Construct(IInputService inputService, Stats playerStats, 
-            ProjectileFactory projectileFactory, SignalBus signalBus)
+        public Player(IInputService inputService, ProjectileFactory projectileFactory, Stats playerStats)
         {
-            _signalBus = signalBus;
-            _playerModel = new PlayerModel(inputService, projectileFactory, playerStats);
-        }
-        private void Start()
-        {
-            _playerModel.Initialize();
-            _playerModel.Died += PlayerModelOnDied;
-        }
+            _inputService = inputService;
+            _projectileFactory = projectileFactory;
+            _playerStats = playerStats;
 
-        private void PlayerModelOnDied()
-        {
-            Destroy(this.gameObject);
-            _signalBus.Fire(new PlayerDiedSignal());
+            transformData = new TransformData(Vector2.zero);
+            velocity = new CustomVelocity(transformData);
         }
 
-        private void Update()
+        public void Initialize()
         {
-            _playerModel.Tick();
-            transform.rotation = _playerModel.transformData.RotationQuaternion;
+            _currentHealth = _playerStats.GetStat<HealthStat>().Value;
+        }
 
-            if (!_particleSystem.isPlaying && _playerModel.IsInvulnerable)
+        public void Tick()
+        {
+            HandleAttack();
+            
+            if (!IsInvulnerable)
             {
-                _particleSystem.Play();
-            }else if (_particleSystem.isPlaying && !_playerModel.IsInvulnerable)
-            {
-                _particleSystem.Stop();
+                velocity.AddForce(_inputService.GetMovement() * transformData.Direction * Time.deltaTime * _playerStats.GetStat<SpeedStat>().Value);
+                velocity.AddAngularForce(_inputService.GetRotation());
             }
-
-            _collider.enabled = !_playerModel.IsInvulnerable;
+            velocity.Tick(Time.deltaTime);
         }
 
-        
-
-        private void OnTriggerEnter2D(Collider2D other)
+        private void HandleAttack()
         {
-            if (other.TryGetComponent(out IPushable pushable))
+            ReloadTick();
+            if (!IsInvulnerable)
             {
-                pushable.Push((other.transform.position - transform.position).normalized * GameConstants.CollisionKnockbackForce);
+                if (_inputService.GetBaseAttack())
+                    ShootBullet();
+                if (_inputService.GetSpecialAttack())
+                    SpecialAttack();
             }
         }
 
         public void TakeDamage()
         {
-            _playerModel.TakeDamage();
+            if (!IsInvulnerable)
+            {
+                _currentHealth--;
+                Invulnerability();
+                if (_currentHealth <= 0)
+                {
+                    Died?.Invoke();
+                }
+            }
         }
 
-        public void Push(Vector2 forceVector)
+        private async UniTask Invulnerability()
         {
-            if (_playerModel.IsInvulnerable) return;
-            _playerModel.velocity.Set(forceVector);
+            IsInvulnerable = true;
+            await UniTask.WaitForSeconds(INVULNERABILITY_TIME);
+            IsInvulnerable = false;
+        }
+        private void ReloadTick()
+        {
+            _gunReload -= Time.deltaTime;
+
+            _laserChargesReload -= Time.deltaTime;
+            _laserChargesReload = Mathf.Max(0f, _laserChargesReload);
+
+            if (_laserChargesReload <= 0)
+            {
+                if (_laserCharges == _playerStats.GetStat<SkillStat>().MaxCharges)
+                {
+                    _laserChargesReload = 0f;
+                }
+                else
+                {
+                    _laserChargesReload = _playerStats.GetStat<SkillStat>().ReloadTime;
+                    _laserCharges++;
+
+                }
+            }
+        }
+
+        private void SpecialAttack()
+        {
+            if (_laserCharges > 0)
+            {
+                _laserCharges--;
+                _projectileFactory.CreateProjectile(_playerStats.GetStat<SkillStat>().ProjectileType,
+                    transformData.Position,
+                    transformData.RotationQuaternion);
+            }
+        }
+
+        private void ShootBullet()
+        {
+            if (_gunReload <= 0)
+            {
+                _gunReload = _playerStats.GetStat<WeaponStat>().ReloadTime;
+                _projectileFactory.CreateProjectile(_playerStats.GetStat<WeaponStat>().ProjectileType,
+                    transformData.Position,
+                    transformData.RotationQuaternion);
+            }
         }
     }
 }

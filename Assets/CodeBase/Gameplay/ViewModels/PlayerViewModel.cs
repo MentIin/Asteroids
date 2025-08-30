@@ -1,6 +1,5 @@
 ﻿using System;
 using CodeBase.Common.Attributes;
-using CodeBase.Gameplay.Player;
 using CodeBase.Gameplay.Services.Providers;
 using CodeBase.Interfaces.UI;
 using UniRx;
@@ -42,14 +41,14 @@ namespace CodeBase.Gameplay.ViewModels
             Observable.EveryUpdate()
                 .Subscribe(_ =>
                 {
-                    LaserChargesLeft.Value = "Charges: " + _playerProvider.Player.LaserCharges;
+                    LaserChargesLeft.Value = "Charges: " + _playerProvider.PlayerPresentation.LaserCharges;
                 })
                 .AddTo(_disposables);
             Observable.EveryUpdate()
                 .Subscribe(_ =>
                 {
                     LaserChargeReload.Value = "Reload: " + Math.Round(
-                        _playerProvider.Player.LaserChargeReload, 2);
+                        _playerProvider.PlayerPresentation.LaserChargeReload, 2);
                 })
                 .AddTo(_disposables);
         }
@@ -59,7 +58,7 @@ namespace CodeBase.Gameplay.ViewModels
             Observable.EveryUpdate()
                 .Subscribe(_ =>
                 {
-                    Speed.Value = "Speed: " + Math.Round(_playerProvider.Player.Speed, 1);
+                    Speed.Value = "Speed: " + Math.Round(_playerProvider.PlayerPresentation.Speed, 1);
                 })
                 .AddTo(_disposables);
         }
@@ -70,7 +69,7 @@ namespace CodeBase.Gameplay.ViewModels
                 .Subscribe(_ =>
                 {
                     Rotation.Value = "Rotation: " + Math.Round(
-                        _playerProvider.Player.TransformData.Rotation);
+                        _playerProvider.PlayerPresentation.TransformData.Rotation);
                 })
                 .AddTo(_disposables);
         }
@@ -80,7 +79,7 @@ namespace CodeBase.Gameplay.ViewModels
             Observable.EveryUpdate()
                 .Subscribe(_ =>
                 {
-                    Position.Value = "Position: " + _playerProvider.Player.TransformData.Position.ToString();
+                    Position.Value = "Position: " + _playerProvider.PlayerPresentation.TransformData.Position.ToString();
                 })
                 .AddTo(_disposables);
         }

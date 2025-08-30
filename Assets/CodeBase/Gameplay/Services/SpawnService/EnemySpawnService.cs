@@ -4,7 +4,6 @@ using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Services.SpawnService.Spawners;
 using CodeBase.Interfaces.Infrastructure.Services;
 using UniRx;
-using UnityEngine;
 
 namespace CodeBase.Gameplay.Services.SpawnService
 {

@@ -10,17 +10,15 @@ namespace CodeBase.CompositionRoot.EntryPoints
         private readonly ISceneLoader _sceneLoader;
         private readonly IAnalyticsService _analyticsService;
         private readonly IAdsService _adsService;
-        private readonly ILogService _logService;
         private readonly IStaticDataService _staticDataService;
 
         public BootstrapEntryPoint(ISceneLoader sceneLoader, IAnalyticsService analyticsService,
-            IAdsService adsService, IStaticDataService staticDataService, ILogService logService)
+            IAdsService adsService, IStaticDataService staticDataService)
         {
             _staticDataService = staticDataService;
             _analyticsService = analyticsService;
             _adsService = adsService;
             _sceneLoader = sceneLoader;
-            _logService = logService;
         }
 
         public void Initialize()

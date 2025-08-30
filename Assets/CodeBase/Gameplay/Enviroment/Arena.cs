@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data;
-using CodeBase.Gameplay.Enemies;
-using CodeBase.Gameplay.Player;
 using CodeBase.Gameplay.Services.Providers;
 using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
@@ -32,7 +30,7 @@ namespace CodeBase.Gameplay.Enviroment
         public void Initialize()
         {
             Size = _staticDataService.ForMap().Size;
-            _coreMember = _playerProvider.Player;
+            _coreMember = _playerProvider.PlayerPresentation;
             _canBeTeleportedDictionary[_coreMember] = true;
         }
         public void Tick()
@@ -67,7 +65,7 @@ namespace CodeBase.Gameplay.Enviroment
             }
             if (!_canBeTeleportedDictionary[member])
             {
-                if (CheckIfInsideArenaBounds(member.TransformData))
+                if (IsInsideArenaBounds(member.TransformData))
                 {
                     _canBeTeleportedDictionary[member] = true;
                 }
@@ -85,7 +83,7 @@ namespace CodeBase.Gameplay.Enviroment
             else if (transformData.Position.y > Size.y) transformData.Position.y -= Size.y;
         }
 
-        private bool CheckIfInsideArenaBounds(TransformData transformData)
+        private bool IsInsideArenaBounds(TransformData transformData)
         {
             if (transformData.Position.x < 0) return false;
             if (transformData.Position.x > Size.x) return false;

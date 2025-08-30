@@ -4,12 +4,13 @@ namespace CodeBase.Data
 {
     public class TransformData
     {
+        private const float FULL_ANGLE = 360f;
         public Vector2 Position;
 
         public float Rotation
         {
             get => _rotation;
-            set => _rotation = value % 360f;
+            set => _rotation = value % FULL_ANGLE;
         }
 
         public Vector2 Direction => 
@@ -28,12 +29,6 @@ namespace CodeBase.Data
         {
             Position = position;
             Rotation = 0f;
-        }
-
-        public TransformData(Vector2 newPosition, Vector2 newVelocity, float newRotation)
-        {
-            Position = newPosition;
-            Rotation = newRotation;
         }
         public TransformData(Transform transform)
         {

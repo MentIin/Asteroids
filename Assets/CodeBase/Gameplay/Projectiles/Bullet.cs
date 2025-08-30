@@ -25,7 +25,7 @@ namespace CodeBase.Gameplay.Projectiles
 
         private void Start()
         {
-            DestroyAfterLifetime();
+            DestroyAfterLifetime().Forget();
         }
 
         private void Update()
@@ -44,7 +44,7 @@ namespace CodeBase.Gameplay.Projectiles
                 }
             }
         }
-        private async UniTaskVoid DestroyAfterLifetime()
+        private async UniTask DestroyAfterLifetime()
         {
             await UniTask.Delay(TimeSpan.FromSeconds(_stats.GetStat<LifetimeStat>().Value));
             if (this != null)

@@ -1,6 +1,5 @@
 ﻿using CodeBase.Data.StaticData;
 using CodeBase.Gameplay.Enviroment;
-using CodeBase.Gameplay.Player;
 using CodeBase.Gameplay.Services.Providers;
 using CodeBase.Interfaces.Infrastructure.Services;
 using Zenject;
@@ -22,15 +21,15 @@ namespace CodeBase.Gameplay.Factories
             _playerProvider = playerProvider;
         }
 
-        public Player.Player CreatePlayer()
+        public Player.PlayerPresentation CreatePlayer()
         {
             PlayerConfig playerData = _staticDataService.ForPlayer();
-            Player.Player player = _container.InstantiatePrefabResourceForComponent<Player.Player>(
+            Player.PlayerPresentation playerPresentation = _container.InstantiatePrefabResourceForComponent<Player.PlayerPresentation>(
                 playerData.PrefabPath, new object[]{playerData.Stats}
                 );
             
-            _playerProvider.RegisterPlayer(player);
-            return player;
+            _playerProvider.RegisterPlayer(playerPresentation);
+            return playerPresentation;
         }
     }
 }

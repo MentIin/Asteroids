@@ -1,6 +1,4 @@
-﻿using System;
-using CodeBase.Data.Signals;
-using CodeBase.Gameplay.Enviroment;
+﻿using CodeBase.Gameplay.Enviroment;
 using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.Services.SpawnService;
 using CodeBase.Interfaces.Infrastructure.Services;
@@ -34,9 +32,9 @@ namespace CodeBase.CompositionRoot.EntryPoints
         {
             _scoreService.ResetScore();
             
-            Gameplay.Player.Player player = _playerFactory.CreatePlayer();
+            Gameplay.Player.PlayerPresentation playerPresentation = _playerFactory.CreatePlayer();
             _arena.Initialize();
-            _cameraService.Follow(player.transform);
+            _cameraService.Follow(playerPresentation.transform);
             
             _enemySpawnService.StartSpawn();
             

@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace CodeBase.Infrastructure.Services.InputService
+﻿namespace CodeBase.Infrastructure.Services.InputService
 {
     public interface IInputStrategy
     {

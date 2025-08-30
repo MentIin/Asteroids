@@ -2,19 +2,19 @@
 {
     public class PlayerProvider
     {
-        private Player.Player _player;
+        private Player.PlayerPresentation _playerPresentation;
 
-        public Player.Player Player => _player;
-        public bool PlayerExists => _player != null;
+        public Player.PlayerPresentation PlayerPresentation => _playerPresentation;
+        public bool PlayerExists => _playerPresentation != null;
         
-        public void RegisterPlayer(Player.Player player)
+        public void RegisterPlayer(Player.PlayerPresentation playerPresentation)
         {
-            _player = player;
+            _playerPresentation = playerPresentation;
         }
 
         public void UnregisterPlayer()
         {
-            _player = null;
+            _playerPresentation = null;
         }
     }
 }

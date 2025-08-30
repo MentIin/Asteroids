@@ -1,5 +1,4 @@
 using CodeBase.CompositionRoot.EntryPoints;
-using CodeBase.Interfaces.Infrastructure.Services.UI;
 using CodeBase.UI.Factories;
 using Zenject;
 

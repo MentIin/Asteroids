@@ -2,7 +2,6 @@
 using CodeBase.UI.Binders.Main;
 using TMPro;
 using UniRx;
-using UnityEngine;
 
 namespace CodeBase.UI.Binders
 {

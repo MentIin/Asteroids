@@ -1,55 +1,46 @@
-﻿using CodeBase.Data.Signals;
-using CodeBase.Data.StaticData;
-using CodeBase.Gameplay.Factories;
+﻿using CodeBase.Data;
+using CodeBase.Data.StatsSystem;
+using CodeBase.Data.StatsSystem.Main;
+using CodeBase.Gameplay.Physic;
 using CodeBase.Gameplay.Services.Providers;
-using CodeBase.Interfaces.Infrastructure.Services;
 using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Gameplay.Enemies.Ufo
 {
-    public class Ufo : Enemy, IDamageable, IPushable
+    public class Ufo : ITickable
     {
-        private UfoModel _model;
-        private IScoreService _scoreService;
-        private EnemyConfig _config;
-        private SignalBus _signalBus;
+        public readonly CustomVelocity velocity;
+        public readonly TransformData transformData;
+        
+        private readonly Stats _stats;
+        private readonly PlayerProvider _playerProvider;
+        private readonly Transform _viewTransform;
+        
+        private Vector2 _directionAxis;
 
-        [Inject]
-        public void Construct(EnemyConfig config, PlayerProvider playerProvider, SignalBus signalBus)
+        public Ufo(Stats stats, PlayerProvider playerProvider, Transform viewTransform)
         {
-            _config = config;
-            _signalBus = signalBus;
-            _model = new UfoModel(config.Stats, playerProvider, transform);
-            TransformData = _model.transformData;
+            _stats = stats;
+            _playerProvider = playerProvider;
+            _viewTransform = viewTransform;
+            transformData = new TransformData();
+            velocity = new CustomVelocity(transformData);
         }
 
-        private void Update()
+        public void Tick()
         {
-            _model.Tick();
+            SetMoveDirection(
+                _playerProvider.PlayerPresentation.TransformData.Position - (Vector2)_viewTransform.position
+            );
+            
+            velocity.AddForce(_directionAxis * (Time.deltaTime * _stats.GetStat<SpeedStat>().Value));
+            velocity.Tick(Time.deltaTime);
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        public void SetMoveDirection(Vector2 dir)
         {
-            if (other.TryGetComponent(out IPushable pushable))
-            {
-                pushable.Push((other.transform.position - transform.position).normalized * GameConstants.CollisionKnockbackForce);
-            }
-            if (other.TryGetComponent(out IDamageable damageable))
-            {
-                damageable.TakeDamage();
-            }
-        }
-
-        public void TakeDamage()
-        {
-            _signalBus.Fire(new EnemyDiedSignal(_config, _model.transformData));
-            ReturnToPool();
-        }
-
-        public void Push(Vector2 forceVector)
-        {
-            _model.velocity.Set(forceVector);
+            _directionAxis = dir.normalized;
         }
     }
 }

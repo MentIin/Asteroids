@@ -3,12 +3,10 @@ using System.Threading;
 using CodeBase.Data.StaticData;
 using CodeBase.Gameplay.Enemies;
 using CodeBase.Gameplay.Enviroment;
-using CodeBase.Gameplay.Factories;
 using CodeBase.Gameplay.ObjectPool;
 using CodeBase.Interfaces.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace CodeBase.Gameplay.Services.SpawnService.Spawners
 {
@@ -19,7 +17,6 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
         private readonly EnemyPoolFactory _poolFactory;
         private readonly Arena _arena;
         private readonly IRandomizerService _randomizerService;
-        private EnemyType _enemyType;
         private float _spawnRate = 1f;
         
         private CancellationTokenSource _spawnCts;
@@ -39,7 +36,6 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
 
         public void SetSpawnData(EnemyType type, float newRate, int max)
         {
-            _enemyType = type;
             _maxEnemies = max;
             _spawnRate = newRate;
 
@@ -66,7 +62,7 @@ namespace CodeBase.Gameplay.Services.SpawnService.Spawners
             _isSpawning = false;
         }
 
-        private async UniTaskVoid SpawnLoop(CancellationToken cancellationToken)
+        private async UniTask SpawnLoop(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
             {

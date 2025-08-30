@@ -3,7 +3,6 @@ using CodeBase.Common.Attributes;
 using CodeBase.Interfaces.Infrastructure.Services;
 using CodeBase.Interfaces.UI;
 using UniRx;
-using UnityEngine;
 using Zenject;
 
 namespace CodeBase.UI.ViewModels

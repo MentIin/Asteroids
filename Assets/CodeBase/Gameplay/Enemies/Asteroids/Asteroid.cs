@@ -1,51 +1,30 @@
-﻿using CodeBase.Data.Signals;
-using CodeBase.Data.StaticData;
+﻿using CodeBase.Data;
+using CodeBase.Data.StatsSystem;
+using CodeBase.Data.StatsSystem.Main;
+using CodeBase.Gameplay.Physic;
 using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Gameplay.Enemies.Asteroids
 {
-    public class Asteroid : Enemy, IDamageable, IPushable
+    public class Asteroid : ITickable
     {
-        private AsteroidModel _model;
-        private EnemyConfig _config;
-        private SignalBus _signalBus;
+        public readonly CustomVelocity velocity;
+        public readonly TransformData transformData;
+        
+        private readonly Stats _stats;
 
-        [Inject]
-        public void Construct(EnemyConfig config, SignalBus signalBus)
+        public Asteroid(Stats stats)
         {
-            _config = config;
-            _model = new AsteroidModel(config.Stats);
-            TransformData = _model.transformData;
-            _signalBus = signalBus;
+            _stats = stats;
+            transformData = new TransformData();
+            velocity = new CustomVelocity(transformData);
         }
 
-        private void Update()
+        public void Tick()
         {
-            _model.Tick();
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.TryGetComponent(out IPushable pushable))
-            {
-                pushable.Push((other.transform.position - transform.position).normalized * GameConstants.CollisionKnockbackForce);
-            }
-            if (other.TryGetComponent(out IDamageable damageable))
-            {
-                damageable.TakeDamage();
-            }
-        }
-
-        public void TakeDamage()
-        {
-            _signalBus.Fire(new EnemyDiedSignal(_config, _model.transformData));
-            ReturnToPool();
-        }
-
-        public void Push(Vector2 forceVector)
-        {
-            _model.velocity.Set(forceVector);
+            velocity.AddForce(transformData.Direction * (Time.deltaTime * _stats.GetStat<SpeedStat>().Value));
+            velocity.Tick(Time.deltaTime);
         }
     }
 }
