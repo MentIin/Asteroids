@@ -23,7 +23,7 @@ namespace CodeBase.CompositionRoot.EntryPoints
 
         public void Initialize()
         {
-            SetUp();
+            SetUp().Forget();
         }
 
         private async UniTask SetUp()
